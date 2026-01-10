@@ -1,0 +1,567 @@
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(44, 62, 80, 0.7);
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+}
+.prev {
+    left: 12px;
+    right: auto;
+}
+.next {
+    right: 12px;
+    left: auto;
+}
+
+
+/* Compte à rebours stylé avec effet smoke */
+
+.countdown-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2.5rem 0 1.5rem 0;
+}
+
+.countdown-title {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    margin-bottom: 0.7rem;
+    text-shadow: 0 2px 8px #fff, 0 0 2px #1abc9c;
+}
+
+.countdown-smoke {
+    font-family: 'Orbitron', 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--secondary-color);
+    display: flex;
+    gap: 1.2rem;
+    min-width: 22rem;
+    justify-content: center;
+    position: relative;
+    overflow: visible;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+.cd-smoke {
+    position: relative;
+    text-shadow: 0 0 18px #fff, 0 0 8px #1abc9c, 0 0 2px #000;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+
+/* Hamburger menu déroulant (overlay) */
+
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+        position: absolute;
+        top: 56px;
+        right: 2rem;
+        left: auto;
+        transform: none;
+        min-width: 180px;
+        max-width: 90vw;
+        background: rgba(44, 62, 80, 0.97);
+        flex-direction: column;
+        align-items: center;
+        z-index: 200;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+    .nav.show {
+        display: flex;
+    }
+    .nav a {
+        margin: 14px 0;
+        font-size: 1.15em;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+        padding: 0.7em 0;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
+    .nav a:hover {
+        background: var(--secondary-color);
+        color: #fff;
+    }
+    .top-bar {
+        position: relative;
+    }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.footer-area {
+    flex-shrink: 0;
+}
+
+
+/* Footer aligné : réseaux sociaux au centre, logo à droite */
+
+.footer-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-height: 2rem;
+    width: 100%;
+    position: relative;
+}
+
+.footer-social {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.footer-logo {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    margin-left: auto;
+    padding-right: 1.2rem;
+}
+
+.footer-logo img {
+    max-width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+
+/* ===== Footer AuthInteractive.com style ===== */
+
+
+/* Footer compact et aligné */
+
+.footer-area {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.3rem 0 0.2rem 0;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.footer-logo {
+    margin-bottom: 0.1rem;
+}
+
+.footer-logo img {
+    max-width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+.footer-social {
+    margin-bottom: 0.1rem;
+}
+
+.footer-social h5 {
+    display: none;
+}
+
+.footer-social a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0 0.3rem;
+    transition: color 0.2s;
+    vertical-align: middle;
+}
+
+.footer-social a:hover {
+    color: var(--secondary-color);
+}
+
+
+/* Footer : logo à gauche, réseaux sociaux centrés */
+
+.footer-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    width: 100%;
+    position: relative;
+}
+
+.footer-logo {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    margin-right: auto;
+    padding-left: 1.2rem;
+}
+
+.footer-logo img {
+    max-width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+.footer-social {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.footer-social h5 {
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.footer-social a {
+    color: #fff;
+    font-size: 1.7em;
+    margin: 0 10px;
+    transition: color 0.2s;
+}
+
+.footer-social a:hover {
+    color: var(--secondary-color);
+}
+
+.footer-copyright {
+    font-size: 0.98em;
+    color: #e0e0e0;
+    margin-top: 10px;
+}
+
+
+/* ===== Footer enrichi ===== */
+
+.footer-area {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 32px 0 0 0;
+    margin-top: 40px;
+    font-size: 1rem;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.footer-col {
+    flex: 1 1 220px;
+    min-width: 220px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.footer-logo {
+    max-width: 90px;
+    margin-bottom: 12px;
+}
+
+.footer-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.newsletter-form input[type="email"] {
+    padding: 7px 14px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    margin-bottom: 4px;
+}
+
+.newsletter-form button {
+    background: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.newsletter-form button:hover {
+    background: #159c87;
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 1.7em;
+    margin-top: 8px;
+}
+
+.footer-social-links a {
+    color: #fff;
+    transition: color 0.2s;
+}
+
+.footer-social-links a:hover {
+    color: var(--secondary-color);
+}
+
+.footer-copyright {
+    text-align: center;
+    padding: 18px 0 10px 0;
+    font-size: 0.98em;
+    color: #e0e0e0;
+    border-top: 1px solid #34495e;
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+    .footer-col {
+        margin-bottom: 18px;
+    }
+}
+
+
+/* Couleurs */
+
+:root {
+    --primary-color: #2C3E50;
+    /* Bleu foncé header/footer */
+    --secondary-color: #1ABC9C;
+    /* Accent / boutons */
+    --background-color: #ECF0F1;
+    /* Fond clair */
+    --text-color: #2C3E50;
+    /* Texte principal */
+    --text-secondary-color: #95A5A6;
+    /* Texte secondaire */
+}
+
+
+/* Reset et base */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+
+/* Bandeau supérieur */
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.top-bar .logo {
+    font-weight: 800;
+    font-size: 22px;
+}
+
+.hamburger {
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 600;
+}
+
+.nav.show {
+    display: flex;
+    flex-direction: column;
+    background: var(--primary-color);
+    padding: 12px;
+}
+
+
+/* Carrousel */
+
+.carousel-container {
+    position: relative;
+    max-width: 900px;
+    margin: 60px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+}
+
+.slide {
+    min-width: 100%;
+    display: none;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(44, 62, 80, 0.7);
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+    /* Place les boutons par rapport à .carousel */
+}
+
+.prev {
+    left: 12px;
+    right: auto;
+}
+
+.next {
+    right: 12px;
+    left: auto;
+}
+
+
+/* Footer */
+
+.bottom-bar {
+    background-color: var(--primary-color);
+    text-align: center;
+    padding: 14px;
+    color: white;
+    font-weight: 600;
+}
+
+
+/* Boutons et liens */
+
+button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive */
+
+@media(max-width:768px) {
+    .hamburger {
+        display: block;
+    }
+    .nav {
+        display: none;
+        flex-direction: column;
+    }
+    .nav a {
+        margin: 12px 0;
+    }
+    .carousel-container {
+        margin: 40px 12px;
+    }
+}

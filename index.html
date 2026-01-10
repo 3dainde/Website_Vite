@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthInteractive — Site Moderne</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/matrix-cursor.css">
+    <link rel="stylesheet" href="css/counter-firebase.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Curseur Matrix -->
+    <canvas id="matrix-cursor" style="display:none;"></canvas>
+    <div id="matrix-container" style="position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;"></div>
+
+    <!-- Bandeau supérieur -->
+    <header class="top-bar">
+        <div class="logo" style="display:flex;align-items:center;gap:1rem;">
+            AuthInteractive
+            <div id="counter-bandeau-wrapper" style="display:flex;align-items:center;gap:0.5rem;"></div>
+        </div>
+        <nav class="nav" id="navMenu">
+            <div id="counter-bandeau-nav" style="display:inline-block;margin-right:1.2rem;"></div>
+            <a href="#">Accueil</a>
+            <a href="#">Jeux</a>
+            <a href="#">Communauté</a>
+            <a href="#">Boutique</a>
+        </nav>
+        <button class="hamburger" id="menuToggle">☰</button>
+    </header>
+
+    <!-- Corps avec carrousel et compte à rebours -->
+    <main>
+        <div class="countdown-section">
+            <div class="countdown-title">Lancement dans</div>
+            <div class="countdown-smoke">
+                <span id="countdown"></span>
+            </div>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                <div class="slide active">
+                    <img src="images/Spin.png" alt="Slide 1">
+                </div>
+                <div class="slide">
+                    <img src="images/Spin_var(20).jpg" alt="Slide 2">
+                </div>
+                <div class="slide">
+                    <img src="images/Spin_var(23).jpg" alt="Slide 3">
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">‹</button>
+                <button class="carousel-btn next" id="nextBtn">›</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bandeau inférieur / Footer -->
+    <footer class="footer-area">
+        <div class="footer-flex">
+            <div class="footer-logo">
+                <a href="#"><img src="images/Logo_Onglet.png" alt="logo"></a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/gaming/authinteractive" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/channel/UCm4l45-JQhK__iM2ks4eg2Q" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/AuthInteractive/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/AuthInteractive" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            Copyright © 2021 All rights reserved | Auth Interactive
+        </div>
+    </footer>
+</body>
+
+<!-- Scripts JS -->
+<script type="module" src="js/counter-firebase.js"></script>
+<script src="js/script.js"></script>
+<script type="module" src="js/matrix-cursor.js"></script>
+
+</html>
