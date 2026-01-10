@@ -69,7 +69,7 @@ function updateCounterDisplay() {
         counterEl.style.borderRadius = '0.7rem';
         counterEl.style.margin = '0 0.3rem 0 0';
         counterEl.style.display = 'inline-block';
-        counterEl.style.transition = 'background 0.3s ease';
+        counterEl.style.transition = 'background 0.3s ease, color 0.3s ease';
         wrapper.prepend(counterEl);
     }
     counterEl.innerHTML = `<span style="font-weight:600;letter-spacing:0.5px;">🌍 ${globalCounter}</span>`;
@@ -108,14 +108,17 @@ function addPulseStyles() {
         @keyframes pulseElectricBlue {
             0% {
                 background: rgba(0, 0, 0, 0.7);
+                color: #fff;
                 box-shadow: 0 0 0 0 rgba(0, 150, 255, 0.7);
             }
             50% {
                 background: rgba(0, 150, 255, 0.5);
+                color: #00f0ff;
                 box-shadow: 0 0 20px 10px rgba(0, 150, 255, 0.3);
             }
             100% {
                 background: rgba(0, 0, 0, 0.7);
+                color: #fff;
                 box-shadow: 0 0 0 0 rgba(0, 150, 255, 0);
             }
         }
