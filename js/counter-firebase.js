@@ -49,28 +49,10 @@ function triggerPulse() {
 
 // Mise à jour de l'affichage du compteur
 function updateCounterDisplay() {
-    const old = document.querySelectorAll('#global-matrix-counter');
-    old.forEach(el => el.parentNode && el.parentNode.id !== 'counter-bandeau-nav' && el.remove());
-
-    const wrapper = document.getElementById('counter-bandeau-nav');
-    if (!wrapper) {
-        window.addEventListener('DOMContentLoaded', updateCounterDisplay);
-        return;
-    }
-
     let counterEl = document.getElementById('global-matrix-counter');
     if (!counterEl) {
-        counterEl = document.createElement('div');
-        counterEl.id = 'global-matrix-counter';
-        counterEl.style.background = 'rgba(0,0,0,0.7)';
-        counterEl.style.color = '#fff';
-        counterEl.style.fontSize = '1.1rem';
-        counterEl.style.padding = '0.2rem 0.8rem';
-        counterEl.style.borderRadius = '0.7rem';
-        counterEl.style.margin = '0 0.3rem 0 0';
-        counterEl.style.display = 'inline-block';
-        counterEl.style.transition = 'background 0.3s ease, color 0.3s ease';
-        wrapper.prepend(counterEl);
+        window.addEventListener('DOMContentLoaded', updateCounterDisplay);
+        return;
     }
     counterEl.innerHTML = `<span style="font-weight:600;letter-spacing:0.5px;">🌍 ${globalCounter}</span>`;
     checkMilestoneAndPulse();
