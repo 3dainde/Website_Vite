@@ -57,13 +57,23 @@ function updateCounterDisplay() {
 
     let wrapper = document.getElementById('counter-bandeau-nav');
     if (!wrapper) {
-        // If DOM not ready yet, wait for it. Otherwise fallback to body so the counter
-        // remains visible even if the expected wrapper is missing.
+        // If DOM not ready yet, wait for it.
         if (document.readyState === 'loading') {
             window.addEventListener('DOMContentLoaded', updateCounterDisplay);
             return;
         }
-        wrapper = document.body;
+        // If the expected wrapper is missing, try to create it inside the .logo element
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            wrapper = document.createElement('div');
+            wrapper.id = 'counter-bandeau-nav';
+            wrapper.style.display = 'inline-block';
+            logo.appendChild(wrapper);
+        } else {
+            // As a last resort wait for DOMContentLoaded again
+            window.addEventListener('DOMContentLoaded', updateCounterDisplay);
+            return;
+        }
     }
 
     let counterEl = document.getElementById('global-matrix-counter');
@@ -78,6 +88,9 @@ function updateCounterDisplay() {
         counterEl.style.margin = '0 0.3rem 0 0';
         counterEl.style.display = 'inline-block';
         counterEl.style.transition = 'background 0.3s ease, color 0.3s ease';
+        wrapper.prepend(counterEl);
+    } else if (counterEl.parentNode && counterEl.parentNode.id !== 'counter-bandeau-nav') {
+        // If an existing counter element is located elsewhere (bottom/right), move it into the nav wrapper
         wrapper.prepend(counterEl);
     }
     counterEl.innerHTML = `<span style="font-weight:600;letter-spacing:0.5px;">🌍 ${globalCounter}</span>`;
