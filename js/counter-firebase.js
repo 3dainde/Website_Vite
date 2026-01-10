@@ -24,12 +24,15 @@ const colorList = [
     '#00ff41', '#1abc9c', '#007bff', '#ff9800', '#e91e63',
     '#ffeb3b', '#9c27b0', '#f44336', '#4caf50', '#00bcd4'
 ];
-const milestones = [10, 100, 1000, 10000, 100000];
+const milestones = [10, 100];
 
 // Vérifier si un seuil est atteint et déclencher le pulse
 function checkMilestoneAndPulse() {
+    // allow re-triggering if counter drops below last triggered milestone
+    if (globalCounter < lastMilestoneTriggered) lastMilestoneTriggered = 0;
     for (const milestone of milestones) {
-        if (globalCounter >= milestone && lastMilestoneTriggered < milestone) {
+        // trigger only when counter equals the milestone exactly
+        if (globalCounter === milestone && lastMilestoneTriggered !== milestone) {
             lastMilestoneTriggered = milestone;
             triggerPulse();
             break;
@@ -49,10 +52,33 @@ function triggerPulse() {
 
 // Mise à jour de l'affichage du compteur
 function updateCounterDisplay() {
+    const old = document.querySelectorAll('#global-matrix-counter');
+    old.forEach(el => el.parentNode && el.parentNode.id !== 'counter-bandeau-nav' && el.remove());
+
+    let wrapper = document.getElementById('counter-bandeau-nav');
+    if (!wrapper) {
+        // If DOM not ready yet, wait for it. Otherwise fallback to body so the counter
+        // remains visible even if the expected wrapper is missing.
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', updateCounterDisplay);
+            return;
+        }
+        wrapper = document.body;
+    }
+
     let counterEl = document.getElementById('global-matrix-counter');
     if (!counterEl) {
-        window.addEventListener('DOMContentLoaded', updateCounterDisplay);
-        return;
+        counterEl = document.createElement('div');
+        counterEl.id = 'global-matrix-counter';
+        counterEl.style.background = 'rgba(0,0,0,0.7)';
+        counterEl.style.color = '#fff';
+        counterEl.style.fontSize = '1.1rem';
+        counterEl.style.padding = '0.2rem 0.8rem';
+        counterEl.style.borderRadius = '0.7rem';
+        counterEl.style.margin = '0 0.3rem 0 0';
+        counterEl.style.display = 'inline-block';
+        counterEl.style.transition = 'background 0.3s ease, color 0.3s ease';
+        wrapper.prepend(counterEl);
     }
     counterEl.innerHTML = `<span style="font-weight:600;letter-spacing:0.5px;">🌍 ${globalCounter}</span>`;
     checkMilestoneAndPulse();
@@ -68,6 +94,13 @@ function getMatrixColor() {
 window.setMatrixCursorCounter = function(val) {
     globalCounter = val;
 };
+
+// Récupération compteur en temps réel
+onValue(counterRef, snapshot => {
+    globalCounter = snapshot.val() || 0;
+    updateCounterDisplay();
+    window.setMatrixCursorCounter(globalCounter);
+});
 
 // Incrémentation Firebase
 function incrementMatrixCounter() {
@@ -108,13 +141,6 @@ function addPulseStyles() {
 window.addEventListener('DOMContentLoaded', () => {
     addPulseStyles();
     updateCounterDisplay();
-});
-
-// Récupération compteur en temps réel
-onValue(counterRef, snapshot => {
-    globalCounter = snapshot.val() || 0;
-    updateCounterDisplay();
-    window.setMatrixCursorCounter(globalCounter);
 });
 
 // Fonction pour synchroniser la valeur du compteur global
