@@ -156,6 +156,19 @@ window.addEventListener('DOMContentLoaded', () => {
     updateCounterDisplay();
 });
 
+// Ensure any misplaced counter instance is moved into the nav next to the logo
+function ensureCounterPlacement() {
+    const wrapper = document.getElementById('counter-bandeau-nav') || document.querySelector('.logo');
+    if (!wrapper) return;
+    const els = document.querySelectorAll('#global-matrix-counter');
+    els.forEach(el => {
+        if (el.parentNode !== wrapper) wrapper.prepend(el);
+    });
+}
+
+// Run placement after a short delay to catch elements created very early/late
+window.addEventListener('load', () => setTimeout(ensureCounterPlacement, 150));
+
 // Fonction pour synchroniser la valeur du compteur global
 export function setMatrixCursorCounter(val) {
     globalCounter = val;
