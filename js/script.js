@@ -1,11 +1,13 @@
 // 1. Son de clic
-const clickSound = new Audio('audio/click.wav');
+const clickSound = new Audio('assets/audio/click.wav');
+clickSound.onerror = () => console.log('Fichier audio click non trouvé');
 
 // 2. Musique d'ambiance
 const BACKGROUND_VOLUME = 5; // Pourcentage entre 0 et 100
 const backgroundMusic = new Audio('assets/audio/background.mp3');
 backgroundMusic.loop = true;
 backgroundMusic.volume = Math.max(0, Math.min(100, BACKGROUND_VOLUME)) / 100;
+backgroundMusic.onerror = () => console.log('Fichier audio background non trouvé');
 backgroundMusic.play().catch(() => {
     console.log('Lecture automatique bloquée par le navigateur, le son commencera au premier clic.');
 });
