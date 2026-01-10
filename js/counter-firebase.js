@@ -69,13 +69,6 @@ window.setMatrixCursorCounter = function(val) {
     globalCounter = val;
 };
 
-// Récupération compteur en temps réel
-onValue(counterRef, snapshot => {
-    globalCounter = snapshot.val() || 0;
-    updateCounterDisplay();
-    window.setMatrixCursorCounter(globalCounter);
-});
-
 // Incrémentation Firebase
 function incrementMatrixCounter() {
     runTransaction(counterRef, current => (current || 0) + 1);
@@ -115,6 +108,13 @@ function addPulseStyles() {
 window.addEventListener('DOMContentLoaded', () => {
     addPulseStyles();
     updateCounterDisplay();
+});
+
+// Récupération compteur en temps réel
+onValue(counterRef, snapshot => {
+    globalCounter = snapshot.val() || 0;
+    updateCounterDisplay();
+    window.setMatrixCursorCounter(globalCounter);
 });
 
 // Fonction pour synchroniser la valeur du compteur global
