@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuthInteractive – Site Moderne</title>
+    <title>AuthInteractive — Site Moderne</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='90' font-weight='bold' fill='%230096ff'>A</text></svg>">
 
     <!-- Styles -->
@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="css/matrix-cursor.css">
     <link rel="stylesheet" href="css/counter-firebase.css">
     <link rel="stylesheet" href="css/all.min.css">
+</head>
+
+<style>
+    header.top-bar{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem;gap:1rem}
+    .logo{display:flex;align-items:center;gap:1rem}
+    #counter-bandeau-nav{margin-left:0.6rem}
+    #global-matrix-counter{margin-left:0.4rem;z-index:10000}
+    /* small screens: ensure the counter stays visible and not clipped */
+    @media (max-width:600px){
+        header.top-bar{padding-right:1.2rem}
+        #global-matrix-counter{margin-right:0.8rem}
+    }
+</style>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
@@ -23,8 +37,9 @@
     <!-- Bandeau supérieur -->
     <header class="top-bar">
         <div class="logo">
-            <span>AuthInteractive</span>
-            <div id="global-matrix-counter">👁️ 0</div>
+            <span class="brand">AuthInteractive</span>
+            <!-- Counter moved next to logo so it appears to the right of the logo in the nav bar -->
+            <div id="counter-bandeau-nav" style="display:inline-block; margin-left:0.6rem;"></div>
         </div>
         <nav class="nav" id="navMenu">
             <a href="#">Accueil</a>
