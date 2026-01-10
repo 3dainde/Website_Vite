@@ -1,15 +1,21 @@
 #global-matrix-counter {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 1rem;
+    z-index: 99999;
+}
+
+/* When the counter is inside the nav/logo area, render it inline instead of fixed */
+#counter-bandeau-nav #global-matrix-counter {
     position: static;
+    bottom: auto;
+    right: auto;
     display: inline-block;
-    background: rgba(0, 150, 255, 0.15);
-    color: #00f0ff;
-    font-size: 1.1rem;
-    padding: 0.4rem 1rem;
-    border-radius: 0.8rem;
-    border: 1px solid rgba(0, 150, 255, 0.4);
-    z-index: 1;
-    font-weight: 600;
-    letter-spacing: 1px;
-    visibility: visible !important;
-    opacity: 1 !important;
+    margin-left: 0.4rem;
+    z-index: 10000;
 }
