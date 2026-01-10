@@ -19,10 +19,33 @@ const counterRef = ref(db, 'matrixClickCounter');
 
 let globalCounter = 0;
 let colorIndex = 0;
+let lastMilestoneTriggered = 0;
 const colorList = [
     '#00ff41', '#1abc9c', '#007bff', '#ff9800', '#e91e63',
     '#ffeb3b', '#9c27b0', '#f44336', '#4caf50', '#00bcd4'
 ];
+const milestones = [10, 100, 1000, 10000, 100000];
+
+// Vérifier si un seuil est atteint et déclencher le pulse
+function checkMilestoneAndPulse() {
+    for (const milestone of milestones) {
+        if (globalCounter >= milestone && lastMilestoneTriggered < milestone) {
+            lastMilestoneTriggered = milestone;
+            triggerPulse();
+            break;
+        }
+    }
+}
+
+// Déclencher l'animation pulse
+function triggerPulse() {
+    const counterEl = document.getElementById('global-matrix-counter');
+    if (!counterEl) return;
+    counterEl.classList.add('pulse-electric-blue');
+    setTimeout(() => {
+        counterEl.classList.remove('pulse-electric-blue');
+    }, 600);
+}
 
 // Mise à jour de l'affichage du compteur
 function updateCounterDisplay() {
@@ -46,9 +69,11 @@ function updateCounterDisplay() {
         counterEl.style.borderRadius = '0.7rem';
         counterEl.style.margin = '0 0.3rem 0 0';
         counterEl.style.display = 'inline-block';
+        counterEl.style.transition = 'background 0.3s ease';
         wrapper.prepend(counterEl);
     }
     counterEl.innerHTML = `<span style="font-weight:600;letter-spacing:0.5px;">🌍 ${globalCounter}</span>`;
+    checkMilestoneAndPulse();
 }
 
 // Couleur Matrix selon compteur
@@ -74,8 +99,38 @@ function incrementMatrixCounter() {
     runTransaction(counterRef, current => (current || 0) + 1);
 }
 
+// Ajouter les styles d'animation CSS
+function addPulseStyles() {
+    if (document.getElementById('pulse-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'pulse-styles';
+    style.textContent = `
+        @keyframes pulseElectricBlue {
+            0% {
+                background: rgba(0, 0, 0, 0.7);
+                box-shadow: 0 0 0 0 rgba(0, 150, 255, 0.7);
+            }
+            50% {
+                background: rgba(0, 150, 255, 0.5);
+                box-shadow: 0 0 20px 10px rgba(0, 150, 255, 0.3);
+            }
+            100% {
+                background: rgba(0, 0, 0, 0.7);
+                box-shadow: 0 0 0 0 rgba(0, 150, 255, 0);
+            }
+        }
+        #global-matrix-counter.pulse-electric-blue {
+            animation: pulseElectricBlue 0.6s ease-out;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // Initialisation au chargement
-window.addEventListener('DOMContentLoaded', updateCounterDisplay);
+window.addEventListener('DOMContentLoaded', () => {
+    addPulseStyles();
+    updateCounterDisplay();
+});
 
 // Fonction pour synchroniser la valeur du compteur global
 export function setMatrixCursorCounter(val) {
