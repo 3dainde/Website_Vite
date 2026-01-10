@@ -1,5 +1,6 @@
 #global-matrix-counter {
     position: static;
+    display: inline-block;
     background: rgba(0, 150, 255, 0.15);
     color: #00f0ff;
     font-size: 1.1rem;
@@ -9,4 +10,6 @@
     z-index: 1;
     font-weight: 600;
     letter-spacing: 1px;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
