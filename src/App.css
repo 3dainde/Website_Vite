@@ -1,0 +1,447 @@
+:root {
+  --primary: #0096ff;
+  --secondary: #1e1e2e;
+  --accent: #00d4ff;
+  --text: #ffffff;
+  --text-secondary: #b0b0b0;
+  --bg-light: #2a2a3e;
+  --border: #404050;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.language-select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.language-select:hover {
+  border-color: var(--primary);
+  background: rgba(0, 150, 255, 0.1);
+}
+
+.language-select option {
+  background: var(--secondary);
+  color: var(--text);
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-logo:hover {
+  color: var(--accent);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 2rem;
+}
+
+.page-container {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--primary);
+  text-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.cta-button, .btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #000;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-button:hover, .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
+}
+
+/* Features Section */
+.features {
+  margin-bottom: 3rem;
+}
+
+.features-grid, .products-grid, .games-grid, .tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.feature-card, .product-card, .game-card {
+  background: rgba(42, 42, 62, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.feature-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.feature-card:hover, .product-card:hover, .game-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 25px rgba(0, 150, 255, 0.3);
+  transform: translateY(-5px);
+}
+
+.product-image, .game-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.products-section {
+  margin-bottom: 3rem;
+}
+
+.products-section h2 {
+  margin-bottom: 1.5rem;
+}
+
+.placeholder {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.price {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 1rem 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-available {
+  background: rgba(0, 200, 100, 0.2);
+  color: #00c864;
+  border: 1px solid #00c864;
+}
+
+.status-coming {
+  background: rgba(255, 150, 0, 0.2);
+  color: #ff9600;
+  border: 1px solid #ff9600;
+}
+
+/* Dev Section */
+.dev-section {
+  margin-bottom: 2rem;
+  background: rgba(42, 42, 62, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.dev-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dev-section li {
+  padding: 0.8rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.dev-section li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.tech-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.tech-grid > div {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05));
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.tech-grid > div:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Contact Form */
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(42, 42, 62, 0.6);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(0, 150, 255, 0.05);
+}
+
+.contact-info {
+  background: rgba(42, 42, 62, 0.6);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.contact-info p {
+  color: var(--text-secondary);
+}
+
+.contact-info strong {
+  color: var(--primary);
+}
+
+/* Footer */
+.footer {
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.footer-links a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(40%) saturate(200%) hue-rotate(190deg);
+  transition: all 0.3s;
+}
+
+.footer-links a:hover .social-icon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(300%) hue-rotate(170deg);
+  transform: scale(1.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-menu {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .features-grid, .products-grid, .games-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form, .contact-info {
+    padding: 1.5rem;
+  }
+}
