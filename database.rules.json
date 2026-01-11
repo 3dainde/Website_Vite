@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "matrixClickCounter": {
+      ".read": true,
+      ".write": true,
+      ".validate": "newData.isNumber()"
+    },
+    ".read": false,
+    ".write": false
+  }
+}
