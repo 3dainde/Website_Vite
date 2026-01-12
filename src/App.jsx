@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { translations } from "./translations";
 import "./App.css";
@@ -42,16 +42,16 @@ function Footer({ t }) {
         <p>&copy; 2026 AuthInteractive. {t.footer.copyright}</p>
         <div className="footer-links">
           <a href="https://www.facebook.com/gaming/authinteractive" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <img src="/icons/facebook.svg" alt="Facebook" className="social-icon" />
+            <img src="./icons/facebook.svg" alt="Facebook" className="social-icon" />
           </a>
           <a href="https://www.youtube.com/channel/UCm4l45-JQhK__iM2ks4eg2Q" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <img src="/icons/youtube.svg" alt="YouTube" className="social-icon" />
+            <img src="./icons/youtube.svg" alt="YouTube" className="social-icon" />
           </a>
           <a href="https://www.instagram.com/AuthInteractive/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <img src="/icons/instagram.svg" alt="Instagram" className="social-icon" />
+            <img src="./icons/instagram.svg" alt="Instagram" className="social-icon" />
           </a>
           <a href="https://twitter.com/AuthInteractive" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <img src="/icons/twitter.svg" alt="Twitter" className="social-icon" />
+            <img src="./icons/twitter.svg" alt="Twitter" className="social-icon" />
           </a>
         </div>
       </div>
