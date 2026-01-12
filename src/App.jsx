@@ -14,7 +14,7 @@ function Navigation({ lang, setLang, t }) {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <Link to="/" className="nav-logo">AuthInteractive</Link>
+        <Link to="/" className="nav-logo"><img src="./logo.png" alt="Logo" className="nav-logo-img" />AuthInteractive</Link>
         <ul className="nav-menu">
           <li><Link to="/" className="nav-link">{t.nav.home}</Link></li>
           <li><Link to="/produits" className="nav-link">{t.nav.products}</Link></li>
@@ -85,3 +85,4 @@ function App() {
 }
 
 export default App;
+

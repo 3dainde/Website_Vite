@@ -76,6 +76,13 @@ body {
   transition: color 0.3s;
 }
 
+.nav-logo-img {
+  height: 30px;
+  width: 30px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 .nav-logo:hover {
   color: var(--accent);
 }
@@ -445,3 +452,4 @@ h3 {
     padding: 1.5rem;
   }
 }
+
