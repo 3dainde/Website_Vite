@@ -21,6 +21,7 @@ import Success from "./pages/Success";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Pricing from "./pages/Pricing";
 
 export const LanguageContext = React.createContext();
 
@@ -145,6 +146,7 @@ function App() {
                   {/* Pages d'authentification */}
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/pricing" element={<Pricing />} />
                   
                   {/* Pages panier et paiement */}
                   <Route path="/checkout" element={<Checkout />} />
