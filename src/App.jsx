@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { translations } from "./translations";
 import { CartProvider, useCart } from "./context/CartContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./App.css";
 
 // Pages existantes
@@ -10,11 +11,16 @@ import JeuxVideo from "./pages/JeuxVideo";
 import Developpement from "./pages/Developpement";
 import Contact from "./pages/Contact";
 
-// Nouvelles pages E-commerce
+// Nouvelles pages E-commerce v1.2.0
 import ProduitsImproved from "./pages/ProduitsImproved";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
+
+// Nouvelles pages v2.0 - Commerciales
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
 export const LanguageContext = React.createContext();
 
@@ -45,6 +51,20 @@ function CartIndicator() {
   );
 }
 
+function UserMenu() {
+  const { user } = useAuth();
+  
+  if (!user) return null;
+  
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <Link to="/dashboard" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        👤 {user.name}
+      </Link>
+    </div>
+  );
+}
+
 function Navigation({ lang, setLang, t }) {
   return (
     <nav className="navbar">
@@ -62,6 +82,7 @@ function Navigation({ lang, setLang, t }) {
               <CartIndicator />
             </Link>
           </li>
+          <li><UserMenu /></li>
         </ul>
         <select className="language-select" value={lang} onChange={(e) => setLang(e.target.value)}>
           <option value="fr">FR</option>
@@ -106,26 +127,38 @@ function App() {
 
   return (
     <LanguageContext.Provider value={{ lang, t }}>
-      <CartProvider>
-        <Router>
-          <div className="app">
-            <Navigation lang={lang} setLang={setLang} t={t} />
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/produits" element={<ProduitsImproved />} />
-                <Route path="/produit/:id" element={<ProductDetail />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/success" element={<Success />} />
-                <Route path="/jeux" element={<JeuxVideo />} />
-                <Route path="/developpement" element={<Developpement />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
-            </main>
-            <Footer t={t} />
-          </div>
-        </Router>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <div className="app">
+              <Navigation lang={lang} setLang={setLang} t={t} />
+              <main className="main-content">
+                <Routes>
+                  {/* Pages publiques */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/produits" element={<ProduitsImproved />} />
+                  <Route path="/produit/:id" element={<ProductDetail />} />
+                  <Route path="/jeux" element={<JeuxVideo />} />
+                  <Route path="/developpement" element={<Developpement />} />
+                  <Route path="/contact" element={<Contact />} />
+                  
+                  {/* Pages d'authentification */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  
+                  {/* Pages panier et paiement */}
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/success" element={<Success />} />
+                  
+                  {/* Pages utilisateur */}
+                  <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+              </main>
+              <Footer t={t} />
+            </div>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
     </LanguageContext.Provider>
   );
 }
