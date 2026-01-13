@@ -1,0 +1,49 @@
+/* src/styles/Success.css */
+
+.success-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.success-icon {
+  background: rgba(0, 150, 255, 0.1);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  font-size: 3rem;
+}
+
+.order-details {
+  background: rgba(42, 42, 62, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.order-details h2 {
+  margin-bottom: 1rem;
+}
+
+.order-details div {
+  margin-bottom: 1rem;
+}
+
+.order-details strong {
+  color: var(--primary);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}

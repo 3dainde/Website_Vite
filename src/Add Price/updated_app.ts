@@ -1,3 +1,4 @@
+// src/App.tsx - VERSION MISE À JOUR avec E-commerce
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { translations } from "./translations";
@@ -16,7 +17,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 
-export const LanguageContext = React.createContext();
+export const LanguageContext = React.createContext<any>(null);
 
 function CartIndicator() {
   const { itemCount } = useCart();
@@ -45,11 +46,15 @@ function CartIndicator() {
   );
 }
 
-function Navigation({ lang, setLang, t }) {
+function Navigation({ lang, setLang, t }: any) {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <Link to="/" className="nav-logo"><img src="./logo.png" alt="Logo" className="nav-logo-img" />AuthInteractive</Link>
+        <Link to="/" className="nav-logo">
+          <img src="./logo.png" alt="Logo" className="nav-logo-img" />
+          AuthInteractive
+        </Link>
+        
         <ul className="nav-menu">
           <li><Link to="/" className="nav-link">{t.nav.home}</Link></li>
           <li><Link to="/produits" className="nav-link">{t.nav.products}</Link></li>
@@ -63,7 +68,12 @@ function Navigation({ lang, setLang, t }) {
             </Link>
           </li>
         </ul>
-        <select className="language-select" value={lang} onChange={(e) => setLang(e.target.value)}>
+        
+        <select 
+          className="language-select" 
+          value={lang} 
+          onChange={(e) => setLang(e.target.value)}
+        >
           <option value="fr">FR</option>
           <option value="en">EN</option>
           <option value="es">ES</option>
@@ -76,7 +86,7 @@ function Navigation({ lang, setLang, t }) {
   );
 }
 
-function Footer({ t }) {
+function Footer({ t }: any) {
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -131,4 +141,3 @@ function App() {
 }
 
 export default App;
-
