@@ -28,10 +28,16 @@
     <!-- GitHub Pages SPA redirect script -->
     <script>
       (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect !== location.href) {
-          history.replaceState(null, null, redirect);
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          try {
+            var data = JSON.parse(redirect);
+            var url = data.path + data.search;
+            history.replaceState(null, null, url);
+          } catch (e) {
+            console.error('Redirect parse error:', e);
+          }
         }
       })();
     </script>

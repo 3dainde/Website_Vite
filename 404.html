@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Redirecting...</title>
   <script>
     // Single Page Apps for GitHub Pages
-    // https://github.com/rafgraph/spa-github-pages
-    // Store the current path before redirect
-    sessionStorage.redirect = location.href;
+    // Store the path for restoration after redirect
+    var pathSegments = window.location.pathname.slice(1).split('/').filter(Boolean);
+    var search = window.location.search || '';
+    
+    sessionStorage.setItem('redirect', JSON.stringify({
+      path: '/' + pathSegments.join('/'),
+      search: search
+    }));
+    
+    // Redirect to index
+    window.location.replace(window.location.origin + '/');
   </script>
-  <meta http-equiv="refresh" content="0;URL='/'">
 </head>
 <body>
+  <p>Redirecting...</p>
 </body>
 </html>
