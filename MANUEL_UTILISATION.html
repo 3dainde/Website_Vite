@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel d'Utilisation - AuthInteractive Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0096ff;
+        }
+
+        h1 {
+            color: #0096ff;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 4px solid #0096ff;
+        }
+
+        nav h2 {
+            color: #0096ff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        nav ol {
+            list-style: none;
+            counter-reset: section;
+        }
+
+        nav li {
+            margin: 10px 0;
+            counter-increment: section;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        nav li::before {
+            content: counter(section) ".";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #0096ff;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #0096ff;
+            text-decoration: underline;
+        }
+
+        section {
+            margin: 50px 0;
+            page-break-inside: avoid;
+        }
+
+        h2 {
+            color: #0096ff;
+            font-size: 2em;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0096ff;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.4;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            border: none;
+            color: #f8f8f2;
+            padding: 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #0096ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .folder-structure {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background: #0096ff;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .back-to-top {
+            display: inline-block;
+            margin: 20px 0;
+            color: #0096ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-to-top:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #0096ff;
+            color: #666;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li::before {
+            content: "☐ ";
+            color: #0096ff;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .back-to-top {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+
+            h2 {
+                page-break-after: avoid;
+            }
+
+            pre, .folder-structure {
+                page-break-inside: avoid;
+            }
+        }
+
+        .emoji {
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="emoji">📚</span> Manuel d'Utilisation</h1>
+            <p class="subtitle">AuthInteractive Website - Vite + React</p>
+        </header>
+
+        <nav id="table-of-contents">
+            <h2><span class="emoji">📖</span> Table des matières</h2>
+            <ol>
+                <li><a href="#introduction">Introduction à Vite</a></li>
+                <li><a href="#structure">Structure du projet</a></li>
+                <li><a href="#produits">Ajouter des produits</a></li>
+                <li><a href="#jeux">Ajouter des jeux</a></li>
+                <li><a href="#liens">Créer des liens entre pages</a></li>
+                <li><a href="#traduction">Système de traduction</a></li>
+                <li><a href="#commandes">Commandes utiles</a></li>
+                <li><a href="#style">Personnalisation du style</a></li>
+                <li><a href="#configuration">Configuration avancée</a></li>
+                <li><a href="#bonnes-pratiques">Bonnes pratiques</a></li>
+                <li><a href="#depannage">Dépannage</a></li>
+                <li><a href="#ressources">Ressources</a></li>
+                <li><a href="#checklist">Checklist</a></li>
+            </ol>
+        </nav>
+
+        <section id="introduction">
+            <h2><span class="emoji">🚀</span> 1. Introduction à Vite</h2>
+            
+            <h3>Qu'est-ce que Vite ?</h3>
+            <p><strong>Vite</strong> (prononcé "vit", comme le mot français) est un outil de build moderne pour les applications web. Il offre :</p>
+            <ul>
+                <li><strong>⚡ Démarrage ultra-rapide</strong> : Le serveur de développement démarre en quelques millisecondes</li>
+                <li><strong>🔥 Hot Module Replacement (HMR)</strong> : Les changements apparaissent instantanément sans recharger la page</li>
+                <li><strong>📦 Build optimisé</strong> : Utilise Rollup pour créer des bundles performants</li>
+            </ul>
+
+            <h3>Pourquoi Vite ?</h3>
+            <ul>
+                <li><strong>Plus rapide que Webpack</strong> : Utilise les modules ES natifs du navigateur</li>
+                <li><strong>Moins de configuration</strong> : Fonctionne out-of-the-box avec React</li>
+                <li><strong>Écosystème moderne</strong> : Compatible avec TypeScript, JSX, CSS modules, etc.</li>
+            </ul>
+
+            <h3>Concepts clés</h3>
+            <pre><code>// import.meta.env : Variables d'environnement Vite
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+
+// import.meta.hot : Hot Module Replacement
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="structure">
+            <h2><span class="emoji">📁</span> 2. Structure du projet</h2>
+            
+            <div class="folder-structure">
+Website_Vite/
+├── src/
+│   ├── pages/           # Pages React
+│   │   ├── Home.jsx
+│   │   ├── Produits.jsx
+│   │   ├── JeuxVideo.jsx
+│   │   ├── Contact.jsx
+│   │   └── Developpement.jsx
+│   ├── App.jsx          # Composant principal
+│   ├── App.css          # Styles globaux
+│   ├── translations.js  # Traductions multilingues
+│   ├── firebaseConfig.js
+│   └── index.jsx        # Point d'entrée
+├── public/              # Fichiers statiques
+│   └── CNAME
+├── images/              # Images
+├── icons/               # Icônes
+├── index.html           # HTML principal
+├── vite.config.ts       # Configuration Vite
+└── package.json         # Dépendances
+            </div>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="produits">
+            <h2><span class="emoji">🛍️</span> 3. Ajouter des produits</h2>
+
+            <h3>Étape 1 : Ajouter les traductions</h3>
+            <p>Ouvrir <code>src/translations.js</code> et ajouter les clés nécessaires dans <strong>toutes les langues</strong> :</p>
+            
+            <pre><code>// Dans chaque langue (fr, en, es, de, it, ru)
+products: {
+  // ... traductions existantes ...
+  
+  // Nouvelles traductions pour votre produit
+  newGameTitle: 'Mon Nouveau Jeu',
+  newGameDesc: 'Description de mon jeu',
+  
+  // Si c'est un service
+  newServiceTitle: 'Mon Service',
+  newServiceDesc: 'Description du service'
+}</code></pre>
+
+            <div class="warning-box">
+                <strong>⚠️ Important</strong> : Ajouter la traduction dans <strong>les 6 langues</strong> (fr, en, es, de, it, ru)
+            </div>
+
+            <h3>Étape 2 : Modifier le composant Produits</h3>
+            <p>Ouvrir <code>src/pages/Produits.jsx</code> :</p>
+
+            <h4>Option A : Ajouter un jeu dans la liste existante</h4>
+            <pre><code>const products = [
+  { id: 1, title: 'Neon Drift', price: '14.99€', descKey: 'neonDriftDesc' },
+  { id: 2, title: 'Voidwalkers', price: '19.99€', descKey: 'voidwalkersDesc' },
+  { id: 3, title: 'Echoes of Terra', price: '12.99€', descKey: 'echoesDesc' },
+  // 🆕 Nouveau produit
+  { id: 4, title: 'Mon Nouveau Jeu', price: '24.99€', descKey: 'newGameDesc' }
+];</code></pre>
+
+            <h4>Option B : Ajouter une nouvelle section complète</h4>
+            <pre><code>&lt;section className="products-section"&gt;
+  &lt;h2&gt;{t.products.newServiceTitle}&lt;/h2&gt;
+  &lt;div className="products-grid"&gt;
+    &lt;div className="product-card"&gt;
+      &lt;div className="product-image"&gt;
+        &lt;div className="placeholder"&gt;{t.products.newServiceTitle}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;h3&gt;{t.products.newServiceTitle}&lt;/h3&gt;
+      &lt;p&gt;{t.products.newServiceDesc}&lt;/p&gt;
+      &lt;p className="price"&gt;{t.products.onQuote}&lt;/p&gt;
+      &lt;button className="btn"&gt;{t.products.buy}&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+            <h3>Étape 3 : Personnaliser avec une image</h3>
+            <p>Remplacer le placeholder par une vraie image :</p>
+            <pre><code>&lt;div className="product-image"&gt;
+  &lt;img src="/images/mon-jeu.png" alt="Mon Jeu" /&gt;
+&lt;/div&gt;</code></pre>
+            <p>Placez l'image dans le dossier <code>/images/</code></p>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="jeux">
+            <h2><span class="emoji">🎮</span> 4. Ajouter des jeux</h2>
+
+            <h3>Étape 1 : Ajouter les traductions des genres</h3>
+            <p>Dans <code>src/translations.js</code> :</p>
+            <pre><code>games: {
+  title: 'Nos Jeux',
+  available: 'Disponible',
+  coming: 'En développement',
+  actionStrategy: 'Action-Stratégie',
+  action: 'Action',
+  adventure: 'Aventure',
+  // 🆕 Nouveaux genres
+  rpg: 'RPG',
+  simulation: 'Simulation',
+  puzzle: 'Puzzle',
+  fps: 'FPS'
+}</code></pre>
+
+            <h3>Étape 2 : Ajouter le jeu dans la liste</h3>
+            <p>Ouvrir <code>src/pages/JeuxVideo.jsx</code> :</p>
+            <pre><code>const games = [
+  { id: 1, title: 'TBD', genreKey: 'actionStrategy' },
+  { id: 2, title: 'TBD', genreKey: 'action' },
+  { id: 3, title: 'TBD', genreKey: 'adventure' },
+  // 🆕 Nouveau jeu
+  { id: 4, title: 'My New Game', genreKey: 'rpg' }
+];</code></pre>
+
+            <h3>Étape 3 : Créer une page détaillée pour un jeu</h3>
+            
+            <h4>A. Créer le composant</h4>
+            <p>Créer <code>src/pages/GameDetail.jsx</code> :</p>
+            <pre><code>import React, { useContext } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { LanguageContext } from '../App';
+
+export default function GameDetail() {
+  const { t } = useContext(LanguageContext);
+  const { gameId } = useParams();
+
+  // Données du jeu
+  const gameData = {
+    1: {
+      titleKey: 'neonDriftTitle',
+      descKey: 'neonDriftFullDesc',
+      images: ['/images/neon-1.jpg', '/images/neon-2.jpg'],
+      features: ['featNeonDrift1', 'featNeonDrift2'],
+      price: '14.99€'
+    }
+  };
+
+  const game = gameData[gameId];
+
+  return (
+    &lt;div className="page-container"&gt;
+      &lt;Link to="/jeux" className="back-link"&gt;← {t.games.backToList}&lt;/Link&gt;
+      &lt;h1&gt;{t.games[game.titleKey]}&lt;/h1&gt;
+      &lt;div className="game-detail"&gt;
+        {/* Contenu du jeu */}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+            <h4>B. Ajouter la route</h4>
+            <p>Dans <code>src/App.jsx</code>, ajouter :</p>
+            <pre><code>import GameDetail from "./pages/GameDetail";
+
+// Dans les Routes
+&lt;Route path="/jeux/:gameId" element={&lt;GameDetail /&gt;} /&gt;</code></pre>
+
+            <h4>C. Ajouter le lien dans la liste</h4>
+            <p>Dans <code>src/pages/JeuxVideo.jsx</code> :</p>
+            <pre><code>import { Link } from 'react-router-dom';
+
+{games.map(game => (
+  &lt;Link to={`/jeux/${game.id}`} key={game.id} className="game-card"&gt;
+    {/* Contenu de la carte */}
+  &lt;/Link&gt;
+))}</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="liens">
+            <h2><span class="emoji">🔗</span> 5. Créer des liens entre pages</h2>
+
+            <h3>Liens internes avec React Router</h3>
+            <pre><code>import { Link } from 'react-router-dom';
+
+// Lien simple
+&lt;Link to="/produits"&gt;Voir nos produits&lt;/Link&gt;
+
+// Lien avec classe CSS
+&lt;Link to="/contact" className="btn"&gt;Contactez-nous&lt;/Link&gt;
+
+// Lien avec paramètre
+&lt;Link to={`/jeux/${gameId}`}&gt;Voir le jeu&lt;/Link&gt;</code></pre>
+
+            <h3>Navigation programmatique</h3>
+            <pre><code>import { useNavigate } from 'react-router-dom';
+
+function MyComponent() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/produits');
+  };
+
+  return &lt;button onClick={handleClick}&gt;Aller aux produits&lt;/button&gt;;
+}</code></pre>
+
+            <h3>Liens externes</h3>
+            <pre><code>&lt;a 
+  href="https://example.com" 
+  target="_blank" 
+  rel="noopener noreferrer"
+&gt;
+  Lien externe
+&lt;/a&gt;</code></pre>
+
+            <h3>Exemples pratiques</h3>
+
+            <h4>Retour à la page précédente</h4>
+            <pre><code>const navigate = useNavigate();
+&lt;button onClick={() => navigate(-1)}&gt;← Retour&lt;/button&gt;</code></pre>
+
+            <h4>Lien conditionnel</h4>
+            <pre><code>{game.available ? (
+  &lt;Link to={`/jeux/${game.id}`}&gt;Jouer maintenant&lt;/Link&gt;
+) : (
+  &lt;span&gt;Bientôt disponible&lt;/span&gt;
+)}</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="traduction">
+            <h2><span class="emoji">🌍</span> 6. Système de traduction</h2>
+
+            <h3>Architecture</h3>
+            <div class="info-box">
+                <p><strong>Le système utilise React Context pour gérer les traductions :</strong></p>
+                <p>translations.js (source) → App.jsx (Context Provider) → Pages (useContext pour lire)</p>
+            </div>
+
+            <h3>Ajouter une nouvelle clé de traduction</h3>
+            
+            <h4>1. Dans translations.js</h4>
+            <pre><code>export const translations = {
+  fr: {
+    myNewSection: {
+      title: 'Mon Titre',
+      description: 'Ma description',
+      button: 'Mon Bouton'
+    }
+  },
+  en: {
+    myNewSection: {
+      title: 'My Title',
+      description: 'My description',
+      button: 'My Button'
+    }
+  }
+  // ... répéter pour es, de, it, ru
+};</code></pre>
+
+            <h4>2. Dans un composant</h4>
+            <pre><code>import { useContext } from 'react';
+import { LanguageContext } from '../App';
+
+function MyComponent() {
+  const { t } = useContext(LanguageContext);
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{t.myNewSection.title}&lt;/h1&gt;
+      &lt;p&gt;{t.myNewSection.description}&lt;/p&gt;
+      &lt;button&gt;{t.myNewSection.button}&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+            <h3>Interpolation de variables</h3>
+            <pre><code>// translations.js
+welcome: 'Bienvenue {name} !'
+
+// Composant
+const userName = "Alice";
+&lt;p&gt;{t.home.welcome.replace('{name}', userName)}&lt;/p&gt;</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="commandes">
+            <h2><span class="emoji">💻</span> 7. Commandes utiles</h2>
+
+            <h3>Développement</h3>
+            <pre><code># Démarrer le serveur de développement
+npm run dev
+# ou
+pnpm dev
+
+# Accès : http://localhost:5173/</code></pre>
+
+            <h3>Build de production</h3>
+            <pre><code># Compiler pour la production
+npm run build
+
+# Le résultat sera dans le dossier /dist</code></pre>
+
+            <h3>Prévisualiser le build</h3>
+            <pre><code># Prévisualiser la version de production
+npm run preview</code></pre>
+
+            <h3>Gestion des dépendances</h3>
+            <pre><code># Installer une nouvelle dépendance
+npm install package-name
+
+# Installer une dépendance de développement
+npm install -D package-name
+
+# Mettre à jour les dépendances
+npm update</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="style">
+            <h2><span class="emoji">🎨</span> 8. Personnalisation du style</h2>
+
+            <h3>Modifier les couleurs globales</h3>
+            <p>Dans <code>src/App.css</code> :</p>
+            <pre><code>:root {
+  --primary: #0096ff;      /* Couleur principale */
+  --secondary: #1e1e2e;    /* Couleur secondaire */
+  --accent: #00d4ff;       /* Couleur accent */
+  --text: #ffffff;         /* Texte */
+  --bg-light: #2a2a3e;     /* Fond clair */
+}</code></pre>
+
+            <h3>Ajouter des styles à un composant</h3>
+            <pre><code>/* Style pour les cartes de jeu */
+.game-card {
+  background: var(--bg-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="configuration">
+            <h2><span class="emoji">🔧</span> 9. Configuration avancée</h2>
+
+            <h3>Variables d'environnement</h3>
+            <p>Créer un fichier <code>.env</code> à la racine :</p>
+            <pre><code>VITE_API_URL=https://api.example.com
+VITE_FIREBASE_API_KEY=your_key_here</code></pre>
+
+            <p>Utilisation :</p>
+            <pre><code>const apiUrl = import.meta.env.VITE_API_URL;</code></pre>
+
+            <div class="warning-box">
+                <strong>⚠️</strong> Préfixe <code>VITE_</code> obligatoire pour que Vite les expose
+            </div>
+
+            <h3>Configuration Vite personnalisée</h3>
+            <p>Dans <code>vite.config.ts</code> :</p>
+            <pre><code>export default defineConfig({
+  base: "/",
+  plugins: [react()],
+  server: {
+    port: 3000,           // Changer le port
+    open: true,           // Ouvrir le navigateur automatiquement
+    host: true            // Exposer sur le réseau local
+  },
+  build: {
+    outDir: "dist",
+    sourcemap: false
+  }
+});</code></pre>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="bonnes-pratiques">
+            <h2><span class="emoji">📝</span> 10. Bonnes pratiques</h2>
+
+            <h3>1. Organisation des fichiers</h3>
+            <ul>
+                <li>Un composant = un fichier</li>
+                <li>Nommer les fichiers en PascalCase : <code>MyComponent.jsx</code></li>
+                <li>Grouper les composants liés dans des dossiers</li>
+            </ul>
+
+            <h3>2. Performance</h3>
+            <ul>
+                <li>Utiliser <code>React.memo()</code> pour éviter les re-renders inutiles</li>
+                <li>Lazy loading pour les pages : <code>const Home = lazy(() => import('./pages/Home'))</code></li>
+            </ul>
+
+            <h3>3. Traductions</h3>
+            <ul>
+                <li><strong>Toujours</strong> ajouter les traductions dans les 6 langues</li>
+                <li>Utiliser des clés descriptives : <code>productCard.title</code> plutôt que <code>pc.t</code></li>
+            </ul>
+
+            <h3>4. Git</h3>
+            <ul>
+                <li>Commiter régulièrement avec des messages clairs</li>
+                <li>Ne pas commiter <code>node_modules/</code> ni <code>.env</code></li>
+            </ul>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="depannage">
+            <h2><span class="emoji">🐛</span> 11. Dépannage</h2>
+
+            <h3>Le serveur ne démarre pas</h3>
+            <pre><code># Supprimer node_modules et réinstaller
+rm -rf node_modules
+npm install</code></pre>
+
+            <h3>Erreur de traduction</h3>
+            <ul>
+                <li>Vérifier que la clé existe dans <strong>toutes les langues</strong></li>
+                <li>Vérifier la syntaxe JSON dans <code>translations.js</code></li>
+            </ul>
+
+            <h3>Erreur de build</h3>
+            <pre><code># Nettoyer et reconstruire
+rm -rf dist
+npm run build</code></pre>
+
+            <h3>Hot reload ne fonctionne pas</h3>
+            <ul>
+                <li>Redémarrer le serveur : Ctrl+C puis <code>npm run dev</code></li>
+                <li>Vider le cache du navigateur</li>
+            </ul>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="ressources">
+            <h2><span class="emoji">📚</span> 12. Ressources</h2>
+
+            <ul>
+                <li><a href="https://vitejs.dev/" target="_blank">Documentation Vite</a></li>
+                <li><a href="https://react.dev/" target="_blank">Documentation React</a></li>
+                <li><a href="https://reactrouter.com/" target="_blank">React Router</a></li>
+                <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a></li>
+            </ul>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <section id="checklist">
+            <h2><span class="emoji">🎯</span> 13. Checklist pour ajouter une nouvelle fonctionnalité</h2>
+
+            <ul class="checklist">
+                <li>Ajouter les traductions dans les 6 langues</li>
+                <li>Créer ou modifier le composant React</li>
+                <li>Ajouter la route si nécessaire dans App.jsx</li>
+                <li>Tester dans le navigateur</li>
+                <li>Vérifier que toutes les langues fonctionnent</li>
+                <li>Tester les liens entre pages</li>
+                <li>Vérifier le responsive (mobile/desktop)</li>
+                <li>Commiter les changements avec un message clair</li>
+            </ul>
+
+            <a href="#table-of-contents" class="back-to-top">↑ Retour au sommaire</a>
+        </section>
+
+        <footer>
+            <p><strong>Fait avec ❤️ pour AuthInteractive</strong></p>
+            <p>Version 1.0 - Janvier 2026</p>
+        </footer>
+    </div>
+</body>
+</html>

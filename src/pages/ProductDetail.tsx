@@ -52,30 +52,7 @@ export default function ProductDetail() {
         ← {lang === 'en' ? 'Back to products' : 'Retour aux produits'}
       </button>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', marginBottom: '3rem' }}>
-        <div>
-          <div style={{ 
-            width: '100%', 
-            height: '400px', 
-            background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05))',
-            borderRadius: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid var(--border)',
-            marginBottom: '1rem',
-            fontSize: '5rem'
-          }}>
-            {product.image}
-          </div>
-
-          {product.videoUrl && (
-            <button className="btn" style={{ width: '100%', marginTop: '1rem' }}>
-              ▶ {lang === 'en' ? 'Watch Demo' : 'Voir la démo'}
-            </button>
-          )}
-        </div>
-
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem', marginBottom: '3rem' }}>
         <div>
           <div style={{ 
             display: 'inline-block',
@@ -130,6 +107,29 @@ export default function ProductDetail() {
           }}>
             {lang === 'en' ? 'Secure payment via Stripe' : 'Paiement sécurisé via Stripe'}
           </div>
+        </div>
+
+        <div>
+          <div style={{ 
+            width: '100%', 
+            height: '300px', 
+            background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05))',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid var(--border)',
+            marginBottom: '1rem',
+            fontSize: '4rem'
+          }}>
+            {product.image}
+          </div>
+
+          {product.videoUrl && (
+            <button className="btn" style={{ width: '100%' }}>
+              ▶ {lang === 'en' ? 'Watch Demo' : 'Voir la démo'}
+            </button>
+          )}
         </div>
       </div>
 

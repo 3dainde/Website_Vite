@@ -74,13 +74,15 @@ body {
   color: var(--primary);
   text-decoration: none;
   transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-logo-img {
   height: 30px;
   width: 30px;
-  margin-right: 8px;
-  vertical-align: middle;
+  padding: 0 0.25rem;
 }
 
 .nav-logo:hover {
@@ -102,6 +104,85 @@ body {
 
 .nav-link:hover {
   color: var(--primary);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1000;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(10.5px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-10.5px) rotate(-45deg);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 73px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+  border-bottom: 1px solid var(--border);
+  max-height: calc(100vh - 73px);
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  transform: translateY(0);
+}
+
+.mobile-menu-link {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.mobile-menu-link:hover {
+  color: var(--primary);
+  background: rgba(0, 150, 255, 0.1);
+  padding-left: 1.5rem;
+}
+
+.mobile-menu-link:last-child {
+  border-bottom: none;
 }
 
 /* Main Content */
@@ -423,8 +504,33 @@ h3 {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .nav-container {
+    padding: 1rem;
+  }
+
   .nav-menu {
-    gap: 1rem;
+    display: none; /* Menu desktop masqué sur mobile */
+  }
+
+  .hamburger {
+    display: flex; /* Hamburger visible sur mobile */
+  }
+
+  .mobile-menu {
+    display: block; /* Menu mobile activé */
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-logo-img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .language-select {
+    padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
   }
 
@@ -450,6 +556,15 @@ h3 {
 
   .contact-form, .contact-info {
     padding: 1.5rem;
+  }
+
+  .footer-links {
+    gap: 1.5rem;
+  }
+
+  .social-icon {
+    width: 28px;
+    height: 28px;
   }
 }
 

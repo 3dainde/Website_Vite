@@ -67,10 +67,16 @@ function UserMenu() {
 }
 
 function Navigation({ lang, setLang, t }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   return (
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="nav-logo"><img src="./logo.png" alt="Logo" className="nav-logo-img" />AuthInteractive</Link>
+        
+        {/* Menu desktop */}
         <ul className="nav-menu">
           <li><Link to="/" className="nav-link">{t.nav.home}</Link></li>
           <li><Link to="/produits" className="nav-link">{t.nav.products}</Link></li>
@@ -85,6 +91,14 @@ function Navigation({ lang, setLang, t }) {
           </li>
           <li><UserMenu /></li>
         </ul>
+
+        {/* Hamburger button */}
+        <button className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
         <select className="language-select" value={lang} onChange={(e) => setLang(e.target.value)}>
           <option value="fr">FR</option>
           <option value="en">EN</option>
@@ -93,6 +107,20 @@ function Navigation({ lang, setLang, t }) {
           <option value="it">IT</option>
           <option value="ru">RU</option>
         </select>
+      </div>
+
+      {/* Menu mobile */}
+      <div className={`mobile-menu ${menuOpen ? 'active' : ''}`}>
+        <Link to="/" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.home}</Link>
+        <Link to="/produits" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.products}</Link>
+        <Link to="/jeux" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.games}</Link>
+        <Link to="/developpement" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.development}</Link>
+        <Link to="/contact" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.contact}</Link>
+        <Link to="/checkout" className="mobile-menu-link" onClick={toggleMenu} style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+          🛒 {t.nav.cart || 'Panier'}
+          <CartIndicator />
+        </Link>
+        <UserMenu />
       </div>
     </nav>
   );

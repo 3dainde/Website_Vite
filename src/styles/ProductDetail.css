@@ -47,3 +47,38 @@
 .nav-link:hover {
   color: var(--primary);
 }
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1rem;
+  }
+
+  /* Force single column layout on mobile */
+  .page-container > div[style*="grid-template-columns"] {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Image container on mobile */
+  .page-container > div > div:last-child {
+    width: 100% !important;
+  }
+
+  .page-container > div > div:last-child > div {
+    height: 250px !important;
+    font-size: 3rem !important;
+  }
+
+  /* Adjust button sizes on mobile */
+  .cta-button {
+    padding: 0.875rem 1.5rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Specs section */
+  .page-container > div:last-child > div {
+    padding: 1.5rem !important;
+  }
+}
