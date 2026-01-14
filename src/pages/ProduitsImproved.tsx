@@ -203,9 +203,18 @@ export default function ProduitsImproved() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '3rem',
-              borderBottom: '1px solid var(--border)'
+              borderBottom: '1px solid var(--border)',
+              overflow: 'hidden'
             }}>
-              {product.image}
+              <img 
+                src={product.image} 
+                alt={lang === 'en' ? product.titleEn : product.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain'
+                }}
+              />
             </div>
             
             <div style={{ padding: '1.5rem' }}>
