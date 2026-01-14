@@ -1,39 +1,113 @@
 // src/pages/ProduitsImproved.tsx
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { LanguageContext } from '../App';
-import { PRODUCTS } from '../data/productsData';
+import { PRODUCTS, ProductCategory } from '../data/productsData';
 import '../styles/Produits.css';
 
 export default function ProduitsImproved() {
   const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
+  const [categoryFilter, setCategoryFilter] = useState<'all' | ProductCategory>('all');
   const [typeFilter, setTypeFilter] = useState<'all' | 'template' | 'asset' | 'formation'>('all');
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'name'>('name');
 
-  const filteredProducts = typeFilter === 'all' 
-    ? PRODUCTS 
-    : PRODUCTS.filter(p => p.type === typeFilter);
+  // Récupérer la catégorie depuis l'URL au chargement
+  useEffect(() => {
+    const categoryParam = searchParams.get('category') as ProductCategory | null;
+    if (categoryParam) {
+      setCategoryFilter(categoryParam);
+    }
+  }, [searchParams]);
 
+  // Filtrer par catégorie
+  let filteredProducts = categoryFilter === 'all' 
+    ? PRODUCTS 
+    : PRODUCTS.filter(p => p.category === categoryFilter);
+
+  // Filtrer par type
+  if (typeFilter !== 'all') {
+    filteredProducts = filteredProducts.filter(p => p.type === typeFilter);
+  }
+
+  // Trier
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === 'price-asc') return a.price - b.price;
     if (sortBy === 'price-desc') return b.price - a.price;
     return (lang === 'en' ? a.titleEn : a.title).localeCompare(lang === 'en' ? b.titleEn : b.title);
   });
 
+  const categoryLabels = {
+    all: { fr: 'Toutes catégories', en: 'All categories' },
+    game: { fr: 'Jeux Innovants', en: 'Innovative Games' },
+    gamedesign: { fr: 'Game Design', en: 'Game Design' },
+    plugin: { fr: 'Plugins', en: 'Plugins' },
+    training: { fr: 'Formations', en: 'Training' },
+    asset: { fr: 'Assets 3D', en: '3D Assets' }
+  };
+
   const typeLabels = {
-    all: { fr: 'Tous', en: 'All' },
+    all: { fr: 'Tous types', en: 'All types' },
     template: { fr: 'Templates', en: 'Templates' },
-    asset: { fr: 'Assets 3D', en: '3D Assets' },
+    asset: { fr: 'Assets', en: 'Assets' },
     formation: { fr: 'Formations', en: 'Trainings' }
   };
 
   return (
     <div className="page-container">
-      <h1 style={{ marginBottom: '1rem' }}>
+      <h1 style={{ marginBottom: '1.5rem' }}>
         {lang === 'en' ? 'Our Products' : 'Nos Produits'}
+        {filteredProducts.length > 0 && (
+          <span style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginLeft: '1rem' }}>
+            ({filteredProducts.length} {lang === 'en' ? 'products' : 'produits'})
+          </span>
+        )}
       </h1>
       
+      {/* Filtres par catégorie (badges cliquables) */}
+      <div style={{ marginBottom: '2rem' }}>
+        <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 600, fontSize: '1.1rem' }}>
+          {lang === 'en' ? 'Categories:' : 'Catégories :'}
+        </label>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {Object.entries(categoryLabels).map(([value, labels]) => (
+            <button
+              key={value}
+              onClick={() => setCategoryFilter(value as any)}
+              style={{
+                padding: '0.6rem 1.2rem',
+                borderRadius: '25px',
+                border: categoryFilter === value ? '2px solid var(--primary)' : '2px solid var(--border)',
+                background: categoryFilter === value ? 'rgba(0, 150, 255, 0.2)' : 'var(--bg-secondary)',
+                color: categoryFilter === value ? 'var(--primary)' : 'var(--text)',
+                cursor: 'pointer',
+                fontSize: '0.95rem',
+                fontWeight: categoryFilter === value ? 700 : 500,
+                transition: 'all 0.3s',
+                boxShadow: categoryFilter === value ? '0 4px 12px rgba(0, 150, 255, 0.3)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (categoryFilter !== value) {
+                  e.currentTarget.style.borderColor = 'var(--primary)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (categoryFilter !== value) {
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }
+              }}
+            >
+              {labels[lang as 'fr' | 'en']}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Filtres Type et Tri */}
       <div style={{ 
         display: 'flex', 
         gap: '2rem', 

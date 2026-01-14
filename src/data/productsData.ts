@@ -1,5 +1,7 @@
 // src/data/productsData.ts
 
+export type ProductCategory = 'game' | 'gamedesign' | 'plugin' | 'training' | 'asset';
+
 export interface Product {
   id: string;
   title: string;
@@ -10,6 +12,8 @@ export interface Product {
   longDescEn: string;
   price: number;
   type: 'template' | 'asset' | 'formation';
+  category: ProductCategory; // Nouvelle propriété
+  tags: string[]; // Tags pour recherche avancée
   image: string;
   features: string[];
   featuresEn: string[];
@@ -30,6 +34,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Complete wingsuit system for Unreal Engine 5 with realistic physics, smooth animations, boost system, precise controls and immersive visual effects. Ready to integrate into your projects.',
     price: 79.99,
     type: 'template',
+    category: 'game',
+    tags: ['wingsuit', 'physique', 'vol', 'action', 'sport'],
     image: './images/products/wingsuit.jpg',
     features: [
       'Physique réaliste basée sur la vraie aérodynamique',
@@ -62,6 +68,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Intensive UE5 Blueprint training: from beginner to expert. Create complex systems without a single line of code. 25h practical videos.',
     price: 99.99,
     type: 'formation',
+    category: 'training',
+    tags: ['blueprint', 'formation', 'unreal', 'débutant', 'expert'],
     image: './images/products/blueprint.jpg',
     features: [
       '25h de vidéos pratiques',
@@ -92,6 +100,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Massive collection of 200+ high-quality sci-fi assets: weapons, props, vehicles, architecture. 4K PBR textures, LODs included, performance optimized.',
     price: 149.99,
     type: 'asset',
+    category: 'asset',
+    tags: ['sci-fi', 'assets', '3d', 'pbr', 'futuriste'],
     image: './images/products/scifi-pack.jpg',
     features: [
       '200+ assets uniques',
@@ -122,6 +132,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Complete Unreal Engine 5 training: Advanced Blueprint, C++, Niagara, Lumen, multiplayer networking. 40h videos, 10 practical projects, final certificate.',
     price: 199.99,
     type: 'formation',
+    category: 'training',
+    tags: ['ue5', 'c++', 'multiplayer', 'avancé', 'pro'],
     image: './images/products/formation-ue5.jpg',
     features: [
       '40h de vidéos HD',
@@ -154,6 +166,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Professional inventory system with drag & drop, crafting, equipment, stats, cloud save, customizable UI. Multiplayer compatible.',
     price: 59.99,
     type: 'template',
+    category: 'plugin',
+    tags: ['inventaire', 'ui', 'craft', 'rpg', 'système'],
     image: './images/products/inventory.jpg',
     features: [
       'Drag & drop fluide',
@@ -184,6 +198,8 @@ export const PRODUCTS: Product[] = [
     longDescEn: 'Giant collection of photoscanned nature assets: trees, rocks, plants, flowers. Photographic quality, Nanite optimized.',
     price: 89.99,
     type: 'asset',
+    category: 'asset',
+    tags: ['nature', 'photogrammétrie', 'nanite', 'réaliste', 'environnement'],
     image: './images/products/nature.jpg',
     features: [
       '500+ assets photoscannés',
@@ -214,4 +230,24 @@ export function getProductById(id: string): Product | undefined {
 // Fonction helper pour filtrer par type
 export function getProductsByType(type: 'template' | 'asset' | 'formation'): Product[] {
   return PRODUCTS.filter(p => p.type === type);
+}
+
+// Fonction helper pour filtrer par catégorie
+export function getProductsByCategory(category: ProductCategory): Product[] {
+  return PRODUCTS.filter(p => p.category === category);
+}
+
+// Fonction helper pour filtrer par lettre
+export function getProductsByLetter(letter: string, lang: 'fr' | 'en' = 'fr'): Product[] {
+  return PRODUCTS.filter(p => {
+    const title = lang === 'en' ? p.titleEn : p.title;
+    return title.toLowerCase().startsWith(letter.toLowerCase());
+  });
+}
+
+// Fonction helper pour recherche par tags
+export function searchProductsByTag(tag: string): Product[] {
+  return PRODUCTS.filter(p => 
+    p.tags.some(t => t.toLowerCase().includes(tag.toLowerCase()))
+  );
 }
