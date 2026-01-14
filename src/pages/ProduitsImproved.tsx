@@ -209,6 +209,7 @@ export default function ProduitsImproved() {
               <img 
                 src={product.image} 
                 alt={lang === 'en' ? product.titleEn : product.title}
+                loading="lazy"
                 style={{
                   width: '100%',
                   height: '100%',
