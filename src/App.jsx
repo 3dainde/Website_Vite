@@ -98,15 +98,6 @@ function Navigation({ lang, setLang, t }) {
           <span></span>
           <span></span>
         </button>
-
-        <select className="language-select" value={lang} onChange={(e) => setLang(e.target.value)}>
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="de">DE</option>
-          <option value="it">IT</option>
-          <option value="ru">RU</option>
-        </select>
       </div>
 
       {/* Menu mobile */}
@@ -116,9 +107,11 @@ function Navigation({ lang, setLang, t }) {
         <Link to="/jeux" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.games}</Link>
         <Link to="/developpement" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.development}</Link>
         <Link to="/contact" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.contact}</Link>
-        <Link to="/checkout" className="mobile-menu-link" onClick={toggleMenu} style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-          🛒 {t.nav.cart || 'Panier'}
-          <CartIndicator />
+        <Link to="/checkout" className="mobile-menu-link mobile-menu-cart" onClick={toggleMenu}>
+          <span style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            🛒 {t.nav.cart || 'Panier'}
+            <CartIndicator />
+          </span>
         </Link>
         <UserMenu />
       </div>
@@ -126,24 +119,36 @@ function Navigation({ lang, setLang, t }) {
   );
 }
 
-function Footer({ t }) {
+function Footer({ t, lang, setLang }) {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>&copy; 2026 AuthInteractive. {t.footer.copyright}</p>
-        <div className="footer-links">
-          <a href="https://www.facebook.com/gaming/authinteractive" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <img src="./icons/facebook.svg" alt="Facebook" className="social-icon" />
-          </a>
-          <a href="https://www.youtube.com/channel/UCm4l45-JQhK__iM2ks4eg2Q" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <img src="./icons/youtube.svg" alt="YouTube" className="social-icon" />
-          </a>
-          <a href="https://www.instagram.com/AuthInteractive/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <img src="./icons/instagram.svg" alt="Instagram" className="social-icon" />
-          </a>
-          <a href="https://twitter.com/AuthInteractive" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <img src="./icons/twitter.svg" alt="Twitter" className="social-icon" />
-          </a>
+        <div className="footer-top">
+          <p>&copy; 2026 AuthInteractive. {t.footer.copyright}</p>
+          <div className="footer-links">
+            <a href="https://www.facebook.com/gaming/authinteractive" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <img src="./icons/facebook.svg" alt="Facebook" className="social-icon" />
+            </a>
+            <a href="https://www.youtube.com/channel/UCm4l45-JQhK__iM2ks4eg2Q" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <img src="./icons/youtube.svg" alt="YouTube" className="social-icon" />
+            </a>
+            <a href="https://www.instagram.com/AuthInteractive/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <img src="./icons/instagram.svg" alt="Instagram" className="social-icon" />
+            </a>
+            <a href="https://twitter.com/AuthInteractive" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <img src="./icons/twitter.svg" alt="Twitter" className="social-icon" />
+            </a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <select className="language-select-footer" value={lang} onChange={(e) => setLang(e.target.value)}>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="ru">🇷🇺 Русский</option>
+          </select>
         </div>
       </div>
     </footer>
@@ -184,7 +189,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                 </Routes>
               </main>
-              <Footer t={t} />
+              <Footer t={t} lang={lang} setLang={setLang} />
             </div>
           </Router>
         </CartProvider>

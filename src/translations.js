@@ -5,7 +5,8 @@
       products: 'Produits',
       games: 'Jeux Vidéo',
       development: 'Développement',
-      contact: 'Contact'
+      contact: 'Contact',
+      cart: 'Panier'
     },
     home: {
       welcome: 'Bienvenue chez Auth Interactive',
@@ -51,7 +52,8 @@
       products: 'Products',
       games: 'Video Games',
       development: 'Development',
-      contact: 'Contact'
+      contact: 'Contact',
+      cart: 'Cart'
     },
     home: {
       welcome: 'Welcome to Auth Interactive',
@@ -97,7 +99,8 @@
       products: 'Productos',
       games: 'Videojuegos',
       development: 'Desarrollo',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      cart: 'Carrito'
     },
     home: {
       welcome: 'Bienvenido a Auth Interactive',
@@ -143,7 +146,8 @@
       products: 'Produkte',
       games: 'Videospiele',
       development: 'Entwicklung',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      cart: 'Warenkorb'
     },
     home: {
       welcome: 'Willkommen bei Auth Interactive',
@@ -189,7 +193,8 @@
       products: 'Prodotti',
       games: 'Videogiochi',
       development: 'Sviluppo',
-      contact: 'Contatti'
+      contact: 'Contatti',
+      cart: 'Carrello'
     },
     home: {
       welcome: 'Benvenuto in Auth Interactive',
@@ -235,7 +240,8 @@
       products: 'Продукты',
       games: 'Видеоигры',
       development: 'Разработка',
-      contact: 'Контакты'
+      contact: 'Контакты',
+      cart: 'Корзина'
     },
     home: {
       welcome: 'Добро пожаловать в Auth Interactive',
