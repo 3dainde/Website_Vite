@@ -36,6 +36,7 @@ body {
   top: 0;
   z-index: 100;
   width: 100%;
+  overflow: hidden;
 }
 
 .nav-container {
@@ -48,6 +49,7 @@ body {
   align-items: center;
   gap: 2rem;
   position: relative;
+  overflow: hidden;
 }
 
 .language-select {
@@ -104,6 +106,8 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .nav-menu li {
@@ -564,7 +568,7 @@ h3 {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 970px) {
   .nav-container {
     padding: 1rem 1.5rem;
     gap: 1rem;
