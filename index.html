@@ -25,6 +25,22 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>AuthInteractive</title>
+    <!-- GitHub Pages SPA redirect script -->
+    <script>
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          try {
+            var data = JSON.parse(redirect);
+            var url = data.path + data.search;
+            history.replaceState(null, null, url);
+          } catch (e) {
+            console.error('Redirect parse error:', e);
+          }
+        }
+      })();
+    </script>
 </head>
 
 <body>

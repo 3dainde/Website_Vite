@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { useTranslation } from '../context/TranslationContext';
 
 const games = [
   { id: 1, title: 'TBD', genre: 'Action-Stratégie', status: 'En développement' },
@@ -7,9 +8,11 @@ const games = [
 ];
 
 export default function JeuxVideo() {
+  const { t } = useTranslation();
+  
   return (
     <div className="page-container">
-      <h1>Jeux Vidéo</h1>
+      <h1>{t.games.title}</h1>
       <div className="games-grid">
         {games.map(game => (
           <div key={game.id} className="game-card">

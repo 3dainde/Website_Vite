@@ -1,5 +1,5 @@
-﻿import React, { useContext } from 'react';
-import { LanguageContext } from '../App';
+﻿import React from 'react';
+import { useTranslation } from '../context/TranslationContext';
 
 const products = [
   { id: 1, title: 'Neon Drift', price: '14.99€', desc: 'Course néo-rétro futuriste' },
@@ -8,7 +8,7 @@ const products = [
 ];
 
 export default function Produits() {
-  const { t } = useContext(LanguageContext);
+  const { t } = useTranslation();
 
   return (
     <div className="page-container">

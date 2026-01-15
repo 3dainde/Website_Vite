@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { translations } from "./translations";
 import { CartProvider, useCart } from "./context/CartContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { TranslationProvider, useTranslation } from "./context/TranslationContext";
 import "./App.css";
 
 // Pages existantes
@@ -22,8 +22,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Pricing from "./pages/Pricing";
-
-export const LanguageContext = React.createContext();
 
 function CartIndicator() {
   const { itemCount } = useCart();
@@ -66,10 +64,24 @@ function UserMenu() {
   );
 }
 
-function Navigation({ lang, setLang, t }) {
+function Navigation({ lang, setLang, t, loading }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  if (loading) {
+    return (
+      <nav className="navbar">
+        <div className="nav-container">
+          <Link to="/" className="nav-logo">
+            <img src="./logo.png" alt="Logo" className="nav-logo-img" />
+            AuthInteractive
+          </Link>
+          <div style={{ color: '#888', fontSize: '0.9rem' }}>🌐 Chargement...</div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav className="navbar">
@@ -119,7 +131,7 @@ function Navigation({ lang, setLang, t }) {
   );
 }
 
-function Footer({ t, lang, setLang }) {
+function Footer({ t }) {
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -140,63 +152,71 @@ function Footer({ t, lang, setLang }) {
             </a>
           </div>
         </div>
-        <div className="footer-bottom">
-          <select className="language-select-footer" value={lang} onChange={(e) => setLang(e.target.value)}>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="en">🇬🇧 English</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="it">🇮🇹 Italiano</option>
-            <option value="ru">🇷🇺 Русский</option>
-          </select>
-        </div>
       </div>
     </footer>
   );
 }
 
 function App() {
-  const [lang, setLang] = useState("fr");
-  const t = translations[lang];
+  const { lang, setLang, t, loading } = useTranslation();
 
   return (
-    <LanguageContext.Provider value={{ lang, t }}>
-      <AuthProvider>
-        <CartProvider>
-          <Router>
-            <div className="app">
-              <Navigation lang={lang} setLang={setLang} t={t} />
-              <main className="main-content">
-                <Routes>
-                  {/* Pages publiques */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/produits" element={<ProduitsImproved />} />
-                  <Route path="/produit/:id" element={<ProductDetail />} />
-                  <Route path="/jeux" element={<JeuxVideo />} />
-                  <Route path="/developpement" element={<Developpement />} />
-                  <Route path="/contact" element={<Contact />} />
-                  
-                  {/* Pages d'authentification */}
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  
-                  {/* Pages panier et paiement */}
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/success" element={<Success />} />
-                  
-                  {/* Pages utilisateur */}
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-              </main>
-              <Footer t={t} lang={lang} setLang={setLang} />
+    <Router>
+      <div className="app">
+        <Navigation lang={lang} setLang={setLang} t={t} loading={loading} />
+        <main className="main-content">
+          {loading ? (
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              height: '50vh',
+              fontSize: '1.5rem',
+              color: '#888'
+            }}>
+              🌐 Chargement des traductions...
             </div>
-          </Router>
-        </CartProvider>
-      </AuthProvider>
-    </LanguageContext.Provider>
+          ) : (
+            <Routes>
+              {/* Pages publiques */}
+              <Route path="/" element={<Home />} />
+              <Route path="/produits" element={<ProduitsImproved />} />
+              <Route path="/produit/:id" element={<ProductDetail />} />
+              <Route path="/jeux" element={<JeuxVideo />} />
+              <Route path="/developpement" element={<Developpement />} />
+              <Route path="/contact" element={<Contact />} />
+              
+              {/* Pages d'authentification */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/pricing" element={<Pricing />} />
+              
+              {/* Pages panier et paiement */}
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/success" element={<Success />} />
+              
+              {/* Pages utilisateur */}
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+          )}
+        </main>
+        <Footer t={t} />
+      </div>
+    </Router>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <TranslationProvider>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
+    </TranslationProvider>
+  );
+}
+
+export default AppWrapper;
 

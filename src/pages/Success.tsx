@@ -1,11 +1,11 @@
 // src/pages/Success.tsx
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LanguageContext } from '../App';
+import { useTranslation } from '../context/TranslationContext';
 import '../styles/Success.css';
 
 export default function Success() {
-  const { lang } = useContext(LanguageContext);
+  const { lang } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   

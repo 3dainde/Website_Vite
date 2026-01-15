@@ -1,9 +1,9 @@
-﻿import React, { useContext } from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
-import { LanguageContext } from '../App';
+import { useTranslation } from '../context/TranslationContext';
 
 export default function Home() {
-  const { t } = useContext(LanguageContext);
+  const { t } = useTranslation();
 
   return (
     <div className="page-container">

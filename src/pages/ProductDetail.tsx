@@ -1,7 +1,7 @@
 // src/pages/ProductDetail.tsx
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LanguageContext } from '../App';
+import { useTranslation } from '../context/TranslationContext';
 import { getProductById } from '../data/productsData';
 import { useCart } from '../context/CartContext';
 import '../styles/ProductDetail.css';
@@ -9,7 +9,7 @@ import '../styles/ProductDetail.css';
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { lang } = useContext(LanguageContext);
+  const { lang } = useTranslation();
   const { addToCart } = useCart();
   
   const product = getProductById(id || '');
