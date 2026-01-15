@@ -58,7 +58,7 @@ function UserMenu() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
       <Link to="/dashboard" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        👤 {user.name}
+        {user.name}
       </Link>
     </div>
   );
@@ -77,7 +77,7 @@ function Navigation({ lang, setLang, t, loading }) {
             <img src="./logo.png" alt="Logo" className="nav-logo-img" />
             AuthInteractive
           </Link>
-          <div style={{ color: '#888', fontSize: '0.9rem' }}>🌐 Chargement...</div>
+          <div style={{ color: '#888', fontSize: '0.9rem' }}>Chargement...</div>
         </div>
       </nav>
     );
@@ -174,7 +174,7 @@ function App() {
               fontSize: '1.5rem',
               color: '#888'
             }}>
-              🌐 Chargement des traductions...
+              Chargement des traductions...
             </div>
           ) : (
             <Routes>

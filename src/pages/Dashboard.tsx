@@ -24,22 +24,22 @@ export default function Dashboard() {
     {
       label: lang === 'en' ? 'Total Purchases' : 'Achats Totaux',
       value: '5',
-      icon: '📦'
+      icon: ''
     },
     {
       label: lang === 'en' ? 'Licenses' : 'Licences',
       value: '8',
-      icon: '🔑'
+      icon: ''
     },
     {
       label: lang === 'en' ? 'Downloads' : 'Téléchargements',
       value: '12',
-      icon: '⬇️'
+      icon: ''
     },
     {
       label: lang === 'en' ? 'Active Subscriptions' : 'Abonnements Actifs',
       value: '2',
-      icon: '⭐'
+      icon: ''
     }
   ];
 
