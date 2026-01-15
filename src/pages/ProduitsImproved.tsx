@@ -125,13 +125,14 @@ export default function ProduitsImproved() {
               padding: '0.5rem 1rem',
               borderRadius: '6px',
               border: '1px solid var(--border)',
-              background: 'var(--bg-secondary)',
-              color: 'var(--text)',
-              cursor: 'pointer'
+              background: '#1e1e2e',
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '1rem'
             }}
           >
             {Object.entries(typeLabels).map(([value, labels]) => (
-              <option key={value} value={value}>
+              <option key={value} value={value} style={{ background: '#1e1e2e', color: '#ffffff' }}>
                 {labels[lang as 'fr' | 'en']}
               </option>
             ))}
@@ -149,18 +150,19 @@ export default function ProduitsImproved() {
               padding: '0.5rem 1rem',
               borderRadius: '6px',
               border: '1px solid var(--border)',
-              background: 'var(--bg-secondary)',
-              color: 'var(--text)',
-              cursor: 'pointer'
+              background: '#1e1e2e',
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '1rem'
             }}
           >
-            <option value="name">
+            <option value="name" style={{ background: '#1e1e2e', color: '#ffffff' }}>
               {lang === 'en' ? 'Name (A-Z)' : 'Nom (A-Z)'}
             </option>
-            <option value="price-asc">
+            <option value="price-asc" style={{ background: '#1e1e2e', color: '#ffffff' }}>
               {lang === 'en' ? 'Price (Low to High)' : 'Prix (Bas à Haut)'}
             </option>
-            <option value="price-desc">
+            <option value="price-desc" style={{ background: '#1e1e2e', color: '#ffffff' }}>
               {lang === 'en' ? 'Price (High to Low)' : 'Prix (Haut à Bas)'}
             </option>
           </select>
