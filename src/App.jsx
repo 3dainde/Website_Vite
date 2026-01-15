@@ -98,15 +98,6 @@ function Navigation({ lang, setLang, t }) {
           <span></span>
           <span></span>
         </button>
-
-        <select className="language-select" value={lang} onChange={(e) => setLang(e.target.value)}>
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="de">DE</option>
-          <option value="it">IT</option>
-          <option value="ru">RU</option>
-        </select>
       </div>
 
       {/* Menu mobile */}
