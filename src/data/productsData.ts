@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     type: 'template',
     category: 'game',
     tags: ['wingsuit', 'physique', 'vol', 'action', 'sport'],
-    image: '/images/products/wingsuit.jpg',
+    image: '/images/products/wingsuit.svg',
     features: [
       'Physique réaliste basée sur la vraie aérodynamique',
       'Système de boost et contrôle avancé',
@@ -70,7 +70,7 @@ export const PRODUCTS: Product[] = [
     type: 'formation',
     category: 'training',
     tags: ['blueprint', 'formation', 'unreal', 'débutant', 'expert'],
-    image: '/images/products/blueprint.jpg',
+    image: '/images/products/blueprint.svg',
     features: [
       '25h de vidéos pratiques',
       'De débutant à expert',
@@ -102,7 +102,7 @@ export const PRODUCTS: Product[] = [
     type: 'asset',
     category: 'asset',
     tags: ['sci-fi', 'assets', '3d', 'pbr', 'futuriste'],
-    image: '/images/products/scifi-pack.jpg',
+    image: '/images/products/scifi-pack.svg',
     features: [
       '200+ assets uniques',
       'Textures PBR 4K',
@@ -134,7 +134,7 @@ export const PRODUCTS: Product[] = [
     type: 'formation',
     category: 'training',
     tags: ['ue5', 'c++', 'multiplayer', 'avancé', 'pro'],
-    image: '/images/products/formation-ue5.jpg',
+    image: '/images/products/formation-ue5.svg',
     features: [
       '40h de vidéos HD',
       '10 projets complets',
@@ -168,7 +168,7 @@ export const PRODUCTS: Product[] = [
     type: 'template',
     category: 'plugin',
     tags: ['inventaire', 'ui', 'craft', 'rpg', 'système'],
-    image: '/images/products/inventory.jpg',
+    image: '/images/products/inventory.svg',
     features: [
       'Drag & drop fluide',
       'Système de craft avancé',
@@ -200,7 +200,7 @@ export const PRODUCTS: Product[] = [
     type: 'asset',
     category: 'asset',
     tags: ['nature', 'photogrammétrie', 'nanite', 'réaliste', 'environnement'],
-    image: '/images/products/nature.jpg',
+    image: '/images/products/nature.svg',
     features: [
       '500+ assets photoscannés',
       'Qualité photographique',
