@@ -8,7 +8,7 @@ import {
   isValidEmail,
   validateHoneypot,
   sanitizeInput,
-} from './src/services/security.service.ts';
+} from './src/services/security.service.js';
 
 dotenv.config();
 
