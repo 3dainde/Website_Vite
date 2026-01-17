@@ -10,14 +10,18 @@ import {
   sanitizeInput,
 } from './src/services/security.service.js';
 
-dotenv.config();
+// Ne charger .env que si les variables ne sont pas déjà définies (dev local uniquement)
+if (!process.env.PORT) {
+  dotenv.config();
+}
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || '3001';
 
 // 🔍 LOG: Afficher les variables d'environnement et l'origine
 console.log('📋 Configuration du serveur:');
-console.log(`   Port: ${port}`);
+console.log(`   PORT env: "${process.env.PORT}"`);
+console.log(`   Port utilisé: ${port}`);
 console.log(`   NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
 console.log(`   GMAIL_USER configuré: ${process.env.GMAIL_USER ? '✅ OUI' : '❌ NON'}`);
 console.log(`   GMAIL_PASSWORD configuré: ${process.env.GMAIL_PASSWORD ? '✅ OUI' : '❌ NON'}`);
@@ -26,6 +30,7 @@ console.log(`   GMAIL_PASSWORD configuré: ${process.env.GMAIL_PASSWORD ? '✅ O
 const corsOptions = {
   origin: [
     'https://authinteractive.com',
+    'https://www.authinteractive.com',
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:3000',
