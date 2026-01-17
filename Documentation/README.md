@@ -1,12 +1,10 @@
 # 🎮 AuthInteractive - Digital Products Platform
 
-![Version](https://img.shields.io/badge/version-2.1.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-active-success)
-![i18n](https://img.shields.io/badge/i18n-auto-brightgreen)
 
-> **Plateforme de vente de produits digitaux premium** - Templates Unreal Engine, Assets 3D, Formations  
-> ✨ **Nouveau** : Traduction automatique basée sur la géolocalisation IP
+> **Plateforme de vente de produits digitaux premium** - Templates Unreal Engine, Assets 3D, Formations
 
 ## 🚀 Quick Start
 
@@ -40,32 +38,13 @@ VITE_FIREBASE_PROJECT_ID=your_project
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_key
 ```
 
-## 🌐 Traduction Automatique (v2.1.0)
-
-Le site détecte automatiquement la langue de l'utilisateur via son IP et traduit le contenu en temps réel !
-
-### Fonctionnalités
-- 🌍 Détection automatique de la langue (30+ pays)
-- 🚀 Traduction en temps réel via API
-- 💾 Cache intelligent (performances optimales)
-- 🔄 Support de 100+ langues
-- ⚡ < 2 secondes au premier chargement
-
-### Documentation Complète
-- 📊 [Récapitulatif](./IMPLEMENTATION_SUMMARY.md)
-- 📘 [Guide Technique](./TRANSLATION_AUTO_GUIDE.md)
-- ⚡ [Démarrage Rapide](./TRANSLATION_QUICK_START.md)
-- 🔄 [Guide de Migration](./MIGRATION_GUIDE.md)
-- 🧪 [Tests](./TRANSLATION_TESTS.md)
-
 ## 📋 Versions
 
-### ✨ v2.1.0 - Traduction Automatique (Janvier 2026)
-- Détection automatique de langue via IP
-- Traduction en temps réel
-- Cache multi-niveaux
-- Support de 100+ langues
-- Documentation complète
+### ✅ v1.2.0 - E-Commerce Foundation
+- Catalogue de produits
+- Panier d'achat
+- Processus de paiement
+- Support multi-langue
 
 ### ✅ v2.0 - Commercial Edition
 - Authentification utilisateur

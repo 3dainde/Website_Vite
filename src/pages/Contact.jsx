@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useTranslation } from '../context/TranslationContext';
 
 export default function Contact() {
-  const { t } = useTranslation();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   
   const handleSubmit = (e) => {
@@ -13,34 +11,34 @@ export default function Contact() {
 
   return (
     <div className="page-container">
-      <h1>{t.contact.title}</h1>
+      <h1>Contactez-nous</h1>
       <div className="contact-content">
         <form className="contact-form" onSubmit={handleSubmit}>
           <input 
             type="text" 
-            placeholder={t.contact.name} 
+            placeholder="Votre nom" 
             value={form.name} 
             onChange={(e) => setForm({...form, name: e.target.value})} 
             required 
           />
           <input 
             type="email" 
-            placeholder={t.contact.email} 
+            placeholder="Votre email" 
             value={form.email} 
             onChange={(e) => setForm({...form, email: e.target.value})} 
             required 
           />
           <textarea 
-            placeholder={t.contact.message} 
+            placeholder="Votre message" 
             rows="5" 
             value={form.message} 
             onChange={(e) => setForm({...form, message: e.target.value})} 
             required
           ></textarea>
-          <button type="submit" className="btn">{t.contact.send}</button>
+          <button type="submit" className="btn">Envoyer</button>
         </form>
         <div className="contact-info">
-          <p><strong>{t.contact.email_label}:</strong> support@authinteractive.com</p>
+          <p><strong>Email:</strong> support@authinteractive.com</p>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 // src/pages/Login.tsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
 
 export default function Login() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const { login } = useAuth();
   const navigate = useNavigate();
   

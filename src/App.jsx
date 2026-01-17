@@ -5,6 +5,9 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { TranslationProvider, useTranslation } from "./context/TranslationContext";
 import "./App.css";
 
+// Créer LanguageContext pour la compatibilité avec les anciens composants
+export const LanguageContext = React.createContext();
+
 // Pages existantes
 import Home from "./pages/Home";
 import JeuxVideo from "./pages/JeuxVideo";
@@ -161,48 +164,50 @@ function App() {
   const { lang, setLang, t, loading } = useTranslation();
 
   return (
-    <Router>
-      <div className="app">
-        <Navigation lang={lang} setLang={setLang} t={t} loading={loading} />
-        <main className="main-content">
-          {loading ? (
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              height: '50vh',
-              fontSize: '1.5rem',
-              color: '#888'
-            }}>
-              Chargement des traductions...
-            </div>
-          ) : (
-            <Routes>
-              {/* Pages publiques */}
-              <Route path="/" element={<Home />} />
-              <Route path="/produits" element={<ProduitsImproved />} />
-              <Route path="/produit/:id" element={<ProductDetail />} />
-              <Route path="/jeux" element={<JeuxVideo />} />
-              <Route path="/developpement" element={<Developpement />} />
-              <Route path="/contact" element={<Contact />} />
-              
-              {/* Pages d'authentification */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/pricing" element={<Pricing />} />
-              
-              {/* Pages panier et paiement */}
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/success" element={<Success />} />
-              
-              {/* Pages utilisateur */}
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          )}
-        </main>
-        <Footer t={t} />
-      </div>
-    </Router>
+    <LanguageContext.Provider value={{ lang, t, setLang }}>
+      <Router>
+        <div className="app">
+          <Navigation lang={lang} setLang={setLang} t={t} loading={loading} />
+          <main className="main-content">
+            {loading ? (
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '50vh',
+                fontSize: '1.5rem',
+                color: '#888'
+              }}>
+                Chargement des traductions...
+              </div>
+            ) : (
+              <Routes>
+                {/* Pages publiques */}
+                <Route path="/" element={<Home />} />
+                <Route path="/produits" element={<ProduitsImproved />} />
+                <Route path="/produit/:id" element={<ProductDetail />} />
+                <Route path="/jeux" element={<JeuxVideo />} />
+                <Route path="/developpement" element={<Developpement />} />
+                <Route path="/contact" element={<Contact />} />
+                
+                {/* Pages d'authentification */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/pricing" element={<Pricing />} />
+                
+                {/* Pages panier et paiement */}
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/success" element={<Success />} />
+                
+                {/* Pages utilisateur */}
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            )}
+          </main>
+          <Footer t={t} />
+        </div>
+      </Router>
+    </LanguageContext.Provider>
   );
 }
 

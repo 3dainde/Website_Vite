@@ -1,11 +1,11 @@
 // src/pages/Pricing.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import '../styles/Pricing.css';
 
 export default function Pricing() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
 
   const plans = [

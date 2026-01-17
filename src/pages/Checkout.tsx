@@ -1,12 +1,12 @@
 // src/pages/Checkout.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import { useCart } from '../context/CartContext';
 import '../styles/Checkout.css';
 
 export default function Checkout() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
   const { cart, removeFromCart, clearCart, totalPrice } = useCart();
   const [email, setEmail] = React.useState('');

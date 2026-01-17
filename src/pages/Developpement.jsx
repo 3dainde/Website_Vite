@@ -1,8 +1,8 @@
-import React from 'react';
-import { useTranslation } from '../context/TranslationContext';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../App';
 
 export default function Developpement() {
-  const { t } = useTranslation();
+  const { t } = useContext(LanguageContext);
 
   const tools = [
     'Documentation API',

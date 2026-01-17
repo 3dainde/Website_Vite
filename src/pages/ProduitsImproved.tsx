@@ -1,12 +1,12 @@
 // src/pages/ProduitsImproved.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import { PRODUCTS, ProductCategory } from '../data/productsData';
 import '../styles/Produits.css';
 
 export default function ProduitsImproved() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   

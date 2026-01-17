@@ -1,12 +1,12 @@
 // src/pages/Register.tsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
 
 export default function Register() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const { register } = useAuth();
   const navigate = useNavigate();
   

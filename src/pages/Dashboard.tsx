@@ -1,12 +1,12 @@
 // src/pages/Dashboard.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '../context/TranslationContext';
+import { LanguageContext } from '../App';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Dashboard.css';
 
 export default function Dashboard() {
-  const { lang } = useTranslation();
+  const { lang } = useContext(LanguageContext);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 

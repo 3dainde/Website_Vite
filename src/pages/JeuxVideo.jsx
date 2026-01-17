@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-import { useTranslation } from '../context/TranslationContext';
 
 const games = [
   { id: 1, title: 'TBD', genre: 'Action-Stratégie', status: 'En développement' },
@@ -8,17 +7,10 @@ const games = [
 ];
 
 export default function JeuxVideo() {
-  const { t } = useTranslation();
-  
   return (
-    <div className="page-container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-      <h1>{t.games.title}</h1>
-      <div className="games-grid" style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-        gap: '2.5rem',
-        marginTop: '2rem'
-      }}>
+    <div className="page-container">
+      <h1>Jeux Vidéo</h1>
+      <div className="games-grid">
         {games.map(game => (
           <div key={game.id} className="game-card">
             <div className="game-image">
