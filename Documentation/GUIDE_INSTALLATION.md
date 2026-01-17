@@ -1,11 +1,13 @@
-# Guide d'Installation - AuthInteractive v1.2.1
+# Installation Guide - AuthInteractive v1.2.2
 
-## Prérequis Système
+Complete installation and setup guide for the AuthInteractive project.
 
-- Node.js v16+ (recommandé v18+)
-- npm ou pnpm
+## System Requirements
+
+- Node.js v16+ (recommended v18+)
+- npm or pnpm
 - Git
-- Un navigateur moderne
+- Modern web browser
 
 ## Étape 1 : Cloner le Repository
 
@@ -25,78 +27,98 @@ Ou avec pnpm :
 pnpm install
 ```
 
-## Étape 3 : Configuration des Variables d'Environnement
+## Step 3: Configure Environment Variables
 
-Créez un fichier `.env.local` à la racine du projet :
+Create a `.env` file in the project root using `.env.example` as a template:
 
-```env
-# Formspree (pour le formulaire de contact)
-VITE_FORMSPREE_ID=votre_id_ici
-
-# Firebase (optionnel, pour futures fonctionnalités)
-VITE_FIREBASE_API_KEY=votre_clé_api
-VITE_FIREBASE_AUTH_DOMAIN=votre_domaine
-VITE_FIREBASE_PROJECT_ID=votre_projet_id
-
-# Stripe (optionnel, pour paiements futurs)
-VITE_STRIPE_PUBLISHABLE_KEY=votre_clé_publique
+```bash
+cp .env.example .env
 ```
 
-### Configuration Formspree
+Update the `.env` file with your actual credentials:
 
-1. Allez sur https://formspree.io
-2. Créez un compte gratuit
-3. Créez un nouveau formulaire "website"
-4. Récupérez l'ID du formulaire dans l'URL : `https://formspree.io/f/xxxxxID`
-5. Insérez cet ID dans `VITE_FORMSPREE_ID`
+```env
+# Gmail SMTP Configuration
+GMAIL_USER=your-email@gmail.com
+GMAIL_PASSWORD=your_app_password_here
+PORT=3001
+NODE_ENV=development
 
-## Étape 4 : Lancer le Serveur de Développement
+# Firebase Configuration (optional)
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
 
+# Stripe Configuration (optional)
+VITE_STRIPE_PUBLISHABLE_KEY=your_public_key
+```
+
+IMPORTANT: Never commit `.env` files containing sensitive credentials. The `.env` file is listed in `.gitignore`.
+
+### Gmail SMTP Configuration
+
+To use the contact form with Gmail SMTP:
+
+1. Enable 2-Factor Authentication on your Google Account
+2. Generate an App Password: https://myaccount.google.com/apppasswords
+3. Select "Mail" and "Windows/Linux"
+4. Copy the generated 16-character password
+5. Add credentials to `.env`:
+   - GMAIL_USER: your-email@gmail.com
+   - GMAIL_PASSWORD: paste the app password here
+
+## Step 4: Start Development Server
+
+Terminal 1 - Start backend server:
+```bash
+npm run server:dev
+```
+
+Terminal 2 - Start frontend (new terminal):
 ```bash
 npm run dev
 ```
 
-Le site sera accessible sur `http://localhost:5173`
+The application will be accessible at `http://localhost:5174`
 
-## Étape 5 : Compiler pour Production
+## Step 5: Build for Production
 
 ```bash
 npm run build
 ```
 
-Les fichiers compilés sont dans le dossier `dist/`
+Compiled files are in the `dist/` folder
 
-## Étape 6 : Prévisualiser le Build Production
+## Step 6: Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-## Déploiement
+## Deployment
 
 ### GitHub Pages
 
 ```bash
-npm run build
-npx gh-pages -d dist
+npm run deploy
 ```
 
-Le site sera accessible sur `https://votre-username.github.io/Website_Vite/`
+The site will be accessible at `https://your-username.github.io/Website_Vite/`
 
-### Domaine Custom avec GitHub Pages
+### Custom Domain with GitHub Pages
 
-1. Créez un fichier `CNAME` dans le dossier `public/` avec votre domaine
-2. Configurez les DNS chez votre registraire pour pointer vers GitHub Pages
-3. Activez HTTPS dans les paramètres du repository
+1. Create a `CNAME` file in the `public/` folder with your domain name
+2. Configure DNS records at your registrar to point to GitHub Pages
+3. Enable HTTPS in repository settings
 
-### Autres Plateformes
+### Alternative Platforms
 
-Le projet peut être déployé sur :
+The project can be deployed on:
 - Vercel
 - Netlify
 - Heroku
 - AWS Amplify
-- n'importe quel serveur avec support Node.js
+- Any server with Node.js support
 
 ## Structure du Projet
 
@@ -190,12 +212,16 @@ Le site supporte 6 langues :
 
 La langue est détectée automatiquement selon le navigateur de l'utilisateur.
 
-## Sécurité
+## Security
 
-Les clés sensibles doivent être dans `.env.local` (non committées) :
-- Jamais commitez `.env.local`
-- Utilisez `.env.example` pour documenter les variables requises
-- Utilisez des clés publiques pour Stripe (les clés privées restent serveur)
+Sensitive credentials must be protected:
+- Never commit `.env` files
+- Use `.env.example` as a template
+- All sensitive files are protected by `.gitignore`
+- Use only public keys for client-side services
+- Keep private keys server-side only
+- Rotate credentials regularly
+- Use environment-specific configuration for different deployments
 
 ## Besoin d'Aide ?
 
