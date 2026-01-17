@@ -215,6 +215,7 @@ body {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - 200px);
 }
 
 .page-container {
@@ -240,12 +241,14 @@ h1 {
   margin-bottom: 2rem;
   color: var(--primary);
   text-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+  text-align: center;
 }
 
 h2 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: var(--accent);
+  text-align: center;
 }
 
 h3 {
@@ -299,18 +302,29 @@ h3 {
   margin: 0;
 }
 
-.features-grid, .products-grid, .games-grid, .tech-grid {
+.features-grid, .products-grid, .tech-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 1.5rem;
 }
 
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
 .feature-card, .product-card, .game-card {
   background: rgba(42, 42, 62, 0.6);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: all 0.3s;
   overflow: hidden;
 }
@@ -432,10 +446,14 @@ h3 {
 
 /* Contact Form */
 .contact-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .contact-form {
@@ -446,6 +464,7 @@ h3 {
   border: 1px solid var(--border);
   padding: 2rem;
   border-radius: 12px;
+  width: 100%;
 }
 
 .contact-form input,
@@ -467,21 +486,22 @@ h3 {
 }
 
 .contact-info {
-  background: rgba(42, 42, 62, 0.6);
-  border: 1px solid var(--border);
-  padding: 2rem;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.5rem;
+  display: none;
 }
 
-.contact-info p {
+.contact-header {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.contact-header p {
+  margin: 0.5rem 0;
   color: var(--text-secondary);
 }
 
-.contact-info strong {
+.contact-header strong {
   color: var(--primary);
 }
 
@@ -639,7 +659,11 @@ h3 {
     font-size: 2rem;
   }
 
-  .features-grid, .products-grid, .games-grid {
+  .features-grid, .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .games-grid {
     grid-template-columns: 1fr;
   }
 

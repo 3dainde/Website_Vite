@@ -135,11 +135,13 @@ function Navigation({ lang, setLang, t, loading }) {
 }
 
 function Footer({ t }) {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-top">
-          <p>&copy; 2026 AuthInteractive. {t.footer.copyright}</p>
+          <p>&copy; {currentYear} AuthInteractive. {t.footer.copyright}</p>
           <div className="footer-links">
             <a href="https://www.facebook.com/gaming/authinteractive" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <img src="./icons/facebook.svg" alt="Facebook" className="social-icon" />

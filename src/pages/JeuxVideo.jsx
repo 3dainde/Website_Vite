@@ -2,8 +2,7 @@
 
 const games = [
   { id: 1, title: 'TBD', genre: 'Action-Stratégie', status: 'En développement' },
-  { id: 2, title: 'TBD', genre: 'Action', status: 'En développement' },
-  { id: 3, title: 'TBD', genre: 'Aventure', status: 'En développement' }
+  { id: 2, title: 'TBD', genre: 'Action', status: 'En développement' }
 ];
 
 export default function JeuxVideo() {

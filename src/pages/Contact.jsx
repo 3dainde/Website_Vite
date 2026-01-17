@@ -2,11 +2,46 @@ import React, { useState } from 'react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Message envoyé !');
-    setForm({ name: '', email: '', message: '' });
+    setLoading(true);
+    setStatusMessage('');
+
+    const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+    if (!formspreeId) {
+      setStatusMessage('⚠️ Formspree ID non configuré');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+
+      if (response.ok) {
+        setStatusMessage('✅ Message envoyé avec succès !');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatusMessage('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setStatusMessage('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,11 +70,21 @@ export default function Contact() {
             onChange={(e) => setForm({...form, message: e.target.value})} 
             required
           ></textarea>
-          <button type="submit" className="btn">Envoyer</button>
+
+          {statusMessage && (
+            <div className={`status-message ${statusMessage.includes('✅') ? 'success' : 'error'}`}>
+              {statusMessage}
+            </div>
+          )}
+
+          <button type="submit" className="btn" disabled={loading}>
+            {loading ? 'Envoi en cours...' : 'Envoyer'}
+          </button>
+
+          <div className="contact-header">
+            <p><strong>Email:</strong> support@authinteractive.com</p>
+          </div>
         </form>
-        <div className="contact-info">
-          <p><strong>Email:</strong> support@authinteractive.com</p>
-        </div>
       </div>
     </div>
   );
