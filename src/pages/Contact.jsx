@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { sendContactForm } from '../services/email.service.ts';
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '', honeypot: '' });
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
 
@@ -10,32 +11,15 @@ export default function Contact() {
     setLoading(true);
     setStatusMessage('');
 
-    const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-    if (!formspreeId) {
-      setStatusMessage('⚠️ Formspree ID non configuré');
-      setLoading(false);
-      return;
-    }
-
     try {
-      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
+      await sendContactForm({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        honeypot: form.honeypot,
       });
-
-      if (response.ok) {
-        setStatusMessage('✅ Message envoyé avec succès !');
-        setForm({ name: '', email: '', message: '' });
-      } else {
-        setStatusMessage('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
-      }
+      setStatusMessage('✅ Message envoyé avec succès !');
+      setForm({ name: '', email: '', message: '', honeypot: '' });
     } catch (error) {
       console.error('Erreur:', error);
       setStatusMessage('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
@@ -70,6 +54,17 @@ export default function Contact() {
             onChange={(e) => setForm({...form, message: e.target.value})} 
             required
           ></textarea>
+
+          {/* Honeypot - Champ invisible pour piéger les bots */}
+          <input 
+            type="text"
+            name="honeypot"
+            style={{ display: 'none' }}
+            value={form.honeypot}
+            onChange={(e) => setForm({...form, honeypot: e.target.value})}
+            tabIndex="-1"
+            autoComplete="off"
+          />
 
           {statusMessage && (
             <div className={`status-message ${statusMessage.includes('✅') ? 'success' : 'error'}`}>
