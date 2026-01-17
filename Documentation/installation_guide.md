@@ -1,11 +1,12 @@
-# Installation Guide - AuthInteractive v1.2.1
+# Installation Guide - AuthInteractive v1.2.4
 
 ## System Requirements
 
-- Node.js v16+ (recommended v18+)
-- npm or pnpm
+- Node.js v18+ (recommended v22+)
+- npm v9+
 - Git
-- A modern browser
+- A modern web browser
+- Gmail account with 2FA enabled (for contact form)
 
 ## Step 1: Clone the Repository
 
@@ -20,83 +21,95 @@ cd Website_Vite
 npm install
 ```
 
-Or with pnpm:
-```bash
-pnpm install
-```
-
 ## Step 3: Configure Environment Variables
 
-Create a `.env.local` file in the project root:
+Create a `.env` file in the project root:
 
 ```env
-# Formspree (for contact form)
-VITE_FORMSPREE_ID=your_id_here
-
-# Firebase (optional, for future features)
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
+VITE_FIREBASE_APP_ID=1:123456789:web:abcdef
 
-# Stripe (optional, for future payments)
-VITE_STRIPE_PUBLISHABLE_KEY=your_public_key
+# Stripe Configuration
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key_here
+
+# Backend API Configuration
+VITE_API_URL=https://websitevite-production.up.railway.app
+
+# Gmail SMTP Configuration - Contact Form Email Sender
+GMAIL_USER=authinteractive@gmail.com
+GMAIL_PASSWORD=your_app_password_here
+PORT=3001
+NODE_ENV=development
 ```
 
-### Formspree Configuration
+### Gmail App Password Setup
 
-1. Go to https://formspree.io
-2. Create a free account
-3. Create a new "website" form
-4. Get the form ID from the URL: `https://formspree.io/f/xxxxxID`
-5. Insert this ID in `VITE_FORMSPREE_ID`
+1. Go to https://myaccount.google.com/security
+2. Enable 2-Step Verification
+3. Go to "App passwords" section
+4. Select "Mail" and "Windows Computer"
+5. Generate a 16-character password
+6. Use this password in `GMAIL_PASSWORD`
 
-## Step 4: Start Development Server
+**Important**: Never commit `.env` file. Use `.env.example` for distribution.
+
+## Step 4: Start Development Server (Frontend)
 
 ```bash
 npm run dev
 ```
 
-The site will be accessible at `http://localhost:5173`
+The frontend will be accessible at `http://localhost:5173` (or `http://localhost:5174` if 5173 is in use)
 
-## Step 5: Build for Production
+## Step 5: Start Backend Server (Local Development)
 
+In a separate terminal:
+
+```bash
+npm run server:dev
+```
+
+The backend will be accessible at `http://localhost:3001`
+
+## Step 6: Build for Production
+
+### Frontend Build
 ```bash
 npm run build
 ```
 
 Compiled files are in the `dist/` folder
 
-## Step 6: Preview Production Build
-
+### Backend Build
 ```bash
-npm run preview
+npm run server:build
 ```
 
-## Deployment
+## Step 7: Deployment
 
-### GitHub Pages
+### Backend Deployment (Railway)
+
+1. Create account on https://railway.app
+2. Connect your GitHub repository
+3. Select "Node.js" as service
+4. Configure environment variables in Railway dashboard
+5. Backend will be deployed automatically on each push
+
+### Frontend Deployment (GitHub Pages)
 
 ```bash
-npm run build
-npx gh-pages -d dist
+npm run deploy
 ```
 
-The site will be accessible at `https://your-username.github.io/Website_Vite/`
-
-### Custom Domain with GitHub Pages
-
-1. Create a `CNAME` file in the `public/` folder with your domain
-2. Configure DNS at your registrar to point to GitHub Pages
-3. Enable HTTPS in the repository settings
-
-### Other Platforms
-
-The project can be deployed on:
-- Vercel
-- Netlify
-- Heroku
-- AWS Amplify
-- Any server with Node.js support
+This will:
+1. Build the frontend
+2. Push to `gh-pages` branch
+3. Deploy to GitHub Pages
 
 ## Project Structure
 
@@ -133,10 +146,18 @@ Website_Vite/
 ## Available Scripts
 
 ```bash
-npm run dev       # Development server
-npm run build     # Build for production
-npm run preview   # Preview production build
-npm run build --host  # Build accessible over network
+# Frontend
+npm run dev             # Development server (frontend)
+npm run build           # Build for production
+npm run preview         # Preview production build
+
+# Backend (Local)
+npm run server:dev      # Development server (backend)
+npm run server:build    # Build backend
+npm run server:start    # Start backend
+
+# Deployment
+npm run deploy          # Build and deploy to GitHub Pages
 ```
 
 ## Advanced Configuration

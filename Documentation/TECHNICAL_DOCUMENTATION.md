@@ -1,8 +1,8 @@
-# Technical Documentation - AuthInteractive v1.2.1
+# Technical Documentation - AuthInteractive v1.2.4
 
 ## Architectural Overview
 
-AuthInteractive is a complete web application built with React and Vite, designed as a modern e-commerce platform for digital products and creative services. The architecture follows modern React best practices with a clear separation of concerns.
+AuthInteractive is a complete web application built with React and Vite, designed as a modern e-commerce platform for digital products and creative services. The architecture features a decoupled frontend (GitHub Pages) and backend (Railway.app) with comprehensive security measures.
 
 ## Technology Stack
 
@@ -13,14 +13,23 @@ AuthInteractive is a complete web application built with React and Vite, designe
 - **TypeScript** - Type safety for critical components
 - **CSS3** - Responsive styling with CSS variables
 
+### Backend
+- **Express.js** - Node.js web framework
+- **TypeScript** - Type-safe backend code
+- **Nodemailer** - Email delivery via Gmail SMTP
+- **CORS** - Cross-origin resource sharing
+- **dotenv** - Environment configuration
+
 ### Backend Services
+- **Gmail SMTP** - Contact form email delivery with automatic fallback
 - **Firebase** - Authentication and database (Firestore)
 - **Stripe** - Payment integration
-- **Formspree** - Contact form management
-
-### Third-Party Services
 - **myMemory Translation** - Automatic translation
 - **IP Geolocation** - User location detection
+
+### Deployment
+- **GitHub Pages** - Frontend hosting
+- **Railway.app** - Backend hosting (Node.js)
 
 ## Application Architecture
 
@@ -126,34 +135,57 @@ function Component() {
 - Flexible grid with CSS Grid
 - Flexbox for components
 
-## Contact Form
+## Contact Form System
 
-### Formspree Integration
-1. Sends directly to support@authinteractive.com
-2. No backend required
-3. Formspree handles emails and spam filtering
+### Architecture
+- **Frontend**: React component with form validation
+- **Backend**: Express.js API endpoint with security middleware
+- **Email Service**: Gmail SMTP with automatic fallback
 
-### Flow
-```jsx
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, message })
-  });
-  
-  if (response.ok) {
-    // Success - show message
-  }
-}
+### Security Features
+1. **Rate Limiting** - 5 requests per IP per 15 minutes
+2. **Honeypot Protection** - Bot detection field
+3. **Input Validation** - Email format and message length checks
+4. **Input Sanitization** - XSS prevention via sanitizer
+5. **Spam Detection** - Keyword filtering and pattern detection
+6. **CORS Protection** - Cross-origin resource sharing control
+
+### Email Flow
+```
+User Form Submission
+    ↓
+Frontend Validation
+    ↓
+Backend Endpoint (/api/send-contact)
+    ↓
+Security Checks (rate limit, honeypot, spam)
+    ↓
+Send to support@authinteractive.com
+    ↓
+Fallback to authinteractive@gmail.com (if primary fails)
+    ↓
+Success/Error Response
 ```
 
-### Environment Variables
+### Environment Variables Required
 ```env
-VITE_FORMSPREE_ID=xreeejpo  # Formspree form ID
+GMAIL_USER=authinteractive@gmail.com
+GMAIL_PASSWORD=your_app_password_here
+NODE_ENV=production
+PORT=3001
 ```
+
+### Rate Limiting
+- **Limit**: 5 requests
+- **Window**: 15 minutes
+- **Storage**: In-memory (resets on restart)
+- **Identifier**: Client IP address
+
+### Spam Detection
+- URL detection (blocks messages with URLs)
+- Keyword filtering (common spam words)
+- Message length validation
+- Honeypot field verification
 
 ## Video Games Page
 
@@ -192,34 +224,85 @@ const games = [
 - Bundle size: ~300KB (gzipped ~90KB)
 - Lazy loading pages available
 
-## Deployment
+## Deployment Architecture
 
-### GitHub Pages
-```bash
-npm run build
-npx gh-pages -d dist
+### Frontend (GitHub Pages)
+- Deployed automatically via `npm run deploy`
+- Uses `gh-pages` npm package
+- Accessible at `https://authinteractive.com`
+- Static hosting with custom domain (CNAME)
+
+### Backend (Railway.app)
+- Node.js Express server
+- URL: `https://websitevite-production.up.railway.app`
+- Auto-deploys on GitHub push
+- Environment variables managed in Railway dashboard
+- 500 hours/month free tier included
+
+### Frontend-Backend Communication
+```
+Frontend (GitHub Pages)
+    ↓
+VITE_API_URL: https://websitevite-production.up.railway.app
+    ↓
+Backend API: /api/send-contact
+    ↓
+Response to Frontend
 ```
 
-Deploys to `gh-pages` branch automatically.
-
-### Custom Domain Configuration
-1. `CNAME` file in `public/`
-2. Configure registrar DNS
-3. Automatic HTTPS via GitHub
+During development:
+- Frontend: `http://localhost:5173` (or 5174)
+- Backend: `http://localhost:3001`
+- Vite proxy: `/api` → `http://localhost:3001`
 
 ## Security
 
 ### Best Practices
-- Environment variables for sensitive keys
-- `.env.local` never committed
-- Client and server-side form validation (future)
-- CORS for external APIs
-- Content Security Policy (optional)
+- Environment variables for sensitive keys in `.env`
+- `.env` never committed (protected by `.gitignore`)
+- `.env.example` provided for safe distribution
+- Client and server-side form validation
+- CORS protection for API endpoints
+- Rate limiting on contact endpoint
+- Input sanitization for XSS prevention
+
+### Rate Limiting Strategy
+- Uses IP-based tracking
+- In-memory storage for performance
+- 5 requests per 15-minute window
+- Resets on server restart (consider Redis for production)
+
+### Email Security
+- Gmail 2FA with App Passwords (not regular password)
+- Credentials never exposed in frontend code
+- Fallback mechanism ensures reliability
+- SMTP encryption (TLS)
+
+### CORS Configuration
+- Allows requests from GitHub Pages domain
+- Restricted API endpoints
+- Credentials handling for cross-origin requests
+
+### Environment Protection
+For production deployment:
+1. Set sensitive variables in Railway dashboard
+2. Use strong Gmail App Passwords
+3. Enable 2FA on Gmail account
+4. Monitor email logs for suspicious activity
+5. Keep dependencies updated (`npm audit fix`)
 
 ### Firebase Authentication
-- To implement for secure sections
-- Session tokens
-- Automatic token refresh
+- Secure user sessions
+- Token-based authentication
+- Automatic session management
+
+## Future Security Enhancements
+- Redis for distributed rate limiting
+- JWT tokens for API authentication
+- Content Security Policy (CSP) headers
+- API key rotation strategy
+- CAPTCHA integration
+- Enhanced logging and monitoring
 
 ## Extensibility
 
@@ -288,5 +371,8 @@ Follow Semantic Versioning:
 
 ---
 
-**Version**: 1.2.1  
-**Last Updated**: January 2026
+**Version**: 1.2.4  
+**Last Updated**: January 2026  
+**Backend**: Railway.app (websitevite-production.up.railway.app)  
+**Frontend**: GitHub Pages (authinteractive.com)  
+**Status**: Production Ready
