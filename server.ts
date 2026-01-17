@@ -51,6 +51,9 @@ interface ContactFormData {
   honeypot?: string;
 }
 
+// Handler pour les preflight requests (OPTIONS)
+app.options('/api/send-contact', cors(corsOptions));
+
 app.post('/api/send-contact', async (req, res) => {
   try {
     const { name, email, message, honeypot } = req.body as ContactFormData;
