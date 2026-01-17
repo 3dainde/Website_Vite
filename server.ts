@@ -48,7 +48,7 @@ app.post('/api/send-contact', async (req, res) => {
     }
 
     // Valider le honeypot (protection contre les bots)
-    if (!validateHoneypot(honeypot)) {
+    if (!validateHoneypot(honeypot || '')) {
       console.warn('⚠️ Tentative de spam détectée (honeypot)');
       return res.status(400).json({ error: 'Erreur de validation' });
     }
