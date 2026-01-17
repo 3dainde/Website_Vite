@@ -14,14 +14,14 @@ export default function Developpement() {
   const technologies = ['Unreal Engine', 'Blender', 'Krita', 'Plant Factory', 'Firebase', 'Vite'];
 
   return (
-    <div className="page-container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
+    <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 5%, 2rem)' }}>
       <h1>{t.development.title}</h1>
       
       <section className="dev-section" style={{ marginBottom: '2rem' }}>
         <h2>{t.development.tools}</h2>
         <ul style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '1.5rem',
           listStyle: 'none',
           padding: 0,
@@ -34,7 +34,8 @@ export default function Developpement() {
               borderRadius: '12px',
               padding: '1.5rem',
               color: 'var(--text-secondary)',
-              fontSize: '1.1rem'
+              fontSize: '1.1rem',
+              boxSizing: 'border-box'
             }}>
               ✓ {tool}
             </li>
@@ -46,8 +47,8 @@ export default function Developpement() {
         <h2>{t.development.technologies}</h2>
         <div className="tech-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '2rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: '1.5rem',
           marginTop: '1.5rem'
         }}>
           {technologies.map((tech, i) => (
@@ -55,13 +56,19 @@ export default function Developpement() {
               background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(0, 212, 255, 0.1))',
               border: '1px solid var(--primary)',
               borderRadius: '12px',
-              padding: '2.5rem',
+              padding: 'clamp(1rem, 4%, 2.5rem)',
               textAlign: 'center',
               fontWeight: 600,
-              fontSize: '1.1rem',
+              fontSize: '1rem',
               color: 'var(--primary)',
               transition: 'all 0.3s',
-              cursor: 'default'
+              cursor: 'default',
+              boxSizing: 'border-box',
+              minHeight: '100px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              wordBreak: 'break-word'
             }} onMouseEnter={(e) => {
               e.target.style.transform = 'translateY(-5px)';
               e.target.style.boxShadow = '0 0 25px rgba(0, 150, 255, 0.3)';
