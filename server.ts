@@ -15,7 +15,20 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+// CORS Configuration
+const corsOptions = {
+  origin: [
+    'https://authinteractive.com',
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:3000',
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(rateLimitMiddleware); // Appliquer le rate limiting à toutes les routes
 
