@@ -34,6 +34,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist",
     "server:dev": "ts-node server.ts",
     "server:build": "tsc --project tsconfig-server.json",
     "server:start": "node dist/server.js"
