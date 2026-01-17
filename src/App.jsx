@@ -11,7 +11,6 @@ export const LanguageContext = React.createContext();
 // Pages existantes
 import Home from "./pages/Home";
 import JeuxVideo from "./pages/JeuxVideo";
-import Developpement from "./pages/Developpement";
 import Contact from "./pages/Contact";
 
 // Nouvelles pages E-commerce v1.2.0
@@ -96,7 +95,6 @@ function Navigation({ lang, setLang, t, loading }) {
           <li><Link to="/" className="nav-link">{t.nav.home}</Link></li>
           <li><Link to="/produits" className="nav-link">{t.nav.products}</Link></li>
           <li><Link to="/jeux" className="nav-link">{t.nav.games}</Link></li>
-          <li><Link to="/developpement" className="nav-link">{t.nav.development}</Link></li>
           <li><Link to="/contact" className="nav-link">{t.nav.contact}</Link></li>
           <li style={{ position: 'relative' }}>
             <Link to="/checkout" className="nav-link" style={{ display: 'flex', alignItems: 'center' }}>
@@ -120,7 +118,6 @@ function Navigation({ lang, setLang, t, loading }) {
         <Link to="/" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.home}</Link>
         <Link to="/produits" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.products}</Link>
         <Link to="/jeux" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.games}</Link>
-        <Link to="/developpement" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.development}</Link>
         <Link to="/contact" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.contact}</Link>
         <Link to="/checkout" className="mobile-menu-link mobile-menu-cart" onClick={toggleMenu}>
           <span style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -189,7 +186,6 @@ function App() {
                 <Route path="/produits" element={<ProduitsImproved />} />
                 <Route path="/produit/:id" element={<ProductDetail />} />
                 <Route path="/jeux" element={<JeuxVideo />} />
-                <Route path="/developpement" element={<Developpement />} />
                 <Route path="/contact" element={<Contact />} />
                 
                 {/* Pages d'authentification */}
