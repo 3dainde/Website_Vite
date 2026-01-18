@@ -1,0 +1,13 @@
+[build]
+builder = "nixpacks"
+
+[build.buildCommand]
+# Compile TypeScript server
+command = "npm run server:build"
+
+[deploy]
+startCommand = "node dist/server.js"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 100
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 10

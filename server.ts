@@ -8,7 +8,7 @@ import {
   isValidEmail,
   validateHoneypot,
   sanitizeInput,
-} from './src/services/security.service.js';
+} from './src/services/security.service.ts';
 
 // Ne charger .env que si les variables ne sont pas déjà définies (dev local uniquement)
 if (!process.env.PORT) {
