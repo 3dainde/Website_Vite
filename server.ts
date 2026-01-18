@@ -79,7 +79,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const PRIMARY_EMAIL = 'support@authinteractive.com';
+const PRIMARY_EMAIL = 'authinteractive@gmail.com';
 const FALLBACK_EMAIL = 'authinteractive@gmail.com';
 
 interface ContactFormData {
