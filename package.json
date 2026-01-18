@@ -6,6 +6,7 @@
   "type": "module",
   "main": "src/index.tsx",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
     "@stripe/stripe-js": "^8.6.1",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.9",

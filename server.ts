@@ -1,5 +1,5 @@
 import express from 'express';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import {
@@ -70,17 +70,11 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(rateLimitMiddleware); // Appliquer le rate limiting à toutes les routes
 
-// Configuration Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASSWORD, // App password, pas le mot de passe Gmail
-  },
-});
+// Configuration SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
-const PRIMARY_EMAIL = 'authinteractive@gmail.com';
-const FALLBACK_EMAIL = 'authinteractive@gmail.com';
+const SENDER_EMAIL = process.env.SENDER_EMAIL || 'authinteractive@gmail.com';
+const RECIPIENT_EMAIL = 'authinteractive@gmail.com';
 
 interface ContactFormData {
   name: string;
@@ -136,6 +130,12 @@ app.post('/api/send-contact', async (req, res) => {
       replyTo: email,
       subject: `Nouveau message de contact de ${cleanName}`,
       html: `
+        <h2sg = {
+      to: RECIPIENT_EMAIL,
+      from: SENDER_EMAIL,
+      replyTo: email,
+      subject: `Nouveau message de contact de ${cleanName}`,
+      html: `
         <h2>Nouveau message de contact</h2>
         <p><strong>Nom:</strong> ${cleanName}</p>
         <p><strong>Email:</strong> ${email}</p>
@@ -144,32 +144,18 @@ app.post('/api/send-contact', async (req, res) => {
       `,
     };
 
-    // Tentative d'envoi vers l'email principal
+    // Envoi via SendGrid
     try {
-      console.log(`   📧 Tentative d'envoi à ${PRIMARY_EMAIL}...`);
-      await transporter.sendMail(mailOptions);
-      console.log(`   ✅ Email envoyé avec succès à ${PRIMARY_EMAIL}`);
+      console.log(`   📧 Tentative d'envoi à ${RECIPIENT_EMAIL} via SendGrid...`);
+      await sgMail.send(msg);
+      console.log(`   ✅ Email envoyé avec succès à ${RECIPIENT_EMAIL}`);
       return res.status(200).json({ success: true, message: 'Email envoyé avec succès' });
-    } catch (primaryError) {
-      console.warn(`   ⚠️ Erreur lors de l'envoi à ${PRIMARY_EMAIL}:`, primaryError);
-
-      // Fallback: envoyer vers l'email de secours
-      try {
-        console.log(`   📧 Fallback: Tentative d'envoi à ${FALLBACK_EMAIL}...`);
-        const fallbackOptions = { ...mailOptions, to: FALLBACK_EMAIL };
-        await transporter.sendMail(fallbackOptions);
-        console.log(`   ✅ Email envoyé au fallback: ${FALLBACK_EMAIL}`);
-        return res.status(200).json({ success: true, message: 'Email envoyé avec succès' });
-      } catch (fallbackError) {
-        console.error(`   ❌ Erreur fallback vers ${FALLBACK_EMAIL}:`, fallbackError);
-        throw fallbackError;
+    } catch (sendError: any) {
+      console.error(`   ❌ Erreur lors de l'envoi via SendGrid:`, sendError);
+      if (sendError.response) {
+        console.error('SendGrid error details:', sendError.response.body);
       }
-    }
-  } catch (error) {
-    console.error('   ❌ Erreur lors de l\'envoi:', error);
-    res.status(500).json({ error: 'Impossible d\'envoyer le message' });
-  }
-});
+      throw sendError;
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK' });
@@ -185,3 +171,6 @@ app.listen(port, () => {
   console.log(`📧 Email de secours: ${FALLBACK_EMAIL}`);
   console.log('='.repeat(60) + '\n');
 });
+destinataire: ${RECIPIENT_EMAIL}`);
+  console.log(`📧 Email expéditeur: ${SENDER_EMAIL}`);
+  console.log(`📧 Service: SendGrid
