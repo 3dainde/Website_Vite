@@ -3,14 +3,18 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import stripeService from '../services/stripe.service';
 import '../styles/Checkout.css';
 
 export default function Checkout() {
   const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
   const { cart, removeFromCart, clearCart, totalPrice } = useCart();
-  const [email, setEmail] = React.useState('');
+  const { user } = useAuth();
+  const [email, setEmail] = React.useState(user?.email || '');
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   if (cart.length === 0) {
     return (
@@ -36,25 +40,28 @@ export default function Checkout() {
     }
 
     setLoading(true);
+    setError(null);
 
     try {
-      // Save order to Firestore
-      const orderData = {
+      // Créer une session Stripe Checkout
+      const session = await stripeService.createCheckoutSession(
+        cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: 1,
+          description: item.description,
+          image: item.image
+        })),
         email,
-        items: cart,
-        total: totalPrice,
-        timestamp: new Date().toISOString(),
-        status: 'pending_payment'
-      };
+        user?.uid
+      );
 
-      console.log('Order data:', orderData);
-      
-      // This will be connected to Firebase Functions later
-      clearCart();
-      navigate('/success', { state: { orderData } });
-    } catch (error) {
+      // Rediriger vers Stripe Checkout
+      window.location.href = session.url;
+    } catch (error: any) {
       console.error('Checkout error:', error);
-      alert(lang === 'en' ? 'An error occurred' : 'Une erreur est survenue');
+      setError(error.message || (lang === 'en' ? 'An error occurred' : 'Une erreur est survenue'));
     } finally {
       setLoading(false);
     }

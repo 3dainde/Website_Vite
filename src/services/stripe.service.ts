@@ -1,62 +1,63 @@
 // src/services/stripe.service.ts
 /**
- * Service Stripe pour gérer les paiements
- * À implémenter avec Firebase Functions
+ * Service Stripe intégré avec Firebase Functions
  */
 
-export interface StripeConfig {
-  publishableKey: string;
-  secretKey?: string;
+const FUNCTIONS_URL = import.meta.env.VITE_FIREBASE_FUNCTIONS_URL || 'https://us-central1-authinteractivedotcom.cloudfunctions.net';
+
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  description?: string;
+  image?: string;
+  downloadUrl?: string;
 }
 
-export interface PaymentIntent {
-  id: string;
-  amount: number;
-  currency: string;
-  status: 'requires_payment_method' | 'requires_confirmation' | 'requires_action' | 'processing' | 'succeeded' | 'requires_capture' | 'canceled';
-  clientSecret: string;
-}
-
-export interface CheckoutSession {
-  id: string;
+export interface CheckoutSessionResponse {
+  sessionId: string;
   url: string;
-  status: 'open' | 'complete' | 'expired';
+}
+
+export interface OrderDetails {
+  orderId: string;
+  sessionId: string;
+  email: string;
+  items: CartItem[];
+  total: number;
+  status: string;
+  licenseKeys?: Array<{
+    productId: string;
+    productName: string;
+    licenseKey: string;
+    downloadUrl: string;
+  }>;
+  createdAt: string;
+  completedAt?: string;
 }
 
 class StripeService {
-  private config: StripeConfig;
-
-  constructor(config: StripeConfig) {
-    this.config = config;
-  }
-
   /**
-   * Créer une intention de paiement
+   * Créer une session Stripe Checkout
    */
-  async createPaymentIntent(amount: number, description: string): Promise<PaymentIntent> {
+  async createCheckoutSession(
+    items: CartItem[],
+    email: string,
+    userId?: string
+  ): Promise<CheckoutSessionResponse> {
     try {
-      const response = await fetch('/api/stripe/create-payment-intent', {
+      const response = await fetch(`${FUNCTIONS_URL}/createCheckoutSession`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, description })
+        body: JSON.stringify({ items, email, userId })
       });
-      return await response.json();
-    } catch (error) {
-      console.error('Error creating payment intent:', error);
-      throw error;
-    }
-  }
 
-  /**
-   * Créer une session de checkout Stripe
-   */
-  async createCheckoutSession(items: any[]): Promise<CheckoutSession> {
-    try {
-      const response = await fetch('/api/stripe/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items })
-      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create checkout session');
+      }
+
       return await response.json();
     } catch (error) {
       console.error('Error creating checkout session:', error);
@@ -65,33 +66,28 @@ class StripeService {
   }
 
   /**
-   * Récupérer les détails d'une intention de paiement
+   * Récupérer les détails d'une commande
    */
-  async getPaymentIntent(paymentIntentId: string): Promise<PaymentIntent> {
+  async getOrderDetails(sessionId: string): Promise<OrderDetails> {
     try {
-      const response = await fetch(`/api/stripe/payment-intent/${paymentIntentId}`);
+      const response = await fetch(`${FUNCTIONS_URL}/getOrderDetails?sessionId=${sessionId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to fetch order details');
+      }
+
       return await response.json();
     } catch (error) {
-      console.error('Error fetching payment intent:', error);
+      console.error('Error fetching order details:', error);
       throw error;
     }
   }
-
-  /**
-   * Générer une clé de licence
-   */
-  static generateLicenseKey(): string {
-    const timestamp = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).substring(2, 15).toUpperCase();
-    return `AUTH-${timestamp}-${random}`;
-  }
-
-  /**
-   * Valider une clé de licence
-   */
-  static validateLicenseKey(key: string): boolean {
-    return /^AUTH-[A-Z0-9]+-[A-Z0-9]+$/.test(key);
-  }
 }
 
-export default StripeService;
+const stripeService = new StripeService();
+
+export default stripeService;

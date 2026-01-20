@@ -1,15 +1,66 @@
 // src/pages/Success.tsx
-import React, { useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { LanguageContext } from '../App';
+import { useCart } from '../context/CartContext';
+import stripeService, { OrderDetails } from '../services/stripe.service';
 import '../styles/Success.css';
 
 export default function Success() {
   const { lang } = useContext(LanguageContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const { clearCart } = useCart();
   
-  const orderData = (location.state as any)?.orderData;
+  const [orderData, setOrderData] = useState<OrderDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const sessionId = searchParams.get('session_id');
+    
+    if (!sessionId) {
+      setError(lang === 'en' ? 'No session found' : 'Aucune session trouvée');
+      setLoading(false);
+      return;
+    }
+
+    // Récupérer les détails de la commande
+    stripeService.getOrderDetails(sessionId)
+      .then(data => {
+        setOrderData(data);
+        clearCart();
+      })
+      .catch(err => {
+        console.error('Error fetching order:', err);
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [searchParams, clearCart, lang]);
+
+  if (loading) {
+    return (
+      <div className="page-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+        <div style={{ fontSize: '2rem' }}>⏳</div>
+        <p>{lang === 'en' ? 'Loading order details...' : 'Chargement des détails...'}</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+        <div style={{ fontSize: '2rem', color: 'var(--error)' }}>❌</div>
+        <h2>{lang === 'en' ? 'Error' : 'Erreur'}</h2>
+        <p>{error}</p>
+        <button onClick={() => navigate('/produits')} className="cta-button" style={{ marginTop: '2rem' }}>
+          {lang === 'en' ? 'Back to Shop' : 'Retour à la boutique'}
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
@@ -76,6 +127,43 @@ export default function Success() {
           }}>
             {lang === 'en' ? 'Total: ' : 'Total : '}{orderData.total.toFixed(2)} €
           </div>
+
+          {orderData.licenseKeys && orderData.licenseKeys.length > 0 && (
+            <div style={{ marginTop: '2rem' }}>
+              <h3 style={{ marginBottom: '1rem', color: 'var(--primary)' }}>
+                {lang === 'en' ? '🔑 Your License Keys' : '🔑 Vos clés de licence'}
+              </h3>
+              {orderData.licenseKeys.map((license, index) => (
+                <div key={index} style={{
+                  background: 'rgba(0, 150, 255, 0.1)',
+                  border: '1px solid var(--primary)',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  marginBottom: '1rem'
+                }}>
+                  <div style={{ fontWeight: 700, marginBottom: '0.5rem' }}>
+                    {license.productName}
+                  </div>
+                  <div style={{
+                    fontFamily: 'monospace',
+                    fontSize: '0.9rem',
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    padding: '0.5rem',
+                    borderRadius: '4px',
+                    marginBottom: '0.5rem'
+                  }}>
+                    {license.licenseKey}
+                  </div>
+                  <a 
+                    href={license.downloadUrl}
+                    style={{ color: 'var(--primary)', textDecoration: 'underline' }}
+                  >
+                    {lang === 'en' ? '⬇️ Download' : '⬇️ Télécharger'}
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
