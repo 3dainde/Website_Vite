@@ -47,14 +47,14 @@ export default function Checkout() {
       const session = await stripeService.createCheckoutSession(
         cart.map(item => ({
           id: item.id,
-          name: item.name,
+          name: item.title,
           price: item.price,
           quantity: 1,
-          description: item.description,
+          description: item.type,
           image: item.image
         })),
         email,
-        user?.uid
+        (user as any)?.uid
       );
 
       // Rediriger vers Stripe Checkout
