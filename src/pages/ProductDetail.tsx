@@ -48,12 +48,20 @@ export default function ProductDetail() {
 
   return (
     <div className="page-container">
-      <button onClick={() => navigate('/produits')} className="nav-link" style={{ marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+      <button onClick={() => navigate('/produits')} className="nav-link" style={{ marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', fontSize: '1rem', cursor: 'pointer' }}>
         ← {lang === 'en' ? 'Back to products' : 'Retour aux produits'}
       </button>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem', marginBottom: '3rem' }}>
-        <div>
+      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '3rem', marginBottom: '3rem', alignItems: 'start' }}>
+        <div style={{
+          background: 'rgba(42, 42, 62, 0.6)',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem'
+        }}>
           <div style={{ 
             display: 'inline-block',
             padding: '0.4rem 0.8rem',
@@ -62,27 +70,60 @@ export default function ProductDetail() {
             borderRadius: '20px',
             fontSize: '0.85rem',
             fontWeight: 600,
-            marginBottom: '1rem'
+            alignSelf: 'flex-start'
           }}>
             {typeLabels[product.type][lang as 'fr' | 'en']}
           </div>
 
-          <h1 style={{ marginBottom: '1rem' }}>{title}</h1>
-          
+          <div style={{ 
+            width: '100%', 
+            height: '240px', 
+            background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05))',
+            borderRadius: '12px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid var(--border)',
+            padding: '1rem'
+          }}>
+            <img 
+              src={product.image} 
+              alt={title}
+              style={{
+                width: '128px',
+                height: '128px',
+                objectFit: 'contain',
+                marginBottom: '1rem'
+              }}
+            />
+            <div style={{
+              fontSize: '0.85rem',
+              color: 'var(--text-secondary)',
+              textAlign: 'center'
+            }}>
+              {lang === 'en' ? 'Product preview' : 'Aperçu produit'}
+            </div>
+          </div>
+
           <div style={{ 
             fontSize: '2.5rem', 
             fontWeight: 700, 
             color: 'var(--primary)',
-            marginBottom: '2rem'
+            marginTop: 'auto'
           }}>
             {product.price.toFixed(2)} €
           </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <h1 style={{ marginBottom: 0 }}>{title}</h1>
 
           <p style={{ 
             fontSize: '1.1rem', 
             color: 'var(--text-secondary)',
-            marginBottom: '2rem',
-            lineHeight: 1.7
+            lineHeight: 1.7,
+            margin: 0
           }}>
             {longDesc}
           </p>
@@ -94,7 +135,7 @@ export default function ProductDetail() {
               width: '100%', 
               fontSize: '1.2rem',
               padding: '1rem 2rem',
-              marginBottom: '1rem'
+              marginTop: 'auto'
             }}
           >
             🛒 {lang === 'en' ? 'Add to Cart' : 'Ajouter au panier'}
@@ -106,23 +147,6 @@ export default function ProductDetail() {
             textAlign: 'center'
           }}>
             {lang === 'en' ? 'Secure payment via Stripe' : 'Paiement sécurisé via Stripe'}
-          </div>
-        </div>
-
-        <div>
-          <div style={{ 
-            width: '100%', 
-            height: '300px', 
-            background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05))',
-            borderRadius: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid var(--border)',
-            marginBottom: '1rem',
-            fontSize: '4rem'
-          }}>
-            {product.image}
           </div>
 
           {product.videoUrl && (
