@@ -1,156 +1,149 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link, NavLink, Navigate, useLocation } from "react-router-dom";
 import { CartProvider, useCart } from "./context/CartContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { TranslationProvider, useTranslation } from "./context/TranslationContext";
+import { CartIcon, LogoMark, MenuIcon, CloseIcon } from "./components/Icons";
 import "./App.css";
 
 // Créer LanguageContext pour la compatibilité avec les anciens composants
 export const LanguageContext = React.createContext();
 
-// Pages existantes
+// Pages du site
 import Home from "./pages/Home";
 import JeuxVideo from "./pages/JeuxVideo";
+import Boutique from "./pages/Boutique";
 import Contact from "./pages/Contact";
 
-// Nouvelles pages E-commerce v1.2.0
-import ProduitsImproved from "./pages/ProduitsImproved";
+// Pages E-commerce
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Success from "./pages/Success";
 
-// Nouvelles pages v2.0 - Commerciales
+// Pages compte
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Pricing from "./pages/Pricing";
 
-function CartIndicator() {
+function CartLink({ label }) {
   const { itemCount } = useCart();
-  
-  if (itemCount === 0) return null;
-  
   return (
-    <span style={{
-      position: 'absolute',
-      top: '-8px',
-      right: '-8px',
-      background: 'linear-gradient(135deg, #ff3232, #ff6b6b)',
-      color: '#fff',
-      borderRadius: '50%',
-      width: '20px',
-      height: '20px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '0.75rem',
-      fontWeight: 700,
-      boxShadow: '0 2px 8px rgba(255, 50, 50, 0.4)'
-    }}>
-      {itemCount}
-    </span>
+    <Link to="/checkout" className="icon-button" aria-label={`${label}, ${itemCount}`}>
+      <CartIcon />
+      {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+    </Link>
   );
 }
 
 function UserMenu() {
   const { user } = useAuth();
-  
   if (!user) return null;
-  
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-      <Link to="/dashboard" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        {user.name}
-      </Link>
+    <Link to="/dashboard" className="nav-link">
+      {user.name}
+    </Link>
+  );
+}
+
+const NAV_ITEMS = [
+  { to: "/", key: "home", end: true },
+  { to: "/jeux", key: "games" },
+  { to: "/boutique", key: "shop" },
+  { to: "/contact", key: "contact" },
+];
+
+function LanguageSwitch({ lang, setLang }) {
+  return (
+    <div className="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" aria-pressed={lang === "fr"} onClick={() => setLang("fr")}>FR</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
     </div>
   );
 }
 
-function Navigation({ lang, setLang, t, loading }) {
+function Navigation({ lang, setLang, t }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  useEffect(() => setMenuOpen(false), [location.pathname]);
 
-  if (loading) {
-    return (
-      <nav className="navbar">
-        <div className="nav-container">
-          <Link to="/" className="nav-logo">
-            <img src="./logo.png" alt="Logo" className="nav-logo-img" />
-            AuthInteractive
-          </Link>
-          <div style={{ color: '#888', fontSize: '0.9rem' }}>Chargement...</div>
-        </div>
-      </nav>
-    );
-  }
+  const linkClass = ({ isActive }) => `nav-link${isActive ? " active" : ""}`;
+  const mobileClass = ({ isActive }) => `mobile-menu-link${isActive ? " active" : ""}`;
 
   return (
-    <nav className="navbar">
+    <header className="navbar">
       <div className="nav-container">
-        <Link to="/" className="nav-logo"><img src="./logo.png" alt="Logo" className="nav-logo-img" />AuthInteractive</Link>
-        
-        {/* Menu desktop */}
-        <ul className="nav-menu">
-          <li><Link to="/" className="nav-link">{t.nav.home}</Link></li>
-          <li><Link to="/produits" className="nav-link">{t.nav.products}</Link></li>
-          <li><Link to="/jeux" className="nav-link">{t.nav.games}</Link></li>
-          <li><Link to="/contact" className="nav-link">{t.nav.contact}</Link></li>
-          <li style={{ position: 'relative' }}>
-            <Link to="/checkout" className="nav-link" style={{ display: 'flex', alignItems: 'center' }}>
-              🛒
-              <CartIndicator />
-            </Link>
-          </li>
-          <li><UserMenu /></li>
-        </ul>
-
-        {/* Hamburger button */}
-        <button className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-
-      {/* Menu mobile */}
-      <div className={`mobile-menu ${menuOpen ? 'active' : ''}`}>
-        <Link to="/" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.home}</Link>
-        <Link to="/produits" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.products}</Link>
-        <Link to="/jeux" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.games}</Link>
-        <Link to="/contact" className="mobile-menu-link" onClick={toggleMenu}>{t.nav.contact}</Link>
-        <Link to="/checkout" className="mobile-menu-link mobile-menu-cart" onClick={toggleMenu}>
-          <span style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            🛒 {t.nav.cart || 'Panier'}
-            <CartIndicator />
+        <Link to="/" className="nav-logo" aria-label="AuthInteractive, accueil">
+          <LogoMark />
+          <span>
+            AUTH<span className="nav-logo-accent">INTERACTIVE</span>
           </span>
         </Link>
-        <UserMenu />
+
+        <nav aria-label={t.nav.main} className="nav-desktop">
+          <ul className="nav-menu">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.key}>
+                <NavLink to={item.to} end={item.end} className={linkClass}>
+                  {t.nav[item.key]}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="nav-tools">
+          <LanguageSwitch lang={lang} setLang={setLang} />
+          <UserMenu />
+          <CartLink label={t.nav.cart} />
+          <button
+            type="button"
+            className="icon-button hamburger"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={t.nav.menu}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <CloseIcon size={20} /> : <MenuIcon />}
+          </button>
+        </div>
       </div>
-    </nav>
+
+      <nav id="mobile-menu" aria-label={t.nav.main} className={`mobile-menu ${menuOpen ? "active" : ""}`}>
+        {NAV_ITEMS.map((item) => (
+          <NavLink key={item.key} to={item.to} end={item.end} className={mobileClass}>
+            {t.nav[item.key]}
+          </NavLink>
+        ))}
+        <div className="mobile-lang">
+          <LanguageSwitch lang={lang} setLang={setLang} />
+        </div>
+      </nav>
+    </header>
   );
 }
 
 function Footer({ t }) {
   const currentYear = new Date().getFullYear();
-  
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-top">
-          <p>&copy; {currentYear} AuthInteractive. {t.footer.copyright}</p>
-          <div className="footer-links">
+          <span>&copy; {currentYear} AuthInteractive. {t.footer.copyright}</span>
+          <div className="footer-social">
             <a href="https://www.facebook.com/gaming/authinteractive" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <img src="./icons/facebook.svg" alt="Facebook" className="social-icon" />
+              <img src="/icons/facebook.svg" alt="" className="social-icon" />
             </a>
             <a href="https://www.youtube.com/channel/UCm4l45-JQhK__iM2ks4eg2Q" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-              <img src="./icons/youtube.svg" alt="YouTube" className="social-icon" />
+              <img src="/icons/youtube.svg" alt="" className="social-icon" />
             </a>
             <a href="https://www.instagram.com/AuthInteractive/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <img src="./icons/instagram.svg" alt="Instagram" className="social-icon" />
+              <img src="/icons/instagram.svg" alt="" className="social-icon" />
             </a>
-            <a href="https://twitter.com/AuthInteractive" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <img src="./icons/twitter.svg" alt="Twitter" className="social-icon" />
+            <a href="https://twitter.com/AuthInteractive" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
+              <img src="/icons/twitter.svg" alt="" className="social-icon" />
             </a>
           </div>
         </div>
@@ -159,48 +152,56 @@ function Footer({ t }) {
   );
 }
 
+// Remonte en haut à chaque changement de page, ou vers l'ancre (#suivre…).
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
+
 function App() {
   const { lang, setLang, t, loading } = useTranslation();
 
   return (
     <LanguageContext.Provider value={{ lang, t, setLang }}>
       <Router>
+        <ScrollManager />
         <div className="app">
-          <Navigation lang={lang} setLang={setLang} t={t} loading={loading} />
-          <main className="main-content">
-            {loading ? (
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '50vh',
-                fontSize: '1.5rem',
-                color: '#888'
-              }}>
-                Chargement des traductions...
-              </div>
-            ) : (
-              <Routes>
-                {/* Pages publiques */}
-                <Route path="/" element={<Home />} />
-                <Route path="/produits" element={<ProduitsImproved />} />
-                <Route path="/produit/:id" element={<ProductDetail />} />
-                <Route path="/jeux" element={<JeuxVideo />} />
-                <Route path="/contact" element={<Contact />} />
-                
-                {/* Pages d'authentification */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/pricing" element={<Pricing />} />
-                
-                {/* Pages panier et paiement */}
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/success" element={<Success />} />
-                
-                {/* Pages utilisateur */}
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Routes>
-            )}
+          <Navigation lang={lang} setLang={setLang} t={t} />
+          <main className="main-content" aria-busy={loading}>
+            <Routes>
+              {/* Pages publiques */}
+              <Route path="/" element={<Home />} />
+              <Route path="/jeux" element={<JeuxVideo />} />
+              <Route path="/boutique" element={<Navigate to="/boutique/musiques" replace />} />
+              <Route path="/boutique/:section" element={<Boutique />} />
+              <Route path="/produits" element={<Navigate to="/boutique/templates" replace />} />
+              <Route path="/produit/:id" element={<ProductDetail />} />
+              <Route path="/contact" element={<Contact />} />
+
+              {/* Pages d'authentification */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/pricing" element={<Pricing />} />
+
+              {/* Pages panier et paiement */}
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/success" element={<Success />} />
+
+              {/* Pages utilisateur */}
+              <Route path="/dashboard" element={<Dashboard />} />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </main>
           <Footer t={t} />
         </div>
@@ -222,4 +223,3 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
-

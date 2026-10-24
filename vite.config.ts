@@ -8,7 +8,7 @@ export default defineConfig({
     allowedHosts: ["x89fhh-5174.csb.app"], // autorise Codesandbox
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        target: "http://localhost:8787",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
       },

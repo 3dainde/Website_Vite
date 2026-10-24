@@ -1,0 +1,12 @@
+Déposez ici la musique du menu principal sous le nom :
+
+    menu-principal.mp3
+
+Conseil : un extrait MP3 de 30 à 60 secondes en 128 kbit/s suffit pour l'écoute sur le site
+(le fichier complet WAV se livre après achat).
+
+Puis complétez la fiche dans src/data/siteData.ts (tableau MUSIC) :
+  - duration  : durée affichée, ex. "2:14"
+  - price     : prix en euros, ex. 9.99 (null = "Bientôt en vente")
+  - sacemCode : code de l'œuvre ou ISWC figurant sur votre déclaration SACEM
+  - sacemUrl  : lien vers la fiche de l'œuvre sur https://repertoire.sacem.fr

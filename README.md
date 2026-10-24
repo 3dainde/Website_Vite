@@ -10,7 +10,7 @@ AuthInteractive is a complete platform for managing and selling digital products
 
 - Modern React 19 architecture with Vite
 - Multi-language support (6 languages)
-- Secure contact form with Gmail SMTP backend
+- Contact form and "notify me" newsletter through a free Cloudflare Worker + Brevo (see Documentation/EMAIL_AUTOMATION.md)
 - Automatic spam and bot protection
 - Product catalog and e-commerce functionality
 - User authentication and dashboard
@@ -28,8 +28,8 @@ AuthInteractive is a complete platform for managing and selling digital products
 - CSS3
 
 ### Backend
-- Express.js
-- Nodemailer
+- Cloudflare Workers (folder `worker/`), free plan
+- Brevo API (transactional e-mails + mailing list)
 - TypeScript
 
 ### Infrastructure
@@ -66,9 +66,10 @@ Update `.env` with your credentials (Gmail SMTP, Firebase, etc.)
 
 4. Start the development servers:
 
-Terminal 1 - Backend:
+Terminal 1 - Backend (e-mail API):
 ```bash
-npm run server:dev
+npm --prefix worker install
+npm run api:dev
 ```
 
 Terminal 2 - Frontend:
@@ -84,7 +85,8 @@ The application will be available at `http://localhost:5174`
 
 ```bash
 npm run dev           # Start frontend development server
-npm run server:dev    # Start backend development server
+npm run api:dev       # Start the e-mail API locally (Cloudflare Worker)
+npm run api:deploy    # Deploy the e-mail API
 npm run build         # Create production build
 npm run preview       # Preview production build locally
 npm run deploy        # Build and deploy to GitHub Pages
@@ -110,10 +112,8 @@ src/
 Copy `.env.example` to `.env` and configure:
 
 ```env
-# Email Service
-GMAIL_USER=your-email@gmail.com
-GMAIL_PASSWORD=your_app_password
-PORT=3001
+# E-mail API (Cloudflare Worker)
+VITE_API_URL=https://api.authinteractive.com
 
 # Firebase (optional)
 VITE_FIREBASE_API_KEY=...
@@ -168,14 +168,11 @@ The project can be deployed to Vercel, Netlify, Heroku, AWS Amplify, or any Node
 
 ## Troubleshooting
 
-### Backend Not Connecting
-- Ensure backend runs on port 3001: `npm run server:dev`
-- Check frontend proxy configuration in `vite.config.ts`
-
 ### Emails Not Sending
-- Verify Gmail 2FA is enabled
-- Confirm app password (not Gmail password) in `.env`
-- Check backend logs for errors
+- Check https://api.authinteractive.com/api/health
+- Check the Worker logs: `cd worker && npx wrangler tail`
+- Check that the domain is authenticated in Brevo (DKIM)
+- Full guide: [Documentation/EMAIL_AUTOMATION.md](Documentation/EMAIL_AUTOMATION.md)
 
 ### Build Failures
 - Clear node_modules and reinstall: `rm -rf node_modules && npm install`
@@ -193,6 +190,6 @@ All rights reserved. AuthInteractive 2024-2026.
 
 ## Version
 
-Current version: 1.2.2
+Current version: 2.1.0
 
-Last updated: January 2026
+Last updated: October 2026

@@ -6,7 +6,7 @@ interface CartItem {
   title: string;
   price: number;
   image?: string;
-  type: 'template' | 'asset' | 'formation';
+  type: 'template' | 'asset' | 'formation' | 'music';
 }
 
 interface CartContextType {

@@ -1,0 +1,3 @@
+# Copiez ce fichier en .dev.vars pour tester l'API en local (npm run dev).
+# Ne jamais commiter .dev.vars.
+BREVO_API_KEY=xkeysib-votre-cle

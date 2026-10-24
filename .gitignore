@@ -36,3 +36,7 @@ _Backup/
 *.jpg~
 *.png~
 *.tmp
+
+# Cloudflare Worker (API e-mail)
+worker/.wrangler/
+worker/.dev.vars

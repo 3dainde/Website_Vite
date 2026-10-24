@@ -15,6 +15,8 @@ export interface Product {
   category: ProductCategory; // Nouvelle propriété
   tags: string[]; // Tags pour recherche avancée
   image: string;
+  /** Visuel plein cadre utilisé dans la boutique (facultatif). */
+  cover?: string;
   features: string[];
   featuresEn: string[];
   downloadSize: string;
@@ -37,6 +39,7 @@ export const PRODUCTS: Product[] = [
     category: 'game',
     tags: ['wingsuit', 'physique', 'vol', 'action', 'sport'],
     image: '/images/products/wingsuit.svg',
+    cover: '/images/site/wingsuit.webp',
     features: [
       'Physique réaliste basée sur la vraie aérodynamique',
       'Système de boost et contrôle avancé',

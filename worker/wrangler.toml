@@ -1,0 +1,29 @@
+# API e-mail d'AuthInteractive — Cloudflare Workers (offre gratuite, sans période d'essai)
+# Guide complet : Documentation/EMAIL_AUTOMATION.md
+
+name = "authinteractive-api"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+# Une fois le domaine authinteractive.com géré par Cloudflare, décommentez
+# pour servir l'API sur https://api.authinteractive.com
+# routes = [{ pattern = "api.authinteractive.com", custom_domain = true }]
+
+[vars]
+# Boîte qui reçoit les messages du formulaire de contact
+CONTACT_TO = "support@authinteractive.com"
+# Expéditeur des e-mails (domaine à authentifier dans Brevo)
+SENDER_EMAIL = "support@authinteractive.com"
+SENDER_NAME = "AuthInteractive"
+# Sites autorisés à appeler l'API (séparés par des virgules)
+ALLOWED_ORIGINS = "https://authinteractive.com,https://www.authinteractive.com,http://localhost:5173,http://localhost:5174"
+# Numéro de la liste Brevo "Soyez prévenu à la sortie"
+BREVO_LIST_ID = "2"
+# Double opt-in (recommandé, RGPD) : numéro du modèle Brevo de confirmation. Laisser "" pour désactiver.
+BREVO_DOI_TEMPLATE_ID = ""
+DOI_REDIRECT_URL = "https://authinteractive.com/jeux"
+# Accusé de réception automatique au visiteur ("false" pour désactiver)
+SEND_ACK = "true"
+
+# Secret (jamais dans ce fichier) :
+#   npx wrangler secret put BREVO_API_KEY

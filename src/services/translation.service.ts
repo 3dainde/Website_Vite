@@ -120,7 +120,7 @@ export async function preloadTranslations(
   console.log(`🔄 Préchargement des traductions pour: ${targetLang}`);
   
   // Vérifier si les traductions sont déjà en cache
-  const cacheKey = `preload_${targetLang}`;
+  const cacheKey = `preload_v3_${targetLang}`; // v3 : refonte du site (nouveaux textes)
   const cached = localStorage.getItem(cacheKey);
   
   if (cached) {
