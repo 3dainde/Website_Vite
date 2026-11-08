@@ -1,0 +1,198 @@
+/* ── Hypercube 3D de l'accueil ── */
+
+@property --spread {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.hc-scene {
+  --s: 12.5cqi;                    /* arête d'un cube, proportionnelle au bloc */
+  --gap: calc(var(--s) * 0.1);     /* écart au repos */
+  --mx: 0;
+  --my: 0;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 600px;
+  margin: 0 auto;
+  perspective: 1400px;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hc-glow {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 200, 255, 0.24) 0%, rgba(30, 200, 255, 0.07) 45%, transparent 70%);
+  filter: blur(24px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.hc-scene.is-exploded .hc-glow {
+  transform: scale(1.18);
+  opacity: 1.2;
+}
+
+.hc-world,
+.hc-spin,
+.hc-cluster {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.hc-world {
+  --spread: 0px;
+  transform:
+    rotateX(calc(-26deg + var(--my) * -12deg))
+    rotateY(calc(var(--mx) * 18deg));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), --spread 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.15);
+}
+
+.hc-scene.is-exploded .hc-world {
+  --spread: calc(var(--s) * 0.32);
+}
+
+.hc-spin {
+  animation: hc-spin 36s linear infinite;
+}
+
+@keyframes hc-spin {
+  from { transform: rotateY(45deg); }
+  to { transform: rotateY(405deg); }
+}
+
+/* Un cube : centré, puis placé selon sa position x/y/z dans la grille */
+.hc-cube {
+  --push: 0px;
+  --step: calc(var(--s) + var(--gap) + var(--spread) + var(--push));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  transform-style: preserve-3d;
+  transform: translate3d(calc(var(--x) * var(--step)), calc(var(--y) * var(--step)), calc(var(--z) * var(--step)));
+  transition: --push 0.35s ease, filter 0.35s ease;
+}
+
+/* Le cube survolé ressort un peu plus et s'illumine */
+.hc-cube:hover {
+  --push: calc(var(--s) * 0.18);
+  filter: brightness(1.6);
+}
+
+.hc-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(140, 225, 255, 0.75);
+  background: linear-gradient(135deg, rgba(60, 190, 255, 0.28), rgba(20, 90, 200, 0.12));
+  box-shadow: inset 0 0 calc(var(--s) * 0.3) rgba(30, 200, 255, 0.35), 0 0 10px rgba(30, 200, 255, 0.18);
+  backface-visibility: visible;
+}
+
+/* Carré intérieur lumineux, comme sur le visuel d'origine */
+.hc-face::after {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  border: 1px solid rgba(170, 235, 255, 0.85);
+  background: rgba(80, 210, 255, 0.16);
+  box-shadow: 0 0 12px rgba(30, 200, 255, 0.55), inset 0 0 8px rgba(120, 220, 255, 0.4);
+}
+
+.hc-face--front  { transform: translateZ(calc(var(--s) / 2)); }
+.hc-face--back   { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.hc-face--right  { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); background: linear-gradient(135deg, rgba(40, 150, 240, 0.24), rgba(10, 60, 160, 0.1)); }
+.hc-face--left   { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); background: linear-gradient(135deg, rgba(40, 150, 240, 0.2), rgba(10, 60, 160, 0.08)); }
+.hc-face--top    { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); background: linear-gradient(135deg, rgba(110, 220, 255, 0.36), rgba(40, 140, 230, 0.16)); }
+.hc-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+
+/* Orbites : fixes autour du bloc, elles ne bougent pas quand il s'écarte */
+.hc-orbit {
+  --d: calc(var(--s) * 6.4 * var(--o-size));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  border: 1px solid rgba(140, 205, 255, 0.32);
+  box-shadow: 0 0 8px rgba(30, 200, 255, 0.12);
+  transform-style: preserve-3d;
+}
+
+.hc-orbit-track {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: hc-orbit linear infinite;
+}
+
+@keyframes hc-orbit {
+  to { transform: rotateZ(360deg); }
+}
+
+.hc-electron {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform-style: preserve-3d;
+}
+
+.hc-electron--dot {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: #bff0ff;
+  box-shadow: 0 0 8px 2px rgba(30, 200, 255, 0.9), 0 0 22px 6px rgba(30, 200, 255, 0.45);
+}
+
+.hc-electron--cube {
+  width: 0;
+  height: 0;
+}
+
+.hc-mini {
+  --s-mini: calc(var(--s) * 0.42);
+  position: absolute;
+  width: var(--s-mini);
+  height: var(--s-mini);
+  margin: calc(var(--s-mini) / -2) 0 0 calc(var(--s-mini) / -2);
+  transform-style: preserve-3d;
+  animation: hc-mini-spin 6s linear infinite;
+}
+
+.hc-mini .hc-face {
+  --s: var(--s-mini);
+  box-shadow: inset 0 0 6px rgba(30, 200, 255, 0.4), 0 0 10px rgba(30, 200, 255, 0.35);
+}
+
+@keyframes hc-mini-spin {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@media (hover: none) {
+  .hc-cube:hover {
+    --push: 0px;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hc-spin,
+  .hc-orbit-track,
+  .hc-mini {
+    animation: none;
+  }
+
+  .hc-world {
+    transition: none;
+  }
+}

@@ -609,7 +609,7 @@ textarea.ai-input {
 .home-hero-visual img {
   position: relative;
   width: 100%;
-  max-width: 680px;
+  max-width: 100%;
   height: auto;
   /* Le fond noir de l'image disparaît, les bords se dissolvent dans la page */
   mix-blend-mode: screen;
@@ -618,27 +618,60 @@ textarea.ai-input {
 }
 
 .home-hero-side {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  margin-top: 4px;
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  z-index: 1;
+  padding-left: 18px;
+  border-left: 2px solid var(--accent);
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.32em;
+  line-height: 2;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text);
   list-style: none;
+  /* Remonte légèrement plus vite que la page au scroll */
+  transform: translate3d(0, calc(-50% - var(--hero-p, 0) * 80px), 0);
+  opacity: calc(1 - var(--hero-p, 0) * 1.6);
+  will-change: transform, opacity;
 }
 
-.home-hero-side li + li::before {
-  content: '';
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  margin-right: 14px;
-  vertical-align: middle;
-  background: var(--accent);
+/* ── Animation du cube : flottement + parallaxe au scroll ── */
+.home-hero-visual {
+  /* Laisse la place à la colonne "Imaginer / Créer / Jouer" à droite */
+  padding-right: clamp(0px, 9vw, 150px);
+}
+
+.home-hero-visual-float {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  animation: hero-float 7s ease-in-out infinite;
+}
+
+.home-hero-visual img {
+  transform:
+    translate3d(0, calc(var(--hero-p, 0) * 140px), 0)
+    rotate(calc(var(--hero-p, 0) * 14deg))
+    scale(calc(1 - var(--hero-p, 0) * 0.15));
+  opacity: calc(1 - var(--hero-p, 0) * 0.7);
+  will-change: transform, opacity;
+}
+
+.home-hero-visual::before {
+  transform: scale(calc(1 + var(--hero-p, 0) * 0.4));
+  opacity: calc(1 - var(--hero-p, 0));
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translate3d(0, -8px, 0) rotate(-1deg); }
+  50% { transform: translate3d(0, 10px, 0) rotate(1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-visual-float { animation: none; }
 }
 
 .home-title {
@@ -1367,7 +1400,12 @@ textarea.ai-input {
   .home-hero-visual {
     position: absolute;
     inset: 0;
+    padding-right: 0;
     opacity: 0.28;
+  }
+
+  .home-hero-side {
+    display: none;
   }
 
   .home-tagline {

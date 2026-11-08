@@ -2,6 +2,8 @@
 // Contenu éditorial du site : jeux, expérimentations, devlog, musiques.
 // Modifiez ce fichier pour mettre à jour les textes sans toucher aux pages.
 
+import musicFiles from 'virtual:music-files';
+
 export type GameStage = 0 | 1 | 2 | 3 | 4; // Concept, Prototype, Alpha, Bêta, Sortie
 
 export interface Game {
@@ -96,7 +98,12 @@ export const DEVLOG: DevlogEntry[] = [
   },
 ];
 
-export const MUSIC: MusicTrack[] = [
+/**
+ * Fiches détaillées (prix, durée, SACEM…). Facultatif : toute piste déposée dans
+ * public/music apparaît d'office dans le lecteur et la boutique, même sans fiche ici.
+ * Ajoutez une fiche quand vous voulez préciser son titre, sa durée ou son prix.
+ */
+const MUSIC_DETAILS: MusicTrack[] = [
   {
     id: 'cube-main-menu-01',
     title: 'CUBE — MAIN MENU 01',
@@ -119,4 +126,53 @@ export const MUSIC: MusicTrack[] = [
     sacemUrl: 'https://repertoire.sacem.fr/',
     sacemCode: '[CODE ŒUVRE SACEM]',
   },
+  {
+    id: 'cube-main-menu-03',
+    title: 'CUBE — MAIN MENU 03',
+    usage: 'MENU',
+    duration: '3:30',
+    loop: 'NON',
+    price: null,
+    audioSrc: '/music/CUBE_MainMenu_Title03.mp3',
+    sacemUrl: 'https://repertoire.sacem.fr/',
+    sacemCode: '[CODE ŒUVRE SACEM]',
+  },
+];
+
+/** Fichiers de public/music à ne pas afficher (anciennes démos…). */
+const MUSIC_IGNORE = ['Tense Silence.mp3'];
+
+/** "CUBE_MainMenu_Title03.mp3" → "CUBE — MAIN MENU TITLE 03" */
+const titleFromFile = (file: string) => {
+  const words = file
+    .replace(/\.[^.]+$/, '')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([A-Za-z])(\d)/g, '$1 $2')
+    .split(/[_\-\s]+/)
+    .filter(Boolean)
+    .map((w) => w.toUpperCase());
+  return words.length > 1 ? `${words[0]} — ${words.slice(1).join(' ')}` : words.join(' ');
+};
+
+const slug = (file: string) =>
+  'music-' + file.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+/** Playlist finale : les fiches détaillées d'abord, puis chaque nouveau fichier audio trouvé. */
+const knownSrc = new Set(MUSIC_DETAILS.map((t) => t.audioSrc));
+
+export const MUSIC: MusicTrack[] = [
+  ...MUSIC_DETAILS.filter((t) => musicFiles.includes(t.audioSrc.replace('/music/', ''))),
+  ...musicFiles
+    .filter((f) => !MUSIC_IGNORE.includes(f) && !knownSrc.has(`/music/${f}`))
+    .map((f) => ({
+      id: slug(f),
+      title: titleFromFile(f),
+      usage: 'MUSIQUE',
+      duration: '[0:00]',
+      loop: 'NON',
+      price: null,
+      audioSrc: `/music/${encodeURI(f)}`,
+      sacemUrl: 'https://repertoire.sacem.fr/',
+      sacemCode: '[CODE ŒUVRE SACEM]',
+    })),
 ];

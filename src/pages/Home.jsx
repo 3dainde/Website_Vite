@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { GAMES, LABS } from '../data/siteData';
@@ -9,10 +9,35 @@ const PROJECTS = [...LABS, ...GAMES];
 export default function Home() {
   const { t } = useContext(LanguageContext);
   const h = t.home;
+  const heroRef = useRef(null);
+
+  // Parallaxe : --hero-p passe de 0 à 1 pendant que le hero sort de l'écran.
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = hero.getBoundingClientRect();
+      const p = Math.min(Math.max(-rect.top / rect.height, 0), 1);
+      hero.style.setProperty('--hero-p', p.toFixed(4));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <>
-      <section className="home-hero">
+      <section className="home-hero" ref={heroRef}>
         <div className="ai-container home-hero-inner">
           <div className="home-hero-copy">
             <p className="ai-kicker">{h.kicker}</p>
@@ -35,22 +60,24 @@ export default function Home() {
                 <PlayCircleIcon />
               </Link>
             </div>
-            <ul className="home-hero-side" aria-label={`${h.side1}, ${h.side2}, ${h.side3}`}>
-              <li>{h.side1}</li>
-              <li>{h.side2}</li>
-              <li>{h.side3}</li>
-            </ul>
           </div>
           <div className="home-hero-visual">
-            <img
-              src="/images/site/cube.webp"
-              alt={h.heroAlt}
-              width="1024"
-              height="944"
-              fetchPriority="high"
-              decoding="async"
-            />
+            <div className="home-hero-visual-float">
+              <img
+                src="/images/site/cube.webp"
+                alt={h.heroAlt}
+                width="1024"
+                height="944"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </div>
           </div>
+          <ul className="home-hero-side" aria-label={`${h.side1}, ${h.side2}, ${h.side3}`}>
+            <li>{h.side1}</li>
+            <li>{h.side2}</li>
+            <li>{h.side3}</li>
+          </ul>
         </div>
       </section>
 
