@@ -178,6 +178,7 @@ function App() {
       <Router>
         <ScrollManager />
         <div className="app">
+          <div className="cube-bg-layer" aria-hidden="true" />
           <Navigation lang={lang} setLang={setLang} t={t} />
           <main className="main-content" aria-busy={loading}>
             <Routes>

@@ -1,10 +1,10 @@
-﻿import React, { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { GAMES, LABS } from '../data/siteData';
 import { ArrowIcon, PlayCircleIcon } from '../components/Icons';
 
-const PROJECTS = [...GAMES, ...LABS];
+const PROJECTS = [...LABS, ...GAMES];
 
 export default function Home() {
   const { t } = useContext(LanguageContext);
@@ -76,7 +76,7 @@ export default function Home() {
           <Link
             to="/boutique/musiques"
             className="ai-card shop-door"
-            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 35%, rgba(6,11,18,0.35) 100%), url(/images/site/stargate.webp)' }}
+            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 35%, rgba(6,11,18,0.35) 100%), url(/images/site/cube.webp)' }}
           >
             <span className="ai-meta">{h.musicKicker}</span>
             <span className="shop-door-title">{h.musicTitle}</span>

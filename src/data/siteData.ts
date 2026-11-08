@@ -58,7 +58,7 @@ export const GAMES: Game[] = [
     id: 'focus',
     name: 'FOCUS',
     tags: 'PUZZLE 3D',
-    image: '/images/site/hero.webp',
+    image: '/images/site/cube.webp',
     stage: 1,
     platforms: 'PC',
     pitch:
@@ -77,20 +77,6 @@ export const GAMES: Game[] = [
 ];
 
 export const LABS: Lab[] = [
-  {
-    id: 'stargate',
-    name: 'STARGATE EFFECT',
-    tags: 'EFFETS VISUELS',
-    image: '/images/site/stargate.webp',
-    desc: 'Effet de portail et de téléportation en temps réel.',
-  },
-  {
-    id: 'procedural-forest',
-    name: 'PROCEDURAL FOREST',
-    tags: 'PCG / UNREAL ENGINE',
-    image: '/images/site/forest.webp',
-    desc: "Génération procédurale de forêts avec le PCG d'Unreal Engine.",
-  },
   {
     id: 'cube-system',
     name: 'CUBE SYSTEM',
