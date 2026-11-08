@@ -1,12 +1,17 @@
-Déposez ici la musique du menu principal sous le nom :
+AJOUTER UNE PISTE AU LECTEUR ET A LA BOUTIQUE
+=============================================
 
-    menu-principal.mp3
+1. Deposez le fichier audio dans ce dossier (public/music).
+   Formats acceptes : .mp3 (conseille), .ogg, .m4a, .wav
+2. Lancez publier-refonte.bat.
 
-Conseil : un extrait MP3 de 30 à 60 secondes en 128 kbit/s suffit pour l'écoute sur le site
-(le fichier complet WAV se livre après achat).
+C'est tout : la piste rejoint automatiquement la playlist du lecteur
+et la liste de la boutique, triee par nom de fichier.
+Le titre affiche vient du nom du fichier :
+   CUBE_MainMenu_Title03.mp3  ->  CUBE — MAIN MENU TITLE 03
 
-Puis complétez la fiche dans src/data/siteData.ts (tableau MUSIC) :
-  - duration  : durée affichée, ex. "2:14"
-  - price     : prix en euros, ex. 9.99 (null = "Bientôt en vente")
-  - sacemCode : code de l'œuvre ou ISWC figurant sur votre déclaration SACEM
-  - sacemUrl  : lien vers la fiche de l'œuvre sur https://repertoire.sacem.fr
+Facultatif : pour afficher un titre, une duree, un prix ou un code SACEM,
+ajoutez une fiche dans src/data/siteData.ts (tableau MUSIC_DETAILS).
+
+Pour masquer un fichier sans le supprimer, ajoutez son nom
+dans MUSIC_IGNORE (meme fichier). "Tense Silence.mp3" y est deja.
