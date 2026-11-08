@@ -24,7 +24,7 @@ export interface SubscribePayload {
 
 const API_URL: string =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? 'https://api.authinteractive.com' : 'http://localhost:8787');
+  (import.meta.env.PROD ? 'https://authinteractive-api.authinteractive.workers.dev' : 'http://localhost:8787');
 
 async function post(path: string, body: unknown): Promise<void> {
   const response = await fetch(`${API_URL}${path}`, {

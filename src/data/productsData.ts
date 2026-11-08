@@ -49,9 +49,8 @@ export const PRODUCTS: Product[] = [
     tags: ['wingsuit', 'physique', 'vol', 'action', 'sport'],
     image: '/images/products/wingsuit.svg',
     cover: '/images/site/wingsuit.webp',
-    featuresTbd: true,
     features: [
-      'Physique réaliste basée sur la vraie aérodynamique',
+      'Physique semi-réaliste ou arcade',
       'Système de boost et contrôle avancé',
       '5+ animations mocap incluses',
       'Effets visuels (trails, vent, vitesse)',
@@ -59,7 +58,7 @@ export const PRODUCTS: Product[] = [
       'Support technique 6 mois'
     ],
     featuresEn: [
-      'Realistic physics based on real aerodynamics',
+      'Semi-realistic or arcade physics',
       'Boost system and advanced controls',
       '5+ mocap animations included',
       'Visual effects (trails, wind, speed)',
