@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link, NavLink, Navigate, useLoc
 import { CartProvider, useCart } from "./context/CartContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { TranslationProvider, useTranslation } from "./context/TranslationContext";
+import { MusicPlayerProvider } from "./context/MusicPlayerContext";
 import { CartIcon, LogoMark, MenuIcon, CloseIcon } from "./components/Icons";
+import MusicPlayer from "./components/MusicPlayer";
 import "./App.css";
 
 // Créer LanguageContext pour la compatibilité avec les anciens composants
@@ -204,6 +206,7 @@ function App() {
             </Routes>
           </main>
           <Footer t={t} />
+          <MusicPlayer />
         </div>
       </Router>
     </LanguageContext.Provider>
@@ -215,7 +218,9 @@ function AppWrapper() {
     <TranslationProvider>
       <AuthProvider>
         <CartProvider>
-          <App />
+          <MusicPlayerProvider>
+            <App />
+          </MusicPlayerProvider>
         </CartProvider>
       </AuthProvider>
     </TranslationProvider>

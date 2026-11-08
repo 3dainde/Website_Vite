@@ -51,6 +51,60 @@ export function PauseIcon({ size = 16 }) {
   );
 }
 
+export function PrevIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <rect x="5" y="5" width="3" height="14" />
+      <path d="M19 5v14l-10-7z" />
+    </svg>
+  );
+}
+
+export function NextIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M5 5v14l10-7z" />
+      <rect x="16" y="5" width="3" height="14" />
+    </svg>
+  );
+}
+
+export function VolumeIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" strokeWidth="1.8" {...base}>
+      <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" />
+      <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+    </svg>
+  );
+}
+
+export function MuteIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" strokeWidth="1.8" {...base}>
+      <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" />
+      <path d="m16 9.5 5 5M21 9.5l-5 5" />
+    </svg>
+  );
+}
+
+export function MinimizeIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" strokeWidth="2" {...base}>
+      <path d="M6 12h12" />
+    </svg>
+  );
+}
+
+export function MusicNoteIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" strokeWidth="1.8" {...base}>
+      <path d="M9 18V6l10-2v12" />
+      <circle cx="6.5" cy="18" r="2.5" />
+      <circle cx="16.5" cy="16" r="2.5" />
+    </svg>
+  );
+}
+
 export function CloseIcon({ size = 16 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" strokeWidth="2" {...base}>

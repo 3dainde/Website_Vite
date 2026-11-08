@@ -1344,3 +1344,293 @@ select.ai-input {
   background-image: linear-gradient(#10243a 1px, transparent 1px), linear-gradient(90deg, #10243a 1px, transparent 1px);
   background-size: 28px 28px;
 }
+
+/* ── Lecteur Minimalist Neon Line (Variante 06) ── */
+.music-player.neon-line-theme {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 14px 0 10px;
+  background: rgba(4, 7, 12, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(22, 50, 74, 0.9);
+  border-bottom: 2px solid var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 16px rgba(30, 200, 255, 0.15);
+  transition: all 0.25s ease;
+  font-family: var(--font-label);
+}
+
+.music-player.neon-line-theme.is-playing {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 0 22px rgba(30, 200, 255, 0.35);
+  border-bottom-color: #55dcff;
+}
+
+/* Bouton Play/Pause en petit sur la gauche */
+.mp-play-mini {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: rgba(30, 200, 255, 0.12);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 0 8px rgba(30, 200, 255, 0.25);
+}
+
+.mp-play-mini:hover {
+  background: var(--accent);
+  color: #02060a;
+  box-shadow: 0 0 14px rgba(30, 200, 255, 0.6);
+  transform: scale(1.06);
+}
+
+/* Navigation de piste discrète */
+.mp-track-nav {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.mp-btn-nano {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.mp-btn-nano:hover {
+  color: var(--accent);
+  background: rgba(30, 200, 255, 0.08);
+}
+
+/* Détails du titre */
+.mp-track-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mp-track-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.mp-track-count {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(30, 200, 255, 0.1);
+  border: 1px solid rgba(30, 200, 255, 0.25);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Barre Neon Line */
+.mp-neon-line {
+  flex: 1 1 120px;
+  min-width: 90px;
+  max-width: 160px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.mp-neon-track {
+  width: 100%;
+  height: 2px;
+  background: rgba(22, 50, 74, 0.8);
+  border-radius: 1px;
+  position: relative;
+  transition: height 0.15s ease;
+}
+
+.mp-neon-line:hover .mp-neon-track {
+  height: 4px;
+}
+
+.mp-neon-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #104264, var(--accent));
+  box-shadow: 0 0 8px rgba(30, 200, 255, 0.6);
+  border-radius: 1px;
+  position: relative;
+}
+
+.mp-neon-glow-head {
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Spectre animé */
+.music-player.neon-line-theme .mp-bars {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 14px;
+  padding: 0 2px;
+}
+
+.music-player.neon-line-theme .mp-bars span {
+  width: 2px;
+  height: 25%;
+  background: var(--accent);
+  border-radius: 1px;
+  animation: mp-bar 0.9s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.music-player.neon-line-theme.is-playing .mp-bars span {
+  animation-play-state: running;
+}
+
+.mp-bars span:nth-child(2) { animation-delay: -0.3s; animation-duration: 0.7s; }
+.mp-bars span:nth-child(3) { animation-delay: -0.6s; animation-duration: 1.1s; }
+.mp-bars span:nth-child(4) { animation-delay: -0.2s; animation-duration: 0.8s; }
+.mp-bars span:nth-child(5) { animation-delay: -0.5s; animation-duration: 1s; }
+
+@keyframes mp-bar {
+  from { height: 20%; }
+  to { height: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-player.neon-line-theme .mp-bars span {
+    animation: none;
+    height: 60%;
+  }
+}
+
+/* Volume minimaliste */
+.mp-volume-block {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mp-range-slim {
+  width: 50px;
+  height: 2px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.mp-vol-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  width: 28px;
+  text-align: right;
+  letter-spacing: 0.05em;
+}
+
+/* Mode réduit (mini pill) */
+.music-player.neon-line-theme.is-collapsed {
+  padding: 0;
+  height: auto;
+  border-radius: 20px;
+  border-bottom: 1px solid rgba(22, 50, 74, 0.9);
+}
+
+.mp-mini-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  background: rgba(4, 7, 12, 0.95);
+  color: var(--text-secondary);
+  font-family: var(--font-label);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.mp-mini-pill:hover {
+  border-color: var(--accent);
+  color: var(--text-strong);
+  box-shadow: 0 0 14px rgba(30, 200, 255, 0.35);
+}
+
+.mp-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.mp-indicator-dot.live {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.mp-mini-title {
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.08em;
+}
+
+/* Responsive mobile */
+@media (max-width: 680px) {
+  .music-player.neon-line-theme {
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    justify-content: space-between;
+  }
+  .music-player.neon-line-theme.is-collapsed {
+    left: auto;
+  }
+  .mp-neon-line {
+    display: none;
+  }
+  .mp-range-slim {
+    display: none;
+  }
+}

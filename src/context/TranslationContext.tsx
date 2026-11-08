@@ -117,6 +117,19 @@ const baseTranslations = {
     price: 'Prix',
     description: 'Description'
   },
+  player: {
+    label: 'Lecteur de musique',
+    play: 'Lecture',
+    pause: 'Pause',
+    next: 'Titre suivant',
+    mute: 'Couper le son',
+    unmute: 'Rétablir le son',
+    volume: 'Volume',
+    collapse: 'Réduire le lecteur',
+    expand: 'Agrandir le lecteur',
+    playing: 'En lecture',
+    paused: 'En pause'
+  },
   games: {
     title: 'Nos Jeux',
     available: 'Disponible',

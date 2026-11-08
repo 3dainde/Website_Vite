@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, Navigate, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { useCart } from '../context/CartContext';
+import { useMusicPlayer } from '../context/MusicPlayerContext';
 import { PRODUCTS } from '../data/productsData';
 import { MUSIC, isPlaceholder } from '../data/siteData';
 import { CloseIcon, PauseIcon, PlayIcon, ShieldIcon } from '../components/Icons';
@@ -28,56 +29,14 @@ function AddButton({ inCart, disabled, onAdd, t }) {
 }
 
 function MusicSection({ t, cart, addToCart }) {
-  const audioRef = useRef(null);
-  const [playing, setPlaying] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [missing, setMissing] = useState({});
-
-  useEffect(() => () => audioRef.current?.pause(), []);
-
-  const toggle = async (track) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing === track.id) {
-      audio.pause();
-      setPlaying(null);
-      return;
-    }
-    if (!audio.src.endsWith(track.audioSrc)) {
-      audio.src = track.audioSrc;
-      setProgress(0);
-    }
-    try {
-      await audio.play();
-      setPlaying(track.id);
-    } catch {
-      setMissing((m) => ({ ...m, [track.id]: true }));
-      setPlaying(null);
-    }
-  };
+  // Lecture assurée par le lecteur global (même playlist, ne s'interrompt pas en changeant de page).
+  const { current, playing, progress, failed: missing, toggleTrack } = useMusicPlayer();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-      <audio
-        ref={audioRef}
-        preload="none"
-        onTimeUpdate={(e) => {
-          const a = e.currentTarget;
-          if (a.duration) setProgress(a.currentTime / a.duration);
-        }}
-        onEnded={() => {
-          setPlaying(null);
-          setProgress(0);
-        }}
-        onError={() => {
-          if (playing) setMissing((m) => ({ ...m, [playing]: true }));
-          setPlaying(null);
-        }}
-      />
-
       <ol className="tracklist">
         {MUSIC.map((track, i) => {
-          const isPlaying = playing === track.id;
+          const isPlaying = playing && current?.id === track.id;
           const lit = isPlaying ? Math.max(1, Math.round(progress * WAVE.length)) : 0;
           const inCart = cart.some((c) => c.id === track.id);
           return (
@@ -88,7 +47,7 @@ function MusicSection({ t, cart, addToCart }) {
               <button
                 type="button"
                 className="play-button"
-                onClick={() => toggle(track)}
+                onClick={() => toggleTrack(track.id)}
                 disabled={missing[track.id]}
                 aria-label={`${isPlaying ? t.pause : t.play} ${track.title}`}
               >
