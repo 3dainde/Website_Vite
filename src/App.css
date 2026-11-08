@@ -834,7 +834,7 @@ textarea.ai-input {
   box-shadow: 0 0 30px rgba(30, 200, 255, 0.08);
   background-image:
     linear-gradient(90deg, var(--bg-card) 45%, rgba(6, 11, 18, 0.5) 100%),
-    url('/images/site/hero.webp');
+    url('/images/site/cristal-cubes.webp');
   background-size: cover;
   background-position: right 30%;
 }
@@ -1044,7 +1044,7 @@ textarea.ai-input {
   background-image:
     linear-gradient(90deg, var(--bg) 0%, rgba(4, 7, 12, 0.2) 40%, rgba(4, 7, 12, 0) 100%),
     linear-gradient(0deg, var(--bg) 0%, rgba(4, 7, 12, 0) 35%),
-    url('/images/site/hero.webp');
+    url('/images/site/cristal-cubes.webp');
   background-size: cover;
   background-position: center 25%;
 }

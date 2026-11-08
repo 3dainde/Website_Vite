@@ -60,7 +60,7 @@ export const GAMES: Game[] = [
     id: 'focus',
     name: 'FOCUS',
     tags: 'PUZZLE 3D',
-    image: '/images/site/cube.webp',
+    image: '/images/site/cristal-cubes.webp',
     stage: 1,
     platforms: 'PC',
     pitch:
@@ -83,7 +83,7 @@ export const LABS: Lab[] = [
     id: 'cube-system',
     name: 'CUBE SYSTEM',
     tags: 'GAMEPLAY / MULTI',
-    image: '/images/site/cube.webp',
+    image: '/images/site/cristal-cubes.webp',
     desc: 'Système de salles cubiques mobiles, cœur du gameplay de FOCUS.',
   },
 ];

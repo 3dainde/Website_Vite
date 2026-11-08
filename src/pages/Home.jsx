@@ -108,7 +108,7 @@ export default function Home() {
           <Link
             to="/boutique/musiques"
             className="ai-card shop-door"
-            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 0%, #060B12 42%, rgba(6,11,18,0.55) 70%, rgba(6,11,18,0.2) 100%), url(/images/site/cube.webp)' }}
+            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 0%, #060B12 42%, rgba(6,11,18,0.55) 70%, rgba(6,11,18,0.2) 100%), url(/images/site/cristal-cubes.webp)' }}
           >
             <span className="ai-meta">{h.musicKicker}</span>
             <span className="shop-door-title">{h.musicTitle}</span>

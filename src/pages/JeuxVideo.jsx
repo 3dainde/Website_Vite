@@ -17,7 +17,7 @@ export default function JeuxVideo() {
         className="page-hero"
         style={{
           backgroundImage:
-            'linear-gradient(90deg, #04070C 30%, rgba(4,7,12,0.5) 70%, rgba(4,7,12,0.15) 100%), linear-gradient(0deg, #04070C 0%, rgba(4,7,12,0) 50%), url(/images/site/cube.webp)',
+            'linear-gradient(90deg, #04070C 30%, rgba(4,7,12,0.5) 70%, rgba(4,7,12,0.15) 100%), linear-gradient(0deg, #04070C 0%, rgba(4,7,12,0) 50%), url(/images/site/cristal-cubes.webp)',
         }}
       >
         <div className="ai-container page-hero-inner">
