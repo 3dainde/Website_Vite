@@ -13,12 +13,6 @@ export default function Home() {
   return (
     <>
       <section className="home-hero">
-        <div className="home-hero-art" role="img" aria-label={h.heroAlt} />
-        <ul className="home-hero-side" aria-hidden="true">
-          <li>{h.side1}</li>
-          <li>{h.side2}</li>
-          <li>{h.side3}</li>
-        </ul>
         <div className="ai-container home-hero-inner">
           <div className="home-hero-copy">
             <p className="ai-kicker">{h.kicker}</p>
@@ -41,6 +35,21 @@ export default function Home() {
                 <PlayCircleIcon />
               </Link>
             </div>
+            <ul className="home-hero-side" aria-label={`${h.side1}, ${h.side2}, ${h.side3}`}>
+              <li>{h.side1}</li>
+              <li>{h.side2}</li>
+              <li>{h.side3}</li>
+            </ul>
+          </div>
+          <div className="home-hero-visual">
+            <img
+              src="/images/site/cube.webp"
+              alt={h.heroAlt}
+              width="1024"
+              height="944"
+              fetchPriority="high"
+              decoding="async"
+            />
           </div>
         </div>
       </section>
@@ -52,7 +61,7 @@ export default function Home() {
             {h.allProjects} <ArrowIcon size={16} />
           </Link>
         </div>
-        <div className="ai-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+        <div className="ai-grid home-grid home-grid--projects">
           {PROJECTS.map((p) => (
             <Link key={p.id} to="/jeux" className="ai-card project-card">
               <div className="ai-media" style={{ backgroundImage: `url(${p.image})` }} role="img" aria-label={p.name} />
@@ -70,13 +79,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="home-shop" className="ai-container" style={{ paddingBottom: 80 }}>
-        <h2 id="home-shop" className="ai-section-title" style={{ marginBottom: 28 }}>{h.shopTitle}</h2>
-        <div className="ai-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+      <section aria-labelledby="home-shop" className="ai-container home-section">
+        <div className="ai-section-head">
+          <h2 id="home-shop" className="ai-section-title">{h.shopTitle}</h2>
+        </div>
+        <div className="ai-grid home-grid home-grid--shop">
           <Link
             to="/boutique/musiques"
             className="ai-card shop-door"
-            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 35%, rgba(6,11,18,0.35) 100%), url(/images/site/cube.webp)' }}
+            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 0%, #060B12 42%, rgba(6,11,18,0.55) 70%, rgba(6,11,18,0.2) 100%), url(/images/site/cube.webp)' }}
           >
             <span className="ai-meta">{h.musicKicker}</span>
             <span className="shop-door-title">{h.musicTitle}</span>
@@ -88,7 +99,7 @@ export default function Home() {
           <Link
             to="/boutique/templates"
             className="ai-card shop-door"
-            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 35%, rgba(6,11,18,0.35) 100%), url(/images/site/wingsuit.webp)' }}
+            style={{ backgroundImage: 'linear-gradient(90deg, #060B12 0%, #060B12 42%, rgba(6,11,18,0.55) 70%, rgba(6,11,18,0.2) 100%), url(/images/site/wingsuit.webp)' }}
           >
             <span className="ai-meta">{h.tplKicker}</span>
             <span className="shop-door-title">{h.tplTitle}</span>

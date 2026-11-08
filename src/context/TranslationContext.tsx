@@ -34,7 +34,7 @@ const baseTranslations = {
     tplTitle: 'Systèmes UE5',
     tplDesc: 'Les systèmes de nos jeux, prêts à brancher dans les vôtres.',
     tplCta: 'Découvrir',
-    heroAlt: 'Soldat face à un portail lumineux dans une structure de cubes'
+    heroAlt: 'Hypercube de cubes de verre lumineux entouré d’orbites néon'
   },
   gamesPage: {
     kicker: 'Projets en cours',

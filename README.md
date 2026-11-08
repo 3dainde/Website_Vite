@@ -94,15 +94,90 @@ npm run deploy        # Build and deploy to GitHub Pages
 
 ### Project Structure
 
-```
-src/
-├── pages/            # Application pages
-├── context/          # Context API (auth, cart, translations)
-├── services/         # Business logic and API calls
-├── data/             # Static data and constants
-├── styles/           # CSS files
-├── types/            # TypeScript definitions
-└── utils/            # Utility functions
+```text
+D:\AuthInteractive/
+├── publier-refonte.bat               # Script batch de publication automatique (GitHub + GitHub Pages)
+├── CUBE_MainMenu_Title01.mp3         # Bande sonore originale (Titre 01)
+├── CUBE_MainMenu_Title02.mp3         # Bande sonore originale (Titre 02)
+├── auth-interactive-dev/             # Dépôt initial / workspace de référence
+└── Vite Project/                     # 🚀 PROJET PRINCIPAL DU SITE (React 19 + Vite)
+    ├── package.json                  # Dépendances (React 19, Vite, Stripe, Firebase, i18next)
+    ├── vite.config.ts                # Configuration du bundler Vite
+    ├── tsconfig.json                 # Configuration TypeScript
+    ├── index.html                    # Entrée HTML principale (polices Orbitron, Rajdhani, Inter)
+    ├── CNAME                         # Domaine personnalisé (authinteractive.com)
+    ├── .env.example                  # Variables d'environnement d'exemple
+    │
+    ├── public/                       # Fichiers statiques servis à la racine
+    │   ├── 404.html                  # Redirection SPA pour GitHub Pages
+    │   ├── CNAME                     # Configuration domaine pour GitHub Pages
+    │   ├── favicon.png & logo.png    # Identité visuelle AuthInteractive
+    │   ├── icons/                    # Icônes SVG et polices FontAwesome
+    │   ├── images/
+    │   │   ├── products/             # Illustrations des templates et formations
+    │   │   └── site/                 # Visuels du site (hero.webp, cube.webp, wingsuit.webp...)
+    │   └── music/                    # Extraits musicaux pour la boutique (LISEZMOI.txt...)
+    │
+    ├── src/                          # Code source de l'application
+    │   ├── index.jsx                 # Point d'entrée React 19 (#root)
+    │   ├── App.jsx                   # Routeur React Router v7, Navigation, Footer, Providers
+    │   ├── App.css                   # Thème global néon cyan (refonte 2026, variables CSS)
+    │   ├── styles.css                # Styles utilitaires
+    │   │
+    │   ├── components/               # Composants réutilisables
+    │   │   ├── Icons.jsx             # Bibliothèque d'icônes SVG intégrées (Logo, Menu, Cart...)
+    │   │   └── NewsletterForm.jsx    # Formulaire newsletter "Être averti" relié à l'API Brevo
+    │   │
+    │   ├── context/                  # Gestion d'état global (React Context)
+    │   │   ├── AuthContext.tsx       # Gestion des sessions et utilisateurs Firebase
+    │   │   ├── CartContext.tsx       # Panier d'achat e-commerce (musiques, templates)
+    │   │   └── TranslationContext.tsx# Internationalisation dynamique (FR / EN)
+    │   │
+    │   ├── data/                     # Données et contenus du site
+    │   │   ├── siteData.ts           # Projets (FOCUS, Wingsuit, Cube System), Devlog, Musiques
+    │   │   └── productsData.ts       # Catalogue produits (Templates Unreal Engine, Formations)
+    │   │
+    │   ├── pages/                    # Pages de l'application
+    │   │   ├── Home.jsx              # Accueil : vitrine studio, projets vedettes, portes boutique
+    │   │   ├── JeuxVideo.jsx         # Catalogue des jeux en développement, R&D et Devlog
+    │   │   ├── Boutique.jsx          # Boutique : écoute des musiques et catalogue templates
+    │   │   ├── Contact.jsx           # Formulaire de contact avec protection anti-spam
+    │   │   ├── ProductDetail.tsx     # Fiche détaillée d'un produit (fonctionnalités, achat)
+    │   │   ├── Checkout.tsx          # Tunnel de commande et paiement Stripe sécurisé
+    │   │   ├── Success.tsx           # Page de confirmation après paiement validé
+    │   │   ├── Login.tsx             # Page de connexion
+    │   │   ├── Register.tsx          # Page de création de compte
+    │   │   ├── Dashboard.tsx         # Espace membre (accès aux achats et clés)
+    │   │   └── Pricing.tsx           # Tarification des offres
+    │   │
+    │   ├── services/                 # Connecteurs et logique métier
+    │   │   ├── email.service.ts      # Envoi de messages via l'API Cloudflare Worker
+    │   │   ├── stripe.service.ts     # Initialisation des sessions Stripe Checkout
+    │   │   ├── firebase.service.ts   # Configuration et services Firebase
+    │   │   ├── geolocation.service.ts# Détection géographique pour la langue et devise
+    │   │   └── translation.service.ts# Service de chargement des traductions
+    │   │
+    │   ├── styles/                   # Styles CSS spécifiques par page
+    │   │   ├── Auth.css              # Styles pour Login / Register
+    │   │   ├── Checkout.css          # Styles du tunnel de paiement
+    │   │   ├── Dashboard.css         # Styles de l'espace client
+    │   │   ├── Pricing.css           # Styles des grilles de prix
+    │   │   └── ProductDetail.css     # Styles des pages produits
+    │   │
+    │   └── types/                    # Définitions TypeScript
+    │       └── auth.ts               # Types utilisateur et profils
+    │
+    ├── worker/                       # ⚡ BACKEND SERVERLESS (Cloudflare Worker)
+    │   ├── wrangler.toml             # Configuration du worker Cloudflare
+    │   ├── package.json              # Dépendances du worker
+    │   ├── src/index.ts              # API REST (contact, mailing-list, Brevo)
+    │   ├── scripts/send-news.mjs     # Script Node.js d'envoi de newsletters
+    │   └── news/exemple-focus.html   # Gabarit d'e-mail d'information FOCUS
+    │
+    └── Documentation/                # Documentation technique
+        ├── EMAIL_AUTOMATION.md       # Configuration de l'API e-mail Cloudflare + Brevo
+        ├── STRIPE_CONFIGURATION.md   # Configuration des clés Stripe (Live & Test)
+        └── TECHNICAL_DOCUMENTATION.md# Documentation technique globale
 ```
 
 ## Configuration

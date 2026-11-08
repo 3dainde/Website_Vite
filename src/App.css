@@ -31,6 +31,11 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --container: 1360px;
   --gutter: 32px;
+  /* Rythme vertical unique pour toutes les sections */
+  --space-section: clamp(56px, 7vw, 104px);
+  --space-block: clamp(20px, 2.4vw, 32px);
+  --nav-h: 73px;
+  --player-clear: 72px;
 }
 
 * {
@@ -80,17 +85,17 @@ img {
 .cube-bg-layer {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   pointer-events: none;
   z-index: 0;
-  background-image: url('/images/site/cube-pattern.webp');
+  /* Grands cubes isométriques vectoriels (tuile sans raccord) */
+  background-image: url('/images/site/cube-pattern.svg');
   background-repeat: repeat;
-  background-size: 320px auto;
-  opacity: 0.9;
-  /* Masque radial doux : 25% de visibilité au milieu, 60% sur les bords */
-  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.25) 35%, rgba(0, 0, 0, 0.60) 100%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.25) 35%, rgba(0, 0, 0, 0.60) 100%);
+  background-size: 156px 270px;
+  background-position: center center;
+  opacity: 0.5;
+  /* Quasi invisible au centre, apparaît en fondu vers les bords */
+  -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.04) 28%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.85) 92%, #000 100%);
+  mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.04) 28%, rgba(0, 0, 0, 0.3) 62%, rgba(0, 0, 0, 0.85) 92%, #000 100%);
 }
 
 .sr-only {
@@ -316,7 +321,7 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 28px;
+  margin-bottom: var(--space-block);
 }
 
 .ai-display {
@@ -564,60 +569,89 @@ textarea.ai-input {
   border-bottom: 1px solid var(--border-muted);
 }
 
-.home-hero-art {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 58%;
-  background-image:
-    linear-gradient(90deg, var(--bg) 0%, rgba(4, 7, 12, 0.5) 15%, rgba(4, 7, 12, 0) 35%),
-    linear-gradient(0deg, var(--bg) 0%, rgba(4, 7, 12, 0) 25%),
-    url('/images/site/cube.webp');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center right 4%;
-  filter: drop-shadow(0 0 35px rgba(30, 200, 255, 0.25));
-}
-
-.home-hero-side {
-  position: absolute;
-  right: 48px;
-  top: 220px;
-  padding-left: 18px;
-  border-left: 2px solid var(--accent);
-  font-family: var(--font-label);
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.32em;
-  line-height: 2;
-  text-transform: uppercase;
-  list-style: none;
-}
-
 .home-hero-inner {
   position: relative;
-  min-height: 720px;
-  padding-top: 120px;
-  padding-bottom: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  min-height: clamp(560px, calc(100svh - var(--nav-h)), 860px);
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: clamp(48px, 6vw, 88px);
 }
 
 .home-hero-copy {
-  max-width: 720px;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 24px;
+}
+
+.home-hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Halo cyan doux derrière l'hypercube */
+.home-hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 200, 255, 0.2) 0%, rgba(30, 200, 255, 0.06) 45%, transparent 70%);
+  filter: blur(20px);
+}
+
+.home-hero-visual img {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  /* Le fond noir de l'image disparaît, les bords se dissolvent dans la page */
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
+}
+
+.home-hero-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 4px;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  list-style: none;
+}
+
+.home-hero-side li + li::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 14px;
+  vertical-align: middle;
+  background: var(--accent);
 }
 
 .home-title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(38px, 6.2vw, 88px);
-  line-height: 1;
+  font-size: clamp(28px, 4.4vw, 68px);
+  line-height: 1.02;
   color: var(--text-strong);
+}
+
+/* "AUTH" puis "INTERACTIVE" sur deux lignes : le titre ne déborde jamais */
+.home-title .ai-glow {
+  display: block;
 }
 
 .home-tagline {
@@ -636,12 +670,27 @@ textarea.ai-input {
 }
 
 .home-section {
-  padding-top: 64px;
-  padding-bottom: 72px;
+  padding-top: var(--space-section);
+}
+
+.home-section:last-child {
+  padding-bottom: var(--space-section);
+}
+
+.home-grid {
+  gap: clamp(16px, 1.8vw, 24px);
+}
+
+.home-grid--projects {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.home-grid--shop {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
 }
 
 .project-card .ai-media {
-  height: 170px;
+  aspect-ratio: 16 / 9;
 }
 
 .project-card-body {
@@ -654,7 +703,7 @@ textarea.ai-input {
 
 .shop-door {
   min-height: 260px;
-  padding: 32px;
+  padding: var(--space-block);
   justify-content: flex-end;
   gap: 10px;
   background-size: cover;
@@ -1052,7 +1101,8 @@ textarea.ai-input {
 
 .footer-top {
   border-top: 1px solid var(--border-strong);
-  padding: 26px 0 32px;
+  /* Réserve la place du lecteur audio flottant */
+  padding: 26px 0 calc(26px + var(--player-clear));
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -1309,19 +1359,15 @@ textarea.ai-input {
     color: var(--accent);
   }
 
-  .home-hero-art {
-    width: 100%;
-    opacity: 0.35;
-  }
-
-  .home-hero-side {
-    display: none;
-  }
-
   .home-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
     min-height: 0;
-    padding-top: 72px;
-    padding-bottom: 80px;
+  }
+
+  .home-hero-visual {
+    position: absolute;
+    inset: 0;
+    opacity: 0.28;
   }
 
   .home-tagline {
