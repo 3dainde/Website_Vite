@@ -3,7 +3,7 @@ import { Link, Navigate, NavLink, useNavigate, useParams } from 'react-router-do
 import { LanguageContext } from '../App';
 import { useCart } from '../context/CartContext';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
-import { PRODUCTS } from '../data/productsData';
+import { PRODUCTS, PRICES_TBD } from '../data/productsData';
 import { MUSIC, isPlaceholder } from '../data/siteData';
 import { CloseIcon, PauseIcon, PlayIcon, ShieldIcon } from '../components/Icons';
 
@@ -12,6 +12,15 @@ const TEMPLATES = PRODUCTS.filter((p) => p.type === 'template');
 const WAVE = [40, 65, 50, 80, 95, 70, 55, 85, 100, 75, 60, 45, 70, 90, 65, 50, 80, 60, 40, 55, 75, 50, 35, 45, 60, 80, 50, 30];
 
 const eur = (n) => `${n.toFixed(2).replace('.', ',')} €`;
+
+/** « TBD » (to be determined) en orange lumineux : tarif ou contenu pas encore prêt. */
+export function Tbd({ style, className = '' }) {
+  return (
+    <span className={`price-tag price-tbd ${className}`} style={style} title="To be determined">
+      TBD
+    </span>
+  );
+}
 
 function AddButton({ inCart, disabled, onAdd, t }) {
   if (inCart) {
@@ -81,13 +90,15 @@ function MusicSection({ t, cart, addToCart }) {
                   <span key={k} className={k < lit ? 'lit' : ''} style={{ height: `${Math.round(h * (0.6 + ((k * 7 + i * 3) % 5) / 10))}%` }} />
                 ))}
               </div>
-              <span className="price-tag" style={{ width: 84, textAlign: 'right' }}>
-                {track.price != null ? eur(track.price) : '—'}
-              </span>
+              {PRICES_TBD || track.price == null ? (
+                <Tbd style={{ width: 84, textAlign: 'right' }} />
+              ) : (
+                <span className="price-tag" style={{ width: 84, textAlign: 'right' }}>{eur(track.price)}</span>
+              )}
               <AddButton
                 t={t}
                 inCart={inCart}
-                disabled={track.price == null}
+                disabled={PRICES_TBD || track.price == null}
                 onAdd={() => addToCart({ id: track.id, title: track.title, price: track.price, type: 'music' })}
               />
             </li>
@@ -128,18 +139,23 @@ function TemplatesSection({ t, lang, cart, addToCart }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 22, flex: 1 }}>
               <h2 className="ai-label" style={{ fontSize: 20, letterSpacing: '0.1em' }}>{title}</h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>{lang === 'en' ? p.shortDescEn : p.shortDesc}</p>
-              <ul className="ai-dash-list" style={{ textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: 14 }}>
-                {features.map((f) => (
-                  <li key={f}>{f}</li>
-                ))}
-              </ul>
+              {p.featuresTbd ? (
+                <Tbd style={{ fontSize: 16, alignSelf: 'flex-start' }} />
+              ) : (
+                <ul className="ai-dash-list" style={{ textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: 14 }}>
+                  {features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+              )}
               <div style={{ marginTop: 'auto', paddingTop: 14, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                <span className="price-tag" style={{ fontSize: 20 }}>{eur(p.price)}</span>
+                {PRICES_TBD ? <Tbd style={{ fontSize: 20 }} /> : <span className="price-tag" style={{ fontSize: 20 }}>{eur(p.price)}</span>}
                 <div style={{ display: 'flex', gap: 10 }}>
                   <Link to={`/produit/${p.id}`} className="ai-btn ai-btn--small">{t.details}</Link>
                   <AddButton
                     t={t}
                     inCart={inCart}
+                    disabled={PRICES_TBD}
                     onAdd={() => addToCart({ id: p.id, title, price: p.price, image: p.image, type: p.type })}
                   />
                 </div>

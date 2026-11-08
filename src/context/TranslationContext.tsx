@@ -62,7 +62,7 @@ const baseTranslations = {
   shop: {
     kicker: 'Musiques & templates',
     title: 'Boutique',
-    intro: "Ce qu'on crée pour nos jeux, disponible pour les vôtres.",
+    intro: 'Une expérience sonore et une recherche dans le temps',
     tabsLabel: 'Sections de la boutique',
     music: 'Musiques',
     templates: 'Templates',

@@ -1019,6 +1019,14 @@ textarea.ai-input {
   white-space: nowrap;
 }
 
+/* « TBD » : tarif ou contenu pas encore déterminé, en jaune orangé lumineux */
+.price-tbd {
+  color: #ffb02e;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 6px rgba(255, 176, 46, 0.75), 0 0 18px rgba(255, 140, 0, 0.45);
+}
+
 /* ---------- Contact ---------- */
 
 .contact-section {

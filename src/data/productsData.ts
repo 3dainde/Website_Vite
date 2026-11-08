@@ -1,5 +1,12 @@
 // src/data/productsData.ts
 
+/**
+ * Tarifs pas encore fixés : la boutique affiche « TBD » (to be determined)
+ * à la place des prix, et l'ajout au panier est désactivé.
+ * Repassez à false le jour où les prix sont prêts.
+ */
+export const PRICES_TBD = true;
+
 export type ProductCategory = 'game' | 'gamedesign' | 'plugin' | 'training' | 'asset';
 
 export interface Product {
@@ -19,6 +26,8 @@ export interface Product {
   cover?: string;
   features: string[];
   featuresEn: string[];
+  /** Contenu pas encore défini : affiche « TBD » à la place de la liste. */
+  featuresTbd?: boolean;
   downloadSize: string;
   compatibility: string[];
   demoUrl?: string;
@@ -40,6 +49,7 @@ export const PRODUCTS: Product[] = [
     tags: ['wingsuit', 'physique', 'vol', 'action', 'sport'],
     image: '/images/products/wingsuit.svg',
     cover: '/images/site/wingsuit.webp',
+    featuresTbd: true,
     features: [
       'Physique réaliste basée sur la vraie aérodynamique',
       'Système de boost et contrôle avancé',

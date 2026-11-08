@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../App';
-import { getProductById } from '../data/productsData';
+import { getProductById, PRICES_TBD } from '../data/productsData';
 import { useCart } from '../context/CartContext';
 import '../styles/ProductDetail.css';
 
@@ -112,7 +112,7 @@ export default function ProductDetail() {
             color: 'var(--primary)',
             marginTop: 'auto'
           }}>
-            {product.price.toFixed(2)} €
+            {PRICES_TBD ? <span className="price-tbd" title="To be determined">TBD</span> : `${product.price.toFixed(2)} €`}
           </div>
         </div>
 
@@ -130,6 +130,7 @@ export default function ProductDetail() {
 
           <button 
             onClick={handleAddToCart}
+            disabled={PRICES_TBD}
             className="cta-button" 
             style={{ 
               width: '100%', 
@@ -138,7 +139,9 @@ export default function ProductDetail() {
               marginTop: 'auto'
             }}
           >
-            🛒 {lang === 'en' ? 'Add to Cart' : 'Ajouter au panier'}
+            {PRICES_TBD
+              ? (lang === 'en' ? 'Coming soon' : 'Bientôt en vente')
+              : `🛒 ${lang === 'en' ? 'Add to Cart' : 'Ajouter au panier'}`}
           </button>
 
           <div style={{ 
@@ -168,7 +171,9 @@ export default function ProductDetail() {
           {lang === 'en' ? "What's included" : "Ce qui est inclus"}
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-          {features.map((feature, i) => (
+          {product.featuresTbd ? (
+            <span className="price-tbd" style={{ fontSize: '1.4rem', fontFamily: 'var(--font-display)' }} title="To be determined">TBD</span>
+          ) : features.map((feature, i) => (
             <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
               <div style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>✓</div>
               <div>{feature}</div>
