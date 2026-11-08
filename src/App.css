@@ -572,7 +572,7 @@ textarea.ai-input {
 .home-hero-inner {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(24px, 4vw, 64px);
   min-height: clamp(560px, calc(100svh - var(--nav-h)), 860px);
@@ -597,31 +597,11 @@ textarea.ai-input {
   pointer-events: none;
 }
 
-/* Halo cyan doux derrière l'hypercube */
-.home-hero-visual::before {
-  content: '';
-  position: absolute;
-  inset: 8%;
-  background: radial-gradient(circle at 50% 50%, rgba(30, 200, 255, 0.2) 0%, rgba(30, 200, 255, 0.06) 45%, transparent 70%);
-  filter: blur(20px);
-}
-
-.home-hero-visual img {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  /* Le fond noir de l'image disparaît, les bords se dissolvent dans la page */
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
-}
-
 .home-hero-side {
   position: absolute;
   right: var(--gutter);
   top: 50%;
-  z-index: 1;
+  z-index: 2;
   padding-left: 18px;
   border-left: 2px solid var(--accent);
   font-family: var(--font-label);
@@ -640,29 +620,26 @@ textarea.ai-input {
 
 /* ── Animation du cube : flottement + parallaxe au scroll ── */
 .home-hero-visual {
+  z-index: 0;
   /* Laisse la place à la colonne "Imaginer / Créer / Jouer" à droite */
-  padding-right: clamp(0px, 9vw, 150px);
+  padding-right: clamp(0px, 7vw, 120px);
 }
 
 .home-hero-visual-float {
   position: relative;
   width: 100%;
   max-width: 640px;
+  container-type: inline-size;
   animation: hero-float 7s ease-in-out infinite;
 }
 
-.home-hero-visual img {
+.home-hero-visual .hc-scene {
   transform:
     translate3d(0, calc(var(--hero-p, 0) * 140px), 0)
     rotate(calc(var(--hero-p, 0) * 14deg))
     scale(calc(1 - var(--hero-p, 0) * 0.15));
   opacity: calc(1 - var(--hero-p, 0) * 0.7);
   will-change: transform, opacity;
-}
-
-.home-hero-visual::before {
-  transform: scale(calc(1 + var(--hero-p, 0) * 0.4));
-  opacity: calc(1 - var(--hero-p, 0));
 }
 
 @keyframes hero-float {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { GAMES, LABS } from '../data/siteData';
 import { ArrowIcon, PlayCircleIcon } from '../components/Icons';
+import HeroCube from '../components/HeroCube';
 
 const PROJECTS = [...LABS, ...GAMES];
 
@@ -63,14 +64,7 @@ export default function Home() {
           </div>
           <div className="home-hero-visual">
             <div className="home-hero-visual-float">
-              <img
-                src="/images/site/cube.webp"
-                alt={h.heroAlt}
-                width="1024"
-                height="944"
-                fetchPriority="high"
-                decoding="async"
-              />
+              <HeroCube label={h.heroAlt} />
             </div>
           </div>
           <ul className="home-hero-side" aria-label={`${h.side1}, ${h.side2}, ${h.side3}`}>

@@ -112,72 +112,6 @@
 .hc-face--top    { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); background: linear-gradient(135deg, rgba(110, 220, 255, 0.36), rgba(40, 140, 230, 0.16)); }
 .hc-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
 
-/* Orbites : fixes autour du bloc, elles ne bougent pas quand il s'écarte */
-.hc-orbit {
-  --d: calc(var(--s) * 6.4 * var(--o-size));
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--d);
-  height: var(--d);
-  border-radius: 50%;
-  border: 1px solid rgba(140, 205, 255, 0.32);
-  box-shadow: 0 0 8px rgba(30, 200, 255, 0.12);
-  transform-style: preserve-3d;
-}
-
-.hc-orbit-track {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: hc-orbit linear infinite;
-}
-
-@keyframes hc-orbit {
-  to { transform: rotateZ(360deg); }
-}
-
-.hc-electron {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform-style: preserve-3d;
-}
-
-.hc-electron--dot {
-  width: 9px;
-  height: 9px;
-  margin: -4.5px 0 0 -4.5px;
-  border-radius: 50%;
-  background: #bff0ff;
-  box-shadow: 0 0 8px 2px rgba(30, 200, 255, 0.9), 0 0 22px 6px rgba(30, 200, 255, 0.45);
-}
-
-.hc-electron--cube {
-  width: 0;
-  height: 0;
-}
-
-.hc-mini {
-  --s-mini: calc(var(--s) * 0.42);
-  position: absolute;
-  width: var(--s-mini);
-  height: var(--s-mini);
-  margin: calc(var(--s-mini) / -2) 0 0 calc(var(--s-mini) / -2);
-  transform-style: preserve-3d;
-  animation: hc-mini-spin 6s linear infinite;
-}
-
-.hc-mini .hc-face {
-  --s: var(--s-mini);
-  box-shadow: inset 0 0 6px rgba(30, 200, 255, 0.4), 0 0 10px rgba(30, 200, 255, 0.35);
-}
-
-@keyframes hc-mini-spin {
-  from { transform: rotateX(0deg) rotateY(0deg); }
-  to { transform: rotateX(360deg) rotateY(360deg); }
-}
-
 @media (hover: none) {
   .hc-cube:hover {
     --push: 0px;
@@ -186,9 +120,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hc-spin,
-  .hc-orbit-track,
-  .hc-mini {
+  .hc-spin {
     animation: none;
   }
 

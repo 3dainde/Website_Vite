@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import './HeroCube.css';
 
 // Hypercube 3D en CSS : 26 cubes de verre (3 x 3 x 3 sans le cœur),
-// qui s'écartent au survol, et des orbites fixes parcourues par des électrons.
+// qui s'écartent légèrement du centre vers l'extérieur au survol.
 
 const POSITIONS = [];
 for (let x = -1; x <= 1; x += 1) {
@@ -15,16 +15,9 @@ for (let x = -1; x <= 1; x += 1) {
 
 const FACES = ['front', 'back', 'right', 'left', 'top', 'bottom'];
 
-const ORBITS = [
-  { tilt: 'rotateX(72deg) rotateY(-18deg)', size: 1, speed: 9, electron: 'cube' },
-  { tilt: 'rotateX(64deg) rotateY(38deg)', size: 1.12, speed: 13, electron: 'dot', reverse: true },
-  { tilt: 'rotateY(78deg) rotateX(-22deg)', size: 1.22, speed: 17, electron: 'dot' },
-  { tilt: 'rotateX(84deg) rotateY(6deg)', size: 1.34, speed: 23, electron: 'cube', reverse: true },
-];
-
-function Cube({ className = 'hc-cube', style }) {
+function Cube({ style }) {
   return (
-    <div className={className} style={style}>
+    <div className="hc-cube" style={style}>
       {FACES.map((f) => (
         <span key={f} className={`hc-face hc-face--${f}`} />
       ))}
@@ -72,23 +65,6 @@ export default function HeroCube({ label }) {
               <Cube key={`${x}${y}${z}`} style={{ '--x': x, '--y': y, '--z': z }} />
             ))}
           </div>
-
-          {ORBITS.map((o, i) => (
-            <div key={i} className="hc-orbit" style={{ '--o-size': o.size, transform: `translate(-50%, -50%) ${o.tilt}` }}>
-              <div
-                className="hc-orbit-track"
-                style={{ animationDuration: `${o.speed}s`, animationDirection: o.reverse ? 'reverse' : 'normal' }}
-              >
-                {o.electron === 'cube' ? (
-                  <div className="hc-electron hc-electron--cube">
-                    <Cube className="hc-mini" />
-                  </div>
-                ) : (
-                  <div className="hc-electron hc-electron--dot" />
-                )}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
